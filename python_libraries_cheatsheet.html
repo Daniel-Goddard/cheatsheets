@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Libraries Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E17;
+    --panel:#0F1420;
+    --panel-border:#F2C14E;
+    --gold:#F2C14E;
+    --text:#ECEAE4;
+    --text-dim:#9AA1B2;
+    --row-line: rgba(242,193,78,0.14);
+
+    --pandas:#B39CFF;
+    --numpy:#5CC2E8;
+    --mpl:#5FD3B3;
+    --sklearn:#F7A63E;
+    --seaborn:#7FA8E0;
+    --tensorflow:#FDB44B;
+    --pytorch:#FF6B5B;
+    --xgboost:#4ADE9E;
+    --core-blue:#4B8BBE;
+    --core-yellow:#FFD43B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(242,193,78,0.05), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(92,194,232,0.05), transparent 40%),
+      var(--bg);
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    padding:28px;
+  }
+  .wordmark{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .wordmark h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:44px;
+    margin:0;
+    letter-spacing:-0.5px;
+  }
+  .wordmark h1 span{color:var(--gold);}
+  .wordmark .sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--text-dim);
+    letter-spacing:0.5px;
+  }
+  .chips{display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.12);
+    display:flex;align-items:center;gap:6px;
+    color:var(--text);
+  }
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;}
+  }
+  .quadrant{
+    background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+    border:1.5px solid var(--panel-border);
+    border-radius:16px;
+    padding:18px;
+  }
+  .quad-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .quad-head .icon{
+    width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;font-size:14px;color:#0A0E17;
+  }
+  .quad-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:21px;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .quad-head .tag{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--text-dim);
+  }
+  .section{margin-bottom:14px;}
+  .section:last-child{margin-bottom:0;}
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    padding:6px 10px;
+    border-radius:6px;
+    margin-bottom:2px;
+    color:#0A0E17;
+  }
+  table{width:100%;border-collapse:collapse;}
+  td{
+    padding:5px 10px;
+    font-size:12.3px;
+    border-bottom:1px solid var(--row-line);
+    vertical-align:top;
+    line-height:1.35;
+  }
+  tr:last-child td{border-bottom:none;}
+  td.fn{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    white-space:nowrap;
+    color:var(--gold);
+    width:1%;
+    padding-right:14px;
+  }
+  td.desc{color:var(--text);}
+  .footer{
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+  }
+
+  /* per-library accents */
+  .pandas .quad-head .icon{background:var(--pandas);}
+  .pandas .section-title{background:var(--pandas);}
+  .pandas td.fn{color:var(--pandas);}
+
+  .numpy .quad-head .icon{background:var(--numpy);}
+  .numpy .section-title{background:var(--numpy);}
+  .numpy td.fn{color:var(--numpy);}
+
+  .mpl .quad-head .icon{background:var(--mpl);}
+  .mpl .section-title{background:var(--mpl);}
+  .mpl td.fn{color:var(--mpl);}
+
+  .sklearn .quad-head .icon{background:var(--sklearn);}
+  .sklearn .section-title{background:var(--sklearn);}
+  .sklearn td.fn{color:var(--sklearn);}
+
+  .seaborn .quad-head .icon{background:var(--seaborn);}
+  .seaborn .section-title{background:var(--seaborn);}
+  .seaborn td.fn{color:var(--seaborn);}
+
+  .tensorflow .quad-head .icon{background:var(--tensorflow);}
+  .tensorflow .section-title{background:var(--tensorflow);}
+  .tensorflow td.fn{color:var(--tensorflow);}
+
+  .pytorch .quad-head .icon{background:var(--pytorch);}
+  .pytorch .section-title{background:var(--pytorch);}
+  .pytorch td.fn{color:var(--pytorch);}
+
+  .xgboost .quad-head .icon{background:var(--xgboost);}
+  .xgboost .section-title{background:var(--xgboost);}
+  .xgboost td.fn{color:var(--xgboost);}
+
+  .core-blue .quad-head .icon{background:var(--core-blue);}
+  .core-blue .section-title{background:var(--core-blue);}
+  .core-blue td.fn{color:var(--core-blue);}
+
+  .core-yellow .quad-head .icon{background:var(--core-yellow);}
+  .core-yellow .section-title{background:var(--core-yellow);}
+  .core-yellow td.fn{color:var(--core-yellow);}
+
+  /* Input / Method / Output example tables */
+  table.ex-table td{white-space:normal;}
+  table.ex-table td.ex-input{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    width:34%;
+  }
+  table.ex-table td.ex-method{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:12.3px;
+    width:34%;
+  }
+  table.ex-table td.ex-output{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--text);
+  }
+  .core-blue table.ex-table td.ex-method{color:var(--core-blue);}
+  .core-yellow table.ex-table td.ex-method{color:var(--core-yellow);}
+  .ex-head td{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    color:var(--text-dim);
+    border-bottom:1px solid rgba(255,255,255,0.15);
+  }
+
+  /* Trick / snippet cards */
+  .trick{margin-bottom:12px;}
+  .trick:last-child{margin-bottom:0;}
+  .trick-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    margin-bottom:6px;
+    color:var(--text);
+  }
+  .trick-code{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    line-height:1.55;
+    color:var(--text);
+    white-space:pre-wrap;
+    word-break:break-word;
+    margin:0 0 6px 0;
+  }
+  .trick-output{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--text-dim);
+  }
+  .trick-output b{font-weight:600;}
+  .core-blue .trick-code{color:var(--core-blue);}
+  .core-yellow .trick-code{color:var(--core-yellow);}
+
+  /* Full-width comparison matrix */
+  .full-width{grid-column:1 / -1;}
+  table.matrix{width:100%;border-collapse:collapse;}
+  table.matrix th{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:#0A0E17;
+    background:var(--core-yellow);
+    padding:7px 10px;
+    text-align:left;
+  }
+  table.matrix th:first-child{border-top-left-radius:6px;}
+  table.matrix th:last-child{border-top-right-radius:6px;}
+  table.matrix td{
+    font-size:12px;
+    padding:7px 10px;
+    border-bottom:1px solid var(--row-line);
+    color:var(--text);
+  }
+  table.matrix td.matrix-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:11.5px;
+    color:var(--core-yellow);
+    white-space:nowrap;
+  }
+</style>
+</head>
+<body>
+
+  <div class="wordmark">
+    <div>
+      <h1>Python <span>Libraries</span></h1>
+      <div class="sub">core · pandas · numpy · matplotlib · scikit-learn · seaborn · tensorflow · pytorch · xgboost — quick reference</div>
+    </div>
+    <div class="chips">
+      <span class="chip"><span class="dot" style="background:var(--core-blue)"></span>python core</span>
+      <span class="chip"><span class="dot" style="background:var(--pandas)"></span>pandas</span>
+      <span class="chip"><span class="dot" style="background:var(--numpy)"></span>numpy</span>
+      <span class="chip"><span class="dot" style="background:var(--mpl)"></span>matplotlib</span>
+      <span class="chip"><span class="dot" style="background:var(--sklearn)"></span>scikit-learn</span>
+      <span class="chip"><span class="dot" style="background:var(--seaborn)"></span>seaborn</span>
+      <span class="chip"><span class="dot" style="background:var(--tensorflow)"></span>tensorflow</span>
+      <span class="chip"><span class="dot" style="background:var(--pytorch)"></span>pytorch</span>
+      <span class="chip"><span class="dot" style="background:var(--xgboost)"></span>xgboost</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- PYTHON CORE: TIME, STATS & STRINGS -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">time · statistics · str</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Time &amp; Datetime</div>
+        <table>
+          <tr><td class="fn">time.time()</td><td class="desc">Get the current time in seconds since the epoch as a floating-point number</td></tr>
+          <tr><td class="fn">time.localtime()</td><td class="desc">Get the current local time</td></tr>
+          <tr><td class="fn">time.asctime()</td><td class="desc">Convert a time tuple to a readable string format</td></tr>
+          <tr><td class="fn">time.perf_counter()</td><td class="desc">Return a high-precision timer for measuring short durations</td></tr>
+          <tr><td class="fn">time.process_time()</td><td class="desc">Sum of the system and user CPU time of the current process</td></tr>
+          <tr><td class="fn">datetime.timedelta()</td><td class="desc">Calculate the difference between two dates or times</td></tr>
+          <tr><td class="fn">datetime.now(tz=None)</td><td class="desc">Get the current local date and time</td></tr>
+          <tr><td class="fn">datetime.strptime(s, fmt)</td><td class="desc">Return a datetime object representing a parsed date string</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Statistics</div>
+        <table>
+          <tr><td class="fn">statistics.mean(data)</td><td class="desc">Calculate the arithmetic mean of a dataset</td></tr>
+          <tr><td class="fn">statistics.median(data)</td><td class="desc">Calculate the median of a dataset</td></tr>
+          <tr><td class="fn">statistics.harmonic_mean()</td><td class="desc">Calculate the harmonic mean of a dataset</td></tr>
+          <tr><td class="fn">statistics.stdev(data)</td><td class="desc">Calculate the sample standard deviation</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">String</div>
+        <table>
+          <tr><td class="fn">str.capitalize()</td><td class="desc">Capitalize the first letter of the string</td></tr>
+          <tr><td class="fn">str.isalnum()</td><td class="desc">Check whether the string consists of alphanumeric characters</td></tr>
+          <tr><td class="fn">str.isalpha()</td><td class="desc">Check whether the string consists of alphabetic characters</td></tr>
+          <tr><td class="fn">str.isdigit()</td><td class="desc">Check whether the string consists of digit characters</td></tr>
+          <tr><td class="fn">len(string)</td><td class="desc">Return the length of the string</td></tr>
+          <tr><td class="fn">str.lower() / upper()</td><td class="desc">Convert all characters to lowercase or uppercase</td></tr>
+          <tr><td class="fn">max(str) / min(str)</td><td class="desc">Return the largest or smallest letter in the string</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: COLLECTIONS -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">set · dict · list</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Set</div>
+        <table>
+          <tr><td class="fn">set.add(elem)</td><td class="desc">Add an element to the set</td></tr>
+          <tr><td class="fn">set.clear()</td><td class="desc">Remove all elements from the set</td></tr>
+          <tr><td class="fn">set.copy()</td><td class="desc">Create a shallow copy of an existing set</td></tr>
+          <tr><td class="fn">set.difference()</td><td class="desc">Return the difference of multiple sets</td></tr>
+          <tr><td class="fn">set.intersection()</td><td class="desc">Return the intersection of two sets</td></tr>
+          <tr><td class="fn">set.issubset()</td><td class="desc">Determine whether the set is a subset of another set</td></tr>
+          <tr><td class="fn">set.symmetric_difference()</td><td class="desc">Return the set of non-repeated elements from two sets</td></tr>
+          <tr><td class="fn">set.remove() / discard()</td><td class="desc">Remove a specified element from the set</td></tr>
+          <tr><td class="fn">set.pop()</td><td class="desc">Randomly remove an element from the set</td></tr>
+          <tr><td class="fn">set.union()</td><td class="desc">Return the union of two sets</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dict</div>
+        <table>
+          <tr><td class="fn">type(variable)</td><td class="desc">Return the type of the input variable</td></tr>
+          <tr><td class="fn">dict.clear()</td><td class="desc">Clear all elements from the dictionary</td></tr>
+          <tr><td class="fn">dict.copy()</td><td class="desc">Return a shallow copy of the dictionary</td></tr>
+          <tr><td class="fn">dict.keys()</td><td class="desc">Return a view object of the dictionary's keys</td></tr>
+          <tr><td class="fn">dict.popitem()</td><td class="desc">Return and remove the last key-value pair from the dictionary</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">List</div>
+        <table>
+          <tr><td class="fn">len(list)</td><td class="desc">Return the number of elements in the list</td></tr>
+          <tr><td class="fn">max(list) / min(list)</td><td class="desc">Return the maximum or minimum value in the list</td></tr>
+          <tr><td class="fn">list(seq)</td><td class="desc">Convert a sequence such as a tuple to a list</td></tr>
+          <tr><td class="fn">list.append(obj)</td><td class="desc">Append a new object to the end of the list</td></tr>
+          <tr><td class="fn">list.count(obj)</td><td class="desc">Count the number of times an element appears in the list</td></tr>
+          <tr><td class="fn">list.index(obj)</td><td class="desc">Find the index of the first match for a value in the list</td></tr>
+          <tr><td class="fn">list.insert(index, obj)</td><td class="desc">Insert an object into the list at a given index</td></tr>
+          <tr><td class="fn">list.pop([i=-1])</td><td class="desc">Remove and return an element from the list (last by default)</td></tr>
+          <tr><td class="fn">list.remove(obj)</td><td class="desc">Remove the first match for a value in the list</td></tr>
+          <tr><td class="fn">list.reverse()</td><td class="desc">Reverse the order of elements in the list</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: OS & FILES -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">os · file</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">OS</div>
+        <table>
+          <tr><td class="fn">os.access(path, mode)</td><td class="desc">Check if the specified path has the specified access permissions</td></tr>
+          <tr><td class="fn">os.chdir(path)</td><td class="desc">Change the current working directory to the specified directory</td></tr>
+          <tr><td class="fn">os.chmod(path, mode)</td><td class="desc">Change the permissions of a file or directory</td></tr>
+          <tr><td class="fn">os.chown(path, uid, gid)</td><td class="desc">Transfer ownership of the file</td></tr>
+          <tr><td class="fn">os.getcwd()</td><td class="desc">Get the path of the current working directory</td></tr>
+          <tr><td class="fn">os.listdir(path)</td><td class="desc">List all the filenames in the specified directory</td></tr>
+          <tr><td class="fn">os.stat(path)</td><td class="desc">Get the status of a file or directory at a specified path</td></tr>
+          <tr><td class="fn">os.link(src, dst)</td><td class="desc">Create a hard link</td></tr>
+          <tr><td class="fn">os.pardir()</td><td class="desc">Get a string representing the parent directory</td></tr>
+          <tr><td class="fn">os.replace(src, dst)</td><td class="desc">Rename a file or directory</td></tr>
+          <tr><td class="fn">os.startfile(path)</td><td class="desc">Open a file or launch it with its default program (Windows)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">File</div>
+        <table>
+          <tr><td class="fn">file.close()</td><td class="desc">Close the file</td></tr>
+          <tr><td class="fn">file.flush()</td><td class="desc">Flush the internal I/O buffer</td></tr>
+          <tr><td class="fn">file.fileno()</td><td class="desc">Return the underlying file descriptor corresponding to the file</td></tr>
+          <tr><td class="fn">file.isatty()</td><td class="desc">Check whether the file is connected to a terminal device</td></tr>
+          <tr><td class="fn">file.read([size])</td><td class="desc">Read the specified number of bytes from a file</td></tr>
+          <tr><td class="fn">file.readline([size])</td><td class="desc">Read a single line from a file</td></tr>
+          <tr><td class="fn">file.tell()</td><td class="desc">Return the current position within the file</td></tr>
+          <tr><td class="fn">file.write(str)</td><td class="desc">Write a string to a file</td></tr>
+          <tr><td class="fn">file.writelines(seq)</td><td class="desc">Write a sequence of strings to a file</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: RANDOM & MATH -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">random · math</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Random</div>
+        <table>
+          <tr><td class="fn">random.seed()</td><td class="desc">Initialize the random number generator</td></tr>
+          <tr><td class="fn">random.getstate()</td><td class="desc">Get the internal state of the random number generator</td></tr>
+          <tr><td class="fn">random.random()</td><td class="desc">Generate a random floating-point number in the range [0.0, 1.0)</td></tr>
+          <tr><td class="fn">random.uniform(a, b)</td><td class="desc">Generate a random floating-point number within a given range</td></tr>
+          <tr><td class="fn">random.betavariate()</td><td class="desc">Generate a random number from the Beta distribution</td></tr>
+          <tr><td class="fn">random.expovariate()</td><td class="desc">Generate a random number from the exponential distribution</td></tr>
+          <tr><td class="fn">random.gammavariate()</td><td class="desc">Generate a random number from the gamma distribution</td></tr>
+          <tr><td class="fn">random.gauss()</td><td class="desc">Generate a random number from the normal (Gaussian) distribution</td></tr>
+          <tr><td class="fn">random.lognormvariate()</td><td class="desc">Generate a random number from the log-normal distribution</td></tr>
+          <tr><td class="fn">random.paretovariate()</td><td class="desc">Generate a random number from the Pareto distribution</td></tr>
+          <tr><td class="fn">random.weibullvariate()</td><td class="desc">Generate a random number from the Weibull distribution</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Math</div>
+        <table>
+          <tr><td class="fn">math.cos / sin / tan(x)</td><td class="desc">Return the cosine, sine, or tangent of x</td></tr>
+          <tr><td class="fn">math.acos / asin / atan(x)</td><td class="desc">Return the inverse cosine, sine, or tangent of x</td></tr>
+          <tr><td class="fn">math.acosh / asinh / atanh(x)</td><td class="desc">Return the inverse hyperbolic cosine, sine, or tangent of x</td></tr>
+          <tr><td class="fn">math.ceil(x)</td><td class="desc">Return the smallest integer not less than x</td></tr>
+          <tr><td class="fn">math.degrees(x)</td><td class="desc">Convert angle x from radians to degrees</td></tr>
+          <tr><td class="fn">math.erf(x)</td><td class="desc">Return the error function of a value</td></tr>
+          <tr><td class="fn">math.exp(x)</td><td class="desc">Return e raised to the power of x</td></tr>
+          <tr><td class="fn">math.fabs(x)</td><td class="desc">Return the absolute value of x</td></tr>
+          <tr><td class="fn">math.gamma(x)</td><td class="desc">Return the gamma function value at x</td></tr>
+          <tr><td class="fn">math.gcd(x, y)</td><td class="desc">Return the greatest common divisor of the integer arguments</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: BASICS & CONTROL FLOW -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">basics · control flow</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Basics</div>
+        <table>
+          <tr><td class="fn">print(obj)</td><td class="desc">Print objects to standard output</td></tr>
+          <tr><td class="fn">type(obj)</td><td class="desc">Return the type of an object</td></tr>
+          <tr><td class="fn">f"{expr}"</td><td class="desc">Embed expressions inside a string literal (f-string)</td></tr>
+          <tr><td class="fn">import sys</td><td class="desc">Access interpreter-level information such as sys.version</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Control Flow</div>
+        <table>
+          <tr><td class="fn">if / elif / else</td><td class="desc">Branch code based on conditional expressions</td></tr>
+          <tr><td class="fn">a if cond else b</td><td class="desc">Assign a value based on a condition in one line</td></tr>
+          <tr><td class="fn">for i in range(n)</td><td class="desc">Iterate over a sequence of numbers</td></tr>
+          <tr><td class="fn">while cond:</td><td class="desc">Repeat a block of code while a condition stays true</td></tr>
+          <tr><td class="fn">break / continue</td><td class="desc">Exit a loop early, or skip to its next iteration</td></tr>
+          <tr><td class="fn">and / or / not</td><td class="desc">Combine or negate boolean conditions</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: FUNCTIONS & CLASSES -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">functions · classes</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Functions</div>
+        <table>
+          <tr><td class="fn">def f(): return</td><td class="desc">Define a reusable, callable block of code</td></tr>
+          <tr><td class="fn">*args</td><td class="desc">Collect extra positional arguments into a tuple</td></tr>
+          <tr><td class="fn">**kwargs</td><td class="desc">Collect extra keyword arguments into a dictionary</td></tr>
+          <tr><td class="fn">lambda x: expr</td><td class="desc">Define a small, unnamed one-line function</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Classes</div>
+        <table>
+          <tr><td class="fn">class Name:</td><td class="desc">Define a new class, or blueprint, for objects</td></tr>
+          <tr><td class="fn">__init__(self, ...)</td><td class="desc">Initialize a new instance's attributes</td></tr>
+          <tr><td class="fn">self</td><td class="desc">Reference the current instance inside a method</td></tr>
+          <tr><td class="fn">@dataclass</td><td class="desc">Auto-generate init and repr for simple data containers</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: ERRORS, FILES & JSON -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">errors · files · json</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Errors</div>
+        <table>
+          <tr><td class="fn">try / except</td><td class="desc">Catch and handle exceptions without crashing</td></tr>
+          <tr><td class="fn">raise ValueError(msg)</td><td class="desc">Manually raise an exception with a message</td></tr>
+          <tr><td class="fn">finally:</td><td class="desc">Run cleanup code whether or not an error occurred</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Files &amp; JSON</div>
+        <table>
+          <tr><td class="fn">open(path, mode)</td><td class="desc">Open a file for reading, writing, or appending</td></tr>
+          <tr><td class="fn">with open(...) as f:</td><td class="desc">Open a file safely within a context manager</td></tr>
+          <tr><td class="fn">f.read() / f.write(s)</td><td class="desc">Read from, or write a string to, an open file</td></tr>
+          <tr><td class="fn">json.dumps(obj)</td><td class="desc">Convert a Python object into a JSON-formatted string</td></tr>
+          <tr><td class="fn">json.loads(str)</td><td class="desc">Parse a JSON-formatted string into a Python object</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: COMPREHENSIONS, ASYNC & MODULES -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">comprehensions · async · modules</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Comprehensions</div>
+        <table>
+          <tr><td class="fn">[x for x in seq]</td><td class="desc">Build a list from an iterable in one line</td></tr>
+          <tr><td class="fn">[x for x in seq if c]</td><td class="desc">Filter items while building a list</td></tr>
+          <tr><td class="fn">{k: v for ...}</td><td class="desc">Build a dictionary in one line</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Async</div>
+        <table>
+          <tr><td class="fn">async def f():</td><td class="desc">Define a coroutine function</td></tr>
+          <tr><td class="fn">await expr</td><td class="desc">Pause execution until an awaited coroutine completes</td></tr>
+          <tr><td class="fn">asyncio.run(main())</td><td class="desc">Run the top-level entry point of an async program</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Modules</div>
+        <table>
+          <tr><td class="fn">import module</td><td class="desc">Load a module's code into the current namespace</td></tr>
+          <tr><td class="fn">from module import name</td><td class="desc">Import a specific name from a module</td></tr>
+          <tr><td class="fn">import module as alias</td><td class="desc">Import a module under a shorter alias</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: TYPING & DEBUGGING -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">typing · debugging</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Typing</div>
+        <table>
+          <tr><td class="fn">x: int</td><td class="desc">Annotate a variable with its expected type</td></tr>
+          <tr><td class="fn">def f(x: int) -> int:</td><td class="desc">Annotate a function's parameter and return types</td></tr>
+          <tr><td class="fn">List[str] / Dict[str,int]</td><td class="desc">Specify the type of items inside a collection</td></tr>
+          <tr><td class="fn">Optional[str]</td><td class="desc">Indicate a value may be a string or None</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Debugging</div>
+        <table>
+          <tr><td class="fn">breakpoint()</td><td class="desc">Pause execution and drop into the debugger</td></tr>
+          <tr><td class="fn">python -m pdb app.py</td><td class="desc">Run a script under the interactive debugger</td></tr>
+          <tr><td class="fn">traceback.print_exc()</td><td class="desc">Print the full traceback of a caught exception</td></tr>
+          <tr><td class="fn">python -m timeit "expr"</td><td class="desc">Measure the execution time of a small expression</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: OPERATORS -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">operators</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Numeric Operators</div>
+        <table>
+          <tr><td class="fn">+  -</td><td class="desc">Addition and subtraction</td></tr>
+          <tr><td class="fn">*  /</td><td class="desc">Multiplication and division</td></tr>
+          <tr><td class="fn">**</td><td class="desc">Exponentiation</td></tr>
+          <tr><td class="fn">%</td><td class="desc">Modulus — remainder of division</td></tr>
+          <tr><td class="fn">//</td><td class="desc">Floor division</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Comparison Operators</div>
+        <table>
+          <tr><td class="fn">==  !=</td><td class="desc">Equal to / not equal to</td></tr>
+          <tr><td class="fn">&gt;  &lt;</td><td class="desc">Greater than / less than</td></tr>
+          <tr><td class="fn">&gt;=  &lt;=</td><td class="desc">Greater than or equal / less than or equal</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Boolean Operators</div>
+        <table>
+          <tr><td class="fn">and</td><td class="desc">True only if both operands are true</td></tr>
+          <tr><td class="fn">or</td><td class="desc">True if either operand is true</td></tr>
+          <tr><td class="fn">not</td><td class="desc">Negate a boolean value</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: STRING METHOD EXAMPLES -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">string method examples</div>
+      </div>
+      <div class="section">
+        <div class="section-title">String Methods — Input → Output</div>
+        <table class="ex-table">
+          <tr class="ex-head"><td>Input</td><td>Method</td><td>Output</td></tr>
+          <tr><td class="ex-input">"Hello World"</td><td class="ex-method">.startswith('Hello')</td><td class="ex-output">True</td></tr>
+          <tr><td class="ex-input">"Hello World"</td><td class="ex-method">.endswith("by")</td><td class="ex-output">False</td></tr>
+          <tr><td class="ex-input">"hello world"</td><td class="ex-method">.capitalize()</td><td class="ex-output">"Hello world"</td></tr>
+          <tr><td class="ex-input">"13/11/2021"</td><td class="ex-method">.split("/")</td><td class="ex-output">["13","11","2021"]</td></tr>
+          <tr><td class="ex-input">"  Hello  "</td><td class="ex-method">.strip()</td><td class="ex-output">"Hello"</td></tr>
+          <tr><td class="ex-input">"Hello A"</td><td class="ex-method">.replace("A","B")</td><td class="ex-output">"Hello B"</td></tr>
+          <tr><td class="ex-input">"hello world"</td><td class="ex-method">.count("o")</td><td class="ex-output">2</td></tr>
+          <tr><td class="ex-input">"Hello World"</td><td class="ex-method">.find("o")</td><td class="ex-output">4</td></tr>
+          <tr><td class="ex-input">'Python'</td><td class="ex-method">.center(10,'*')</td><td class="ex-output">"**Python**"</td></tr>
+          <tr><td class="ex-input">'HELLO WORLD'</td><td class="ex-method">.find('OR')</td><td class="ex-output">7</td></tr>
+          <tr><td class="ex-input">'31/01/2022'</td><td class="ex-method">.replace('/','-')</td><td class="ex-output">"31-01-2022"</td></tr>
+          <tr><td class="ex-input">'abc123'</td><td class="ex-method">.isalnum()</td><td class="ex-output">True</td></tr>
+          <tr><td class="ex-input">"123456"</td><td class="ex-method">.isnumeric()</td><td class="ex-output">True</td></tr>
+          <tr><td class="ex-input">'HELLO WORLD'</td><td class="ex-method">.isupper()</td><td class="ex-output">True</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: LIST METHOD EXAMPLES -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">list method examples</div>
+      </div>
+      <div class="section">
+        <div class="section-title">List Methods — Input → Output</div>
+        <table class="ex-table">
+          <tr class="ex-head"><td>Input</td><td>Method</td><td>Output</td></tr>
+          <tr><td class="ex-input">[10, 20, 30]</td><td class="ex-method">.append(40)</td><td class="ex-output">[10, 20, 30, 40]</td></tr>
+          <tr><td class="ex-input">[10, 20, 30]</td><td class="ex-method">.extend([40])</td><td class="ex-output">[10, 20, 30, 40]</td></tr>
+          <tr><td class="ex-input">[10, 20, 30]</td><td class="ex-method">.insert(2, 40)</td><td class="ex-output">[10, 20, 40, 30]</td></tr>
+          <tr><td class="ex-input">[10, 20, 30, 20]</td><td class="ex-method">.count(20)</td><td class="ex-output">2</td></tr>
+          <tr><td class="ex-input">[10, 20, 30]</td><td class="ex-method">.clear()</td><td class="ex-output">[]</td></tr>
+          <tr><td class="ex-input">[10, 20, 30, 40]</td><td class="ex-method">.index(40)</td><td class="ex-output">3</td></tr>
+          <tr><td class="ex-input">[10, 20, 30, 40]</td><td class="ex-method">.remove(10)</td><td class="ex-output">[20, 30, 40]</td></tr>
+          <tr><td class="ex-input">[10, 20, 30, 40]</td><td class="ex-method">.pop(2)</td><td class="ex-output">[10, 20, 40]</td></tr>
+          <tr><td class="ex-input">[30, 20, 10]</td><td class="ex-method">.reverse()</td><td class="ex-output">[10, 20, 30]</td></tr>
+          <tr><td class="ex-input">[30, 10, 40, 20]</td><td class="ex-method">.sort()</td><td class="ex-output">[10, 20, 30, 40]</td></tr>
+          <tr><td class="ex-input">[10, 20, 30]</td><td class="ex-method">.copy()</td><td class="ex-output">[10, 20, 30]</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: SET METHOD EXAMPLES -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">set method examples</div>
+      </div>
+      <div class="section">
+        <div class="section-title">Set Methods — Input → Output</div>
+        <table class="ex-table">
+          <tr class="ex-head"><td>Input</td><td>Method</td><td>Output</td></tr>
+          <tr><td class="ex-input">{5, 'Hello', 3.2}</td><td class="ex-method">.add(2)</td><td class="ex-output">{2, 'Hello', 3.2, 5}</td></tr>
+          <tr><td class="ex-input">{5, 'Hello', 3.2}</td><td class="ex-method">.discard(3.2)</td><td class="ex-output">{'Hello', 5}</td></tr>
+          <tr><td class="ex-input">{5, 'Hello', 3.2}</td><td class="ex-method">.remove(3.2)</td><td class="ex-output">{'Hello', 5}</td></tr>
+          <tr><td class="ex-input">{5, 'Hello', 3.2}</td><td class="ex-method">.pop()</td><td class="ex-output">{3.2, 5}</td></tr>
+          <tr><td class="ex-input">{5, 2, 8}</td><td class="ex-method">.intersection({5,1})</td><td class="ex-output">{5}</td></tr>
+          <tr><td class="ex-input">{5, 2, 8}</td><td class="ex-method">.difference({5,1})</td><td class="ex-output">{8, 2}</td></tr>
+          <tr><td class="ex-input">{1, -2}</td><td class="ex-method">.issubset({-2,1,3})</td><td class="ex-output">True</td></tr>
+          <tr><td class="ex-input">{-2, 1, 3}</td><td class="ex-method">.issuperset({1,-2})</td><td class="ex-output">True</td></tr>
+          <tr><td class="ex-input">{-2, 1, 3}</td><td class="ex-method">.isdisjoint({4,6})</td><td class="ex-output">True</td></tr>
+          <tr><td class="ex-input">{1, 2, 3}</td><td class="ex-method">.union({3,1})</td><td class="ex-output">{1, 2, 3}</td></tr>
+          <tr><td class="ex-input">{1, 2, 3}</td><td class="ex-method">.update({'a','b'})</td><td class="ex-output">{1, 2, 3, 'b', 'a'}</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: ONE-LINERS & TRICKS -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">one-liners &amp; tricks</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Handy One-Liners</div>
+
+        <div class="trick">
+          <div class="trick-title">Partition a list into N groups</div>
+          <div class="trick-code">list1 = ['Sun','Flowers','Peoples','Animals','Day','Night']
+partition = list(zip(*[iter(list1)] * 2))
+print(partition)</div>
+          <div class="trick-output">Output: [('Sun','Flowers'), ('Peoples','Animals'), ('Day','Night')]</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Print more than one list simultaneously</div>
+          <div class="trick-code">list1 = [1, 3, 5, 7]
+list2 = [2, 4, 6, 8]
+for a, b in zip(list1, list2):
+    print(a, b)</div>
+          <div class="trick-output">Output: 1 2 · 3 4 · 5 6 · 7 8</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Convert a list of lists into a single list</div>
+          <div class="trick-code">import itertools
+list1 = [[1,2], [3,4], [5,6]]
+lst = list(itertools.chain.from_iterable(list1))
+print(lst)</div>
+          <div class="trick-output">Output: [1, 2, 3, 4, 5, 6]</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Take a string of numbers as input and convert to a list</div>
+          <div class="trick-code">formatted_list = list(map(int, input().split()))
+print(formatted_list)</div>
+          <div class="trick-output">Input: 2 3 5 6 → Output: [2, 3, 5, 6]</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Mini Project — Password Generator</div>
+        <div class="trick">
+          <div class="trick-code">import random
+
+lower = "abcdefghijklmnopqrstuvwxyz"
+upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+number = "1234567890"
+symbols = "_-.;:[]{}"
+
+all_chars = lower + upper + number + symbols
+length = 17
+password = "".join(random.sample(all_chars, length))
+print(password)</div>
+          <div class="trick-output">Sample output: bcmc143;[[3ILYop</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: DATA TYPE COMPARISON (FULL WIDTH) -->
+    <div class="quadrant core-blue full-width">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">data type comparison</div>
+      </div>
+      <div class="section">
+        <table class="matrix">
+          <tr>
+            <th>Property</th><th>String</th><th>List</th><th>Tuple</th><th>Set</th><th>Dictionary</th>
+          </tr>
+          <tr><td class="matrix-label">Mutability</td><td>Immutable</td><td>Mutable</td><td>Immutable</td><td>Mutable</td><td>Mutable</td></tr>
+          <tr><td class="matrix-label">Ordered / Indexed</td><td>Ordered</td><td>Ordered</td><td>Ordered</td><td>Unordered</td><td>Unordered</td></tr>
+          <tr><td class="matrix-label">Duplicates</td><td>Allowed</td><td>Allowed</td><td>Allowed</td><td>Not allowed</td><td>Keys not allowed</td></tr>
+          <tr><td class="matrix-label">Empty literal</td><td>""</td><td>[]</td><td>()</td><td>set()</td><td>{}</td></tr>
+          <tr><td class="matrix-label">Single-item literal</td><td>"H"</td><td>["Hello"]</td><td>("Hello",)</td><td>{"Hello"}</td><td>{"Hello": 1}</td></tr>
+          <tr><td class="matrix-label">Can store</td><td>Characters only</td><td>Any data type</td><td>Any data type</td><td>Hashable types only (int, str, tuple)</td><td>Keys: hashable types · Values: any type</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANDAS -->
+    <div class="quadrant pandas">
+      <div class="quad-head">
+        <div class="icon">pd</div>
+        <h2>Pandas</h2>
+        <div class="tag">import pandas as pd</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Series &amp; DataFrame Creation</div>
+        <table>
+          <tr><td class="fn">pd.Series(data)</td><td class="desc">Create a one-dimensional labeled array</td></tr>
+          <tr><td class="fn">pd.DataFrame(data)</td><td class="desc">Create a two-dimensional labeled data structure</td></tr>
+          <tr><td class="fn">pd.read_csv(path)</td><td class="desc">Read a comma-separated values file into a DataFrame</td></tr>
+          <tr><td class="fn">pd.read_excel(path)</td><td class="desc">Read an Excel file into a DataFrame</td></tr>
+          <tr><td class="fn">pd.read_json(path)</td><td class="desc">Read a JSON file into a DataFrame</td></tr>
+          <tr><td class="fn">df.to_csv(path)</td><td class="desc">Write the DataFrame out to a CSV file</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Inspecting Data</div>
+        <table>
+          <tr><td class="fn">df.head(n)</td><td class="desc">Return the first n rows</td></tr>
+          <tr><td class="fn">df.tail(n)</td><td class="desc">Return the last n rows</td></tr>
+          <tr><td class="fn">df.info()</td><td class="desc">Print a concise summary of the DataFrame</td></tr>
+          <tr><td class="fn">df.describe()</td><td class="desc">Generate descriptive statistics for numeric columns</td></tr>
+          <tr><td class="fn">df.shape</td><td class="desc">Return the dimensions as (rows, columns)</td></tr>
+          <tr><td class="fn">df.dtypes</td><td class="desc">Return the data type of each column</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Selection &amp; Indexing</div>
+        <table>
+          <tr><td class="fn">df.loc[]</td><td class="desc">Access rows and columns by label</td></tr>
+          <tr><td class="fn">df.iloc[]</td><td class="desc">Access rows and columns by integer position</td></tr>
+          <tr><td class="fn">df.at[]</td><td class="desc">Access a single value by row/column label</td></tr>
+          <tr><td class="fn">df[col]</td><td class="desc">Select a single column as a Series</td></tr>
+          <tr><td class="fn">df.query(expr)</td><td class="desc">Filter rows using a boolean expression string</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cleaning Data</div>
+        <table>
+          <tr><td class="fn">df.dropna()</td><td class="desc">Remove rows or columns with missing values</td></tr>
+          <tr><td class="fn">df.fillna(val)</td><td class="desc">Fill missing values with a specified value</td></tr>
+          <tr><td class="fn">df.drop_duplicates()</td><td class="desc">Remove duplicate rows</td></tr>
+          <tr><td class="fn">df.rename(columns)</td><td class="desc">Rename column or index labels</td></tr>
+          <tr><td class="fn">df.astype(dtype)</td><td class="desc">Cast a column to a specified data type</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">GroupBy, Sort &amp; Combine</div>
+        <table>
+          <tr><td class="fn">df.groupby(col)</td><td class="desc">Group rows that share values in a column</td></tr>
+          <tr><td class="fn">df.agg(func)</td><td class="desc">Apply one or more aggregation functions</td></tr>
+          <tr><td class="fn">df.pivot_table()</td><td class="desc">Create a spreadsheet-style pivot table</td></tr>
+          <tr><td class="fn">df.sort_values(col)</td><td class="desc">Sort rows by the values in a column</td></tr>
+          <tr><td class="fn">df.value_counts()</td><td class="desc">Count unique values in a Series</td></tr>
+          <tr><td class="fn">pd.merge(df1, df2)</td><td class="desc">Merge two DataFrames using a database-style join</td></tr>
+          <tr><td class="fn">pd.concat([...])</td><td class="desc">Concatenate DataFrames along an axis</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- NUMPY -->
+    <div class="quadrant numpy">
+      <div class="quad-head">
+        <div class="icon">np</div>
+        <h2>NumPy</h2>
+        <div class="tag">import numpy as np</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Array Creation</div>
+        <table>
+          <tr><td class="fn">np.array(list)</td><td class="desc">Create an array from a list or nested list</td></tr>
+          <tr><td class="fn">np.zeros(shape)</td><td class="desc">Create an array filled with zeros</td></tr>
+          <tr><td class="fn">np.ones(shape)</td><td class="desc">Create an array filled with ones</td></tr>
+          <tr><td class="fn">np.arange(start,stop,step)</td><td class="desc">Create evenly spaced values within an interval</td></tr>
+          <tr><td class="fn">np.linspace(start,stop,n)</td><td class="desc">Create n evenly spaced numbers over an interval</td></tr>
+          <tr><td class="fn">np.eye(n)</td><td class="desc">Create an n x n identity matrix</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Array Inspection</div>
+        <table>
+          <tr><td class="fn">arr.shape</td><td class="desc">Return the dimensions of the array</td></tr>
+          <tr><td class="fn">arr.ndim</td><td class="desc">Return the number of array dimensions</td></tr>
+          <tr><td class="fn">arr.size</td><td class="desc">Return the total number of elements</td></tr>
+          <tr><td class="fn">arr.dtype</td><td class="desc">Return the data type of the array's elements</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Manipulation</div>
+        <table>
+          <tr><td class="fn">arr.reshape(shape)</td><td class="desc">Change the array's shape without changing its data</td></tr>
+          <tr><td class="fn">arr.flatten()</td><td class="desc">Collapse the array into one dimension</td></tr>
+          <tr><td class="fn">np.concatenate([...])</td><td class="desc">Join arrays along an existing axis</td></tr>
+          <tr><td class="fn">np.split(arr, n)</td><td class="desc">Split an array into n equal sub-arrays</td></tr>
+          <tr><td class="fn">arr.T</td><td class="desc">Return the transpose of the array</td></tr>
+          <tr><td class="fn">np.sort(arr)</td><td class="desc">Return a sorted copy of the array</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Math Operations</div>
+        <table>
+          <tr><td class="fn">np.add / subtract(a,b)</td><td class="desc">Add or subtract two arrays element-wise</td></tr>
+          <tr><td class="fn">np.multiply(a,b)</td><td class="desc">Multiply two arrays element-wise</td></tr>
+          <tr><td class="fn">np.dot(a,b)</td><td class="desc">Compute the dot product of two arrays</td></tr>
+          <tr><td class="fn">np.sqrt(arr)</td><td class="desc">Compute the square root of each element</td></tr>
+          <tr><td class="fn">np.exp(arr)</td><td class="desc">Compute the exponential of each element</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Statistics &amp; Random</div>
+        <table>
+          <tr><td class="fn">np.mean(arr)</td><td class="desc">Compute the arithmetic mean</td></tr>
+          <tr><td class="fn">np.std(arr)</td><td class="desc">Compute the standard deviation</td></tr>
+          <tr><td class="fn">np.sum / min / max(arr)</td><td class="desc">Sum, minimum, or maximum of elements</td></tr>
+          <tr><td class="fn">np.random.rand(shape)</td><td class="desc">Generate uniform random values in [0, 1)</td></tr>
+          <tr><td class="fn">np.random.randn(shape)</td><td class="desc">Generate standard normal random values</td></tr>
+          <tr><td class="fn">np.random.randint(low,high)</td><td class="desc">Generate random integers in a range</td></tr>
+          <tr><td class="fn">np.random.seed(n)</td><td class="desc">Set the random number generator's seed</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- MATPLOTLIB -->
+    <div class="quadrant mpl">
+      <div class="quad-head">
+        <div class="icon">plt</div>
+        <h2>Matplotlib</h2>
+        <div class="tag">import matplotlib.pyplot as plt</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Basic Plotting</div>
+        <table>
+          <tr><td class="fn">plt.plot(x,y)</td><td class="desc">Draw a line plot</td></tr>
+          <tr><td class="fn">plt.scatter(x,y)</td><td class="desc">Draw a scatter plot</td></tr>
+          <tr><td class="fn">plt.bar(x,height)</td><td class="desc">Draw a vertical bar chart</td></tr>
+          <tr><td class="fn">plt.hist(data)</td><td class="desc">Draw a histogram of a dataset</td></tr>
+          <tr><td class="fn">plt.pie(data)</td><td class="desc">Draw a pie chart</td></tr>
+          <tr><td class="fn">plt.boxplot(data)</td><td class="desc">Draw a box-and-whisker plot</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Labels &amp; Legends</div>
+        <table>
+          <tr><td class="fn">plt.title(text)</td><td class="desc">Set the plot's title</td></tr>
+          <tr><td class="fn">plt.xlabel / ylabel(text)</td><td class="desc">Set the x-axis or y-axis label</td></tr>
+          <tr><td class="fn">plt.legend()</td><td class="desc">Display a legend describing the plotted series</td></tr>
+          <tr><td class="fn">plt.xticks / yticks()</td><td class="desc">Set the tick locations and labels</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Figures &amp; Axes</div>
+        <table>
+          <tr><td class="fn">plt.figure(figsize)</td><td class="desc">Create a new figure with a given size</td></tr>
+          <tr><td class="fn">plt.subplots(nrows,ncols)</td><td class="desc">Create a figure with a grid of subplots</td></tr>
+          <tr><td class="fn">ax.set_xlim / ylim()</td><td class="desc">Set the axis display limits</td></tr>
+          <tr><td class="fn">plt.tight_layout()</td><td class="desc">Automatically adjust spacing between subplots</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Styling</div>
+        <table>
+          <tr><td class="fn">plt.style.use(name)</td><td class="desc">Apply a built-in visual style to the plot</td></tr>
+          <tr><td class="fn">plt.grid(True)</td><td class="desc">Show grid lines on the plot</td></tr>
+          <tr><td class="fn">plt.colorbar()</td><td class="desc">Add a color scale bar to the plot</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Saving &amp; Displaying</div>
+        <table>
+          <tr><td class="fn">plt.show()</td><td class="desc">Display the current figure</td></tr>
+          <tr><td class="fn">plt.savefig(path)</td><td class="desc">Save the current figure to a file</td></tr>
+          <tr><td class="fn">plt.close()</td><td class="desc">Close a figure window and free memory</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- SCIKIT-LEARN -->
+    <div class="quadrant sklearn">
+      <div class="quad-head">
+        <div class="icon">sk</div>
+        <h2>Scikit-Learn</h2>
+        <div class="tag">from sklearn import ...</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Preprocessing</div>
+        <table>
+          <tr><td class="fn">StandardScaler()</td><td class="desc">Standardize features to zero mean and unit variance</td></tr>
+          <tr><td class="fn">MinMaxScaler()</td><td class="desc">Scale features to a fixed range, e.g. [0, 1]</td></tr>
+          <tr><td class="fn">LabelEncoder()</td><td class="desc">Encode categorical labels as integers</td></tr>
+          <tr><td class="fn">OneHotEncoder()</td><td class="desc">Encode categorical features as one-hot vectors</td></tr>
+          <tr><td class="fn">train_test_split()</td><td class="desc">Split arrays into random train and test subsets</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Selection</div>
+        <table>
+          <tr><td class="fn">GridSearchCV()</td><td class="desc">Exhaustively search over a parameter grid</td></tr>
+          <tr><td class="fn">RandomizedSearchCV()</td><td class="desc">Search over parameters using random sampling</td></tr>
+          <tr><td class="fn">cross_val_score()</td><td class="desc">Evaluate a model's score using cross-validation</td></tr>
+          <tr><td class="fn">KFold()</td><td class="desc">Split data into k train/test folds</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Classification &amp; Regression Models</div>
+        <table>
+          <tr><td class="fn">LogisticRegression()</td><td class="desc">Fit a logistic regression classifier</td></tr>
+          <tr><td class="fn">RandomForestClassifier()</td><td class="desc">Fit a random forest ensemble classifier</td></tr>
+          <tr><td class="fn">SVC()</td><td class="desc">Fit a support vector classifier</td></tr>
+          <tr><td class="fn">KNeighborsClassifier()</td><td class="desc">Fit a k-nearest neighbors classifier</td></tr>
+          <tr><td class="fn">LinearRegression()</td><td class="desc">Fit an ordinary least squares regression model</td></tr>
+          <tr><td class="fn">RandomForestRegressor()</td><td class="desc">Fit a random forest ensemble regressor</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Evaluation</div>
+        <table>
+          <tr><td class="fn">accuracy_score(y, pred)</td><td class="desc">Compute classification accuracy</td></tr>
+          <tr><td class="fn">confusion_matrix(y, pred)</td><td class="desc">Compute a confusion matrix of predictions</td></tr>
+          <tr><td class="fn">mean_squared_error(y, pred)</td><td class="desc">Compute the mean squared error</td></tr>
+          <tr><td class="fn">r2_score(y, pred)</td><td class="desc">Compute the R² coefficient of determination</td></tr>
+          <tr><td class="fn">classification_report()</td><td class="desc">Print precision, recall, and F1-score per class</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Fitting &amp; Pipelines</div>
+        <table>
+          <tr><td class="fn">model.fit(X, y)</td><td class="desc">Train the model on the provided data</td></tr>
+          <tr><td class="fn">model.predict(X)</td><td class="desc">Generate predictions for new data</td></tr>
+          <tr><td class="fn">model.score(X, y)</td><td class="desc">Return the model's default evaluation score</td></tr>
+          <tr><td class="fn">Pipeline([...])</td><td class="desc">Chain preprocessing steps and a model together</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- SEABORN -->
+    <div class="quadrant seaborn">
+      <div class="quad-head">
+        <div class="icon">sns</div>
+        <h2>Seaborn</h2>
+        <div class="tag">import seaborn as sns</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Basic Plots</div>
+        <table>
+          <tr><td class="fn">sns.scatterplot(data,x,y)</td><td class="desc">Draw a scatter plot with semantic grouping</td></tr>
+          <tr><td class="fn">sns.lineplot(data,x,y)</td><td class="desc">Draw a line plot with a confidence interval</td></tr>
+          <tr><td class="fn">sns.barplot(data,x,y)</td><td class="desc">Draw a bar plot with error bars</td></tr>
+          <tr><td class="fn">sns.histplot(data)</td><td class="desc">Draw a histogram with an optional density curve</td></tr>
+          <tr><td class="fn">sns.boxplot(data)</td><td class="desc">Draw a box plot showing value distributions</td></tr>
+          <tr><td class="fn">sns.violinplot(data)</td><td class="desc">Draw a violin plot combining boxplot and KDE</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Relationships &amp; Distributions</div>
+        <table>
+          <tr><td class="fn">sns.pairplot(data)</td><td class="desc">Plot pairwise relationships across a dataset</td></tr>
+          <tr><td class="fn">sns.heatmap(data)</td><td class="desc">Draw a color-encoded matrix</td></tr>
+          <tr><td class="fn">sns.jointplot(data,x,y)</td><td class="desc">Draw a bivariate plot with marginal distributions</td></tr>
+          <tr><td class="fn">sns.kdeplot(data)</td><td class="desc">Draw a kernel density estimate</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Styling</div>
+        <table>
+          <tr><td class="fn">sns.set_style(style)</td><td class="desc">Set the overall aesthetic style of the plots</td></tr>
+          <tr><td class="fn">sns.set_palette(palette)</td><td class="desc">Set the default color palette</td></tr>
+          <tr><td class="fn">sns.despine()</td><td class="desc">Remove the top and right spines from a plot</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TENSORFLOW -->
+    <div class="quadrant tensorflow">
+      <div class="quad-head">
+        <div class="icon">tf</div>
+        <h2>TensorFlow</h2>
+        <div class="tag">import tensorflow as tf</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Tensors</div>
+        <table>
+          <tr><td class="fn">tf.constant(value)</td><td class="desc">Create an immutable tensor</td></tr>
+          <tr><td class="fn">tf.Variable(value)</td><td class="desc">Create a mutable tensor for trainable parameters</td></tr>
+          <tr><td class="fn">tf.zeros / ones(shape)</td><td class="desc">Create a tensor filled with zeros or ones</td></tr>
+          <tr><td class="fn">tf.reshape(tensor, shape)</td><td class="desc">Change a tensor's shape without changing its data</td></tr>
+          <tr><td class="fn">tf.cast(tensor, dtype)</td><td class="desc">Cast a tensor to a new data type</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Building Models (Keras)</div>
+        <table>
+          <tr><td class="fn">tf.keras.Sequential([...])</td><td class="desc">Build a model as a linear stack of layers</td></tr>
+          <tr><td class="fn">tf.keras.layers.Dense(units)</td><td class="desc">Add a fully-connected layer</td></tr>
+          <tr><td class="fn">tf.keras.layers.Conv2D()</td><td class="desc">Add a 2D convolution layer</td></tr>
+          <tr><td class="fn">tf.keras.layers.Dropout(rate)</td><td class="desc">Randomly drop units during training to curb overfitting</td></tr>
+          <tr><td class="fn">tf.keras.Input(shape)</td><td class="desc">Define an input layer's shape</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Training</div>
+        <table>
+          <tr><td class="fn">model.compile()</td><td class="desc">Configure the model's optimizer, loss, and metrics</td></tr>
+          <tr><td class="fn">model.fit(X, y)</td><td class="desc">Train the model for a fixed number of epochs</td></tr>
+          <tr><td class="fn">model.evaluate(X, y)</td><td class="desc">Evaluate the model's loss and metrics</td></tr>
+          <tr><td class="fn">model.predict(X)</td><td class="desc">Generate output predictions for input data</td></tr>
+          <tr><td class="fn">model.save(path)</td><td class="desc">Save the model's architecture and weights to disk</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Data Pipelines</div>
+        <table>
+          <tr><td class="fn">tf.data.Dataset.from_tensor_slices()</td><td class="desc">Create a dataset from array-like objects</td></tr>
+          <tr><td class="fn">dataset.batch(n)</td><td class="desc">Combine consecutive elements into batches</td></tr>
+          <tr><td class="fn">dataset.shuffle(n)</td><td class="desc">Randomly shuffle elements in the dataset</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTORCH -->
+    <div class="quadrant pytorch">
+      <div class="quad-head">
+        <div class="icon">pt</div>
+        <h2>PyTorch</h2>
+        <div class="tag">import torch</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Tensors</div>
+        <table>
+          <tr><td class="fn">torch.tensor(data)</td><td class="desc">Create a tensor from data</td></tr>
+          <tr><td class="fn">torch.zeros / ones(shape)</td><td class="desc">Create a tensor filled with zeros or ones</td></tr>
+          <tr><td class="fn">torch.rand(shape)</td><td class="desc">Create a tensor with uniform random values</td></tr>
+          <tr><td class="fn">tensor.view(shape)</td><td class="desc">Return a reshaped view of the tensor's data</td></tr>
+          <tr><td class="fn">tensor.to(device)</td><td class="desc">Move a tensor to a device such as CPU or GPU</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Autograd &amp; Models</div>
+        <table>
+          <tr><td class="fn">tensor.requires_grad_()</td><td class="desc">Track operations on a tensor for gradient computation</td></tr>
+          <tr><td class="fn">loss.backward()</td><td class="desc">Compute gradients via backpropagation</td></tr>
+          <tr><td class="fn">torch.nn.Module</td><td class="desc">Base class for building neural network models</td></tr>
+          <tr><td class="fn">torch.nn.Linear(in, out)</td><td class="desc">Create a fully-connected layer</td></tr>
+          <tr><td class="fn">F.relu(tensor)</td><td class="desc">Apply the ReLU activation function</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Training</div>
+        <table>
+          <tr><td class="fn">optimizer.step()</td><td class="desc">Update model parameters using computed gradients</td></tr>
+          <tr><td class="fn">optimizer.zero_grad()</td><td class="desc">Clear existing gradients before backpropagation</td></tr>
+          <tr><td class="fn">model.train() / .eval()</td><td class="desc">Set the model to training or evaluation mode</td></tr>
+          <tr><td class="fn">torch.save(model, path)</td><td class="desc">Save a model's state to disk</td></tr>
+          <tr><td class="fn">torch.load(path)</td><td class="desc">Load a saved model's state from disk</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Data</div>
+        <table>
+          <tr><td class="fn">torch.utils.data.Dataset</td><td class="desc">Base class for representing a dataset</td></tr>
+          <tr><td class="fn">torch.utils.data.DataLoader()</td><td class="desc">Load data in batches with optional shuffling</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- XGBOOST -->
+    <div class="quadrant xgboost">
+      <div class="quad-head">
+        <div class="icon">xgb</div>
+        <h2>XGBoost</h2>
+        <div class="tag">import xgboost as xgb</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Data &amp; Training</div>
+        <table>
+          <tr><td class="fn">xgb.DMatrix(data, label)</td><td class="desc">Create an optimized data structure for training</td></tr>
+          <tr><td class="fn">xgb.train(params, dtrain)</td><td class="desc">Train a booster using XGBoost's native API</td></tr>
+          <tr><td class="fn">XGBClassifier()</td><td class="desc">Fit a gradient-boosted classifier (scikit-learn API)</td></tr>
+          <tr><td class="fn">XGBRegressor()</td><td class="desc">Fit a gradient-boosted regressor (scikit-learn API)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Prediction &amp; Evaluation</div>
+        <table>
+          <tr><td class="fn">model.predict(X)</td><td class="desc">Generate predictions from a trained model</td></tr>
+          <tr><td class="fn">model.feature_importances_</td><td class="desc">Return importance scores for each feature</td></tr>
+          <tr><td class="fn">xgb.cv(params, dtrain)</td><td class="desc">Run cross-validation with a given parameter set</td></tr>
+          <tr><td class="fn">xgb.plot_importance(model)</td><td class="desc">Plot feature importances from a trained model</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>PYTHON LIBRARIES · QUICK REFERENCE</span>
+    <span>python core / pandas / numpy / matplotlib / scikit-learn / seaborn / tensorflow / pytorch / xgboost</span>
+  </div>
+
+</body>
+</html>
