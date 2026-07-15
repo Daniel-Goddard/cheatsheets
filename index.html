@@ -2,24 +2,108 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python Libraries Cheat Sheet</title>
-<meta http-equiv="refresh" content="0; url=python_libraries_cheatsheet.html">
-<link rel="canonical" href="python_libraries_cheatsheet.html">
+<title>Cheat Sheets — Daniel Goddard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --bg:#0A0E17;
+    --gold:#F2C14E;
+    --text:#ECEAE4;
+    --text-dim:#9AA1B2;
+
+    --python:#4B8BBE;
+    --postgres:#4F97D1;
+    --math:#C0605A;
+  }
+  *{box-sizing:border-box;}
   body{
     margin:0;
-    height:100vh;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(242,193,78,0.06), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(79,151,209,0.06), transparent 40%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#0A0E17;
-    color:#ECEAE4;
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    padding:40px 20px;
   }
-  a{color:#F2C14E;}
+  .wrap{max-width:760px;width:100%;}
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:38px;
+    margin:0 0 6px;
+    letter-spacing:-0.5px;
+  }
+  h1 span{color:var(--gold);}
+  .sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--text-dim);
+    margin-bottom:32px;
+  }
+  .cards{display:flex;flex-direction:column;gap:14px;}
+  a.card{
+    display:block;
+    text-decoration:none;
+    color:var(--text);
+    border:1.5px solid rgba(255,255,255,0.14);
+    border-radius:14px;
+    padding:18px 20px;
+    transition:border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+  a.card:hover{
+    background:rgba(255,255,255,0.03);
+    transform:translateY(-1px);
+  }
+  .card-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:4px;
+  }
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .card-desc{
+    font-size:13.5px;
+    color:var(--text-dim);
+    line-height:1.5;
+  }
+  #python .dot{background:var(--python);}
+  #python:hover{border-color:var(--python);}
+  #postgres .dot{background:var(--postgres);}
+  #postgres:hover{border-color:var(--postgres);}
+  #math .dot{background:var(--math);}
+  #math:hover{border-color:var(--math);}
 </style>
 </head>
 <body>
-  <p>Redirecting to the cheat sheet… if nothing happens, <a href="python_libraries_cheatsheet.html">click here</a>.</p>
+  <div class="wrap">
+    <h1>Cheat <span>Sheets</span></h1>
+    <div class="sub">quick references for python · sql · math — pick one below</div>
+
+    <div class="cards">
+      <a id="python" class="card" href="python_libraries_cheatsheet.html">
+        <div class="card-title"><span class="dot"></span>Python Cheat Sheet</div>
+        <div class="card-desc">Core language plus Pandas, NumPy, Matplotlib, Scikit-learn, Seaborn, TensorFlow, PyTorch &amp; XGBoost.</div>
+      </a>
+
+      <a id="postgres" class="card" href="postgresql_cheatsheet.html">
+        <div class="card-title"><span class="dot"></span>PostgreSQL Cheat Sheet</div>
+        <div class="card-desc">Core SQL syntax, joins, CTEs, date formatting/filtering, aggregates, and window functions.</div>
+      </a>
+
+      <a id="math" class="card" href="math_ds_ml_ai_cheatsheet.html">
+        <div class="card-title"><span class="dot"></span>Math for Data Science, ML &amp; AI</div>
+        <div class="card-desc">Linear algebra, calculus, probability, statistics, optimization &amp; information theory — Beginner to Advanced.</div>
+      </a>
+    </div>
+  </div>
 </body>
 </html>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PostgreSQL Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E17;
+    --panel-border:#F2C14E;
+    --gold:#F2C14E;
+    --text:#ECEAE4;
+    --text-dim:#9AA1B2;
+    --row-line: rgba(242,193,78,0.14);
+
+    --pg-blue:#4F97D1;
+    --pg-gold:#F2C14E;
+    --pg-teal:#5FD3B3;
+    --pg-purple:#B39CFF;
+    --pg-orange:#F7A63E;
+    --pg-coral:#FF6B5B;
+    --pg-green:#4ADE9E;
+    --pg-cyan:#5CC2E8;
+    --pg-lime:#C6E86B;
+    --pg-pink:#FF8FB3;
+    --pg-steel:#7FA8E0;
+    --pg-indigo:#8C9EFF;
+    --pg-amber:#FFB86B;
+    --pg-mint:#7EE8C0;
+    --pg-slate:#A9B4C4;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(242,193,78,0.05), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(79,151,209,0.06), transparent 40%),
+      var(--bg);
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    padding:28px;
+  }
+  .wordmark{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .wordmark h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:44px;
+    margin:0;
+    letter-spacing:-0.5px;
+  }
+  .wordmark h1 span{color:var(--gold);}
+  .wordmark .sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--text-dim);
+    letter-spacing:0.5px;
+  }
+  .chips{display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.12);
+    display:flex;align-items:center;gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .chip:hover{
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(255,255,255,0.28);
+  }
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;}
+  }
+  .quadrant{
+    background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+    border:1.5px solid var(--panel-border);
+    border-radius:16px;
+    padding:18px;
+    scroll-margin-top:20px;
+  }
+  .full-width{grid-column:1 / -1;}
+  .quad-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .quad-head .icon{
+    width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;font-size:13px;color:#0A0E17;
+  }
+  .quad-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:20px;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .quad-head .tag{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--text-dim);
+    text-align:right;
+  }
+  .section{margin-bottom:14px;}
+  .section:last-child{margin-bottom:0;}
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    padding:6px 10px;
+    border-radius:6px;
+    margin-bottom:2px;
+    color:#0A0E17;
+  }
+  table{width:100%;border-collapse:collapse;}
+  td{
+    padding:5px 10px;
+    font-size:12px;
+    border-bottom:1px solid var(--row-line);
+    vertical-align:top;
+    line-height:1.4;
+  }
+  tr:last-child td{border-bottom:none;}
+  td.fn{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    color:var(--gold);
+    width:38%;
+  }
+  td.desc{color:var(--text);}
+
+  .pg-blue .quad-head .icon{background:var(--pg-blue);}
+  .pg-blue .section-title{background:var(--pg-blue);}
+  .pg-blue td.fn{color:var(--pg-blue);}
+
+  .pg-gold .quad-head .icon{background:var(--pg-gold);}
+  .pg-gold .section-title{background:var(--pg-gold);}
+  .pg-gold td.fn{color:var(--pg-gold);}
+
+  .pg-teal .quad-head .icon{background:var(--pg-teal);}
+  .pg-teal .section-title{background:var(--pg-teal);}
+  .pg-teal td.fn{color:var(--pg-teal);}
+
+  .pg-purple .quad-head .icon{background:var(--pg-purple);}
+  .pg-purple .section-title{background:var(--pg-purple);}
+  .pg-purple td.fn{color:var(--pg-purple);}
+
+  .pg-orange .quad-head .icon{background:var(--pg-orange);}
+  .pg-orange .section-title{background:var(--pg-orange);}
+  .pg-orange td.fn{color:var(--pg-orange);}
+
+  .pg-coral .quad-head .icon{background:var(--pg-coral);}
+  .pg-coral .section-title{background:var(--pg-coral);}
+  .pg-coral td.fn{color:var(--pg-coral);}
+
+  .pg-green .quad-head .icon{background:var(--pg-green);}
+  .pg-green .section-title{background:var(--pg-green);}
+  .pg-green td.fn{color:var(--pg-green);}
+
+  .pg-cyan .quad-head .icon{background:var(--pg-cyan);}
+  .pg-cyan .section-title{background:var(--pg-cyan);}
+  .pg-cyan td.fn{color:var(--pg-cyan);}
+
+  .pg-lime .quad-head .icon{background:var(--pg-lime);}
+  .pg-lime .section-title{background:var(--pg-lime);}
+  .pg-lime td.fn{color:var(--pg-lime);}
+
+  .pg-pink .quad-head .icon{background:var(--pg-pink);}
+  .pg-pink .section-title{background:var(--pg-pink);}
+  .pg-pink td.fn{color:var(--pg-pink);}
+
+  .pg-steel .quad-head .icon{background:var(--pg-steel);}
+  .pg-steel .section-title{background:var(--pg-steel);}
+  .pg-steel td.fn{color:var(--pg-steel);}
+
+  .pg-indigo .quad-head .icon{background:var(--pg-indigo);}
+  .pg-indigo .section-title{background:var(--pg-indigo);}
+  .pg-indigo td.fn{color:var(--pg-indigo);}
+
+  .pg-amber .quad-head .icon{background:var(--pg-amber);}
+  .pg-amber .section-title{background:var(--pg-amber);}
+  .pg-amber td.fn{color:var(--pg-amber);}
+
+  .pg-mint .quad-head .icon{background:var(--pg-mint);}
+  .pg-mint .section-title{background:var(--pg-mint);}
+  .pg-mint td.fn{color:var(--pg-mint);}
+
+  .pg-slate .quad-head .icon{background:var(--pg-slate);}
+  .pg-slate .section-title{background:var(--pg-slate);}
+  .pg-slate td.fn{color:var(--pg-slate);}
+
+  /* code / trick blocks */
+  .trick{margin-bottom:12px;}
+  .trick:last-child{margin-bottom:0;}
+  .trick-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    margin-bottom:6px;
+    color:var(--text);
+  }
+  .trick-code{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    word-break:break-word;
+    margin:0;
+  }
+  .pg-blue .trick-code{color:var(--pg-blue);}
+  .pg-gold .trick-code{color:var(--pg-gold);}
+  .pg-teal .trick-code{color:var(--pg-teal);}
+  .pg-purple .trick-code{color:var(--pg-purple);}
+  .pg-orange .trick-code{color:var(--pg-orange);}
+  .pg-coral .trick-code{color:var(--pg-coral);}
+  .pg-green .trick-code{color:var(--pg-green);}
+  .pg-cyan .trick-code{color:var(--pg-cyan);}
+  .pg-lime .trick-code{color:var(--pg-lime);}
+  .pg-pink .trick-code{color:var(--pg-pink);}
+  .pg-steel .trick-code{color:var(--pg-steel);}
+  .pg-indigo .trick-code{color:var(--pg-indigo);}
+  .pg-amber .trick-code{color:var(--pg-amber);}
+  .pg-mint .trick-code{color:var(--pg-mint);}
+  .pg-slate .trick-code{color:var(--pg-slate);}
+
+  /* format-code reference table */
+  table.fmt-table td.fmt-code{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    color:var(--pg-blue);
+    width:22%;
+  }
+
+  .footer{
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+  <div class="wordmark">
+    <div>
+      <h1>Postgre<span>SQL</span></h1>
+      <div class="sub">date formatting · filtering · aggregates · window functions — quick reference</div>
+    </div>
+    <div class="chips">
+      <a href="#section-syntax" class="chip"><span class="dot" style="background:var(--pg-teal)"></span>core syntax</a>
+      <a href="#section-conditions" class="chip"><span class="dot" style="background:var(--pg-lime)"></span>conditions</a>
+      <a href="#section-joins" class="chip"><span class="dot" style="background:var(--pg-pink)"></span>joins · unions</a>
+      <a href="#section-grouping" class="chip"><span class="dot" style="background:var(--pg-steel)"></span>grouping</a>
+      <a href="#section-ctes" class="chip"><span class="dot" style="background:var(--pg-indigo)"></span>ctes · subqueries</a>
+      <a href="#section-data-mod" class="chip"><span class="dot" style="background:var(--pg-amber)"></span>data modification</a>
+      <a href="#section-formatting" class="chip"><span class="dot" style="background:var(--pg-blue)"></span>select · dates</a>
+      <a href="#section-filtering" class="chip"><span class="dot" style="background:var(--pg-gold)"></span>where · dates</a>
+      <a href="#section-aggregates" class="chip"><span class="dot" style="background:var(--pg-purple)"></span>aggregates</a>
+      <a href="#section-window-overview" class="chip"><span class="dot" style="background:var(--pg-mint)"></span>window overview</a>
+      <a href="#section-running" class="chip"><span class="dot" style="background:var(--pg-orange)"></span>running totals</a>
+      <a href="#section-lag-lead" class="chip"><span class="dot" style="background:var(--pg-coral)"></span>lag · lead · rank</a>
+      <a href="#section-growth" class="chip"><span class="dot" style="background:var(--pg-green)"></span>growth</a>
+      <a href="#section-procs" class="chip"><span class="dot" style="background:var(--pg-slate)"></span>procs · operators</a>
+      <a href="#section-conditional" class="chip"><span class="dot" style="background:var(--pg-cyan)"></span>conditional · strings</a>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- CORE SYNTAX & CLAUSES -->
+    <div id="section-syntax" class="quadrant pg-teal">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Core Syntax</h2>
+        <div class="tag">select · where · order by</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Selecting Data</div>
+        <table>
+          <tr><td class="fn">SELECT col1, col2 FROM table;</td><td class="desc">Select specific columns from a table</td></tr>
+          <tr><td class="fn">SELECT * FROM table;</td><td class="desc">Select every column from a table</td></tr>
+          <tr><td class="fn">SELECT DISTINCT col FROM table;</td><td class="desc">Select only unique values from a column</td></tr>
+          <tr><td class="fn">SELECT col FROM table LIMIT 10;</td><td class="desc">Limit the number of rows returned (Postgres uses LIMIT instead of TOP)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Filtering &amp; Ordering</div>
+        <table>
+          <tr><td class="fn">WHERE condition</td><td class="desc">Filter rows before grouping or aggregation</td></tr>
+          <tr><td class="fn">WHERE a AND b / OR b / NOT a</td><td class="desc">Combine or negate multiple conditions</td></tr>
+          <tr><td class="fn">ORDER BY col ASC | DESC</td><td class="desc">Sort the result set by one or more columns</td></tr>
+          <tr><td class="fn">col AS alias</td><td class="desc">Give a column or table a temporary name for the query</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Comments</div>
+        <table>
+          <tr><td class="fn">-- single line comment</td><td class="desc">Comment out the rest of a line</td></tr>
+          <tr><td class="fn">/* multi-line comment */</td><td class="desc">Comment out a block spanning multiple lines</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PATTERN MATCHING & CONDITIONS -->
+    <div id="section-conditions" class="quadrant pg-lime">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Conditions</h2>
+        <div class="tag">like · in · between · case</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Matching &amp; Ranges</div>
+        <table>
+          <tr><td class="fn">col LIKE 'A%'</td><td class="desc">Match values starting with a given pattern</td></tr>
+          <tr><td class="fn">col LIKE '%A%'</td><td class="desc">Match values containing a given pattern anywhere</td></tr>
+          <tr><td class="fn">col IN ('a', 'b', 'c')</td><td class="desc">Match a column against a list of values</td></tr>
+          <tr><td class="fn">col BETWEEN a AND b</td><td class="desc">Match values within an inclusive range</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Wildcards</div>
+        <table>
+          <tr><td class="fn">%</td><td class="desc">Match zero or more characters</td></tr>
+          <tr><td class="fn">_</td><td class="desc">Match exactly one character</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Conditional Logic</div>
+        <table>
+          <tr><td class="fn">CASE WHEN cond THEN x ELSE y END</td><td class="desc">Return different values based on a condition</td></tr>
+          <tr><td class="fn">COALESCE(a, b, c)</td><td class="desc">Return the first non-null value from a list</td></tr>
+          <tr><td class="fn">NULLIF(a, b)</td><td class="desc">Return NULL if two values are equal, otherwise return the first</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- JOINS & SET OPERATIONS -->
+    <div id="section-joins" class="quadrant pg-pink">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Joins &amp; Unions</h2>
+        <div class="tag">inner · left · right · full</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Joins</div>
+        <table>
+          <tr><td class="fn">INNER JOIN</td><td class="desc">Return only rows with matches in both tables</td></tr>
+          <tr><td class="fn">LEFT JOIN</td><td class="desc">Return all left-table rows, with matches from the right where available</td></tr>
+          <tr><td class="fn">RIGHT JOIN</td><td class="desc">Return all right-table rows, with matches from the left where available</td></tr>
+          <tr><td class="fn">FULL JOIN</td><td class="desc">Return all rows from both tables, matched or not</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Self Join — Example</div>
+        <div class="trick">
+          <div class="trick-code">SELECT a.name AS employee, b.name AS manager
+FROM employees a
+JOIN employees b ON a.manager_id = b.id;</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Combining Result Sets</div>
+        <table>
+          <tr><td class="fn">UNION</td><td class="desc">Combine result sets and remove duplicate rows</td></tr>
+          <tr><td class="fn">UNION ALL</td><td class="desc">Combine result sets and keep all rows, including duplicates</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GROUPING & SUBQUERY CONDITIONS -->
+    <div id="section-grouping" class="quadrant pg-steel">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Grouping</h2>
+        <div class="tag">group by · having · exists</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Grouping</div>
+        <table>
+          <tr><td class="fn">GROUP BY col</td><td class="desc">Group rows that share the same value for aggregation</td></tr>
+          <tr><td class="fn">HAVING condition</td><td class="desc">Filter grouped rows after aggregation, unlike WHERE</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Subquery Conditions</div>
+        <table>
+          <tr><td class="fn">EXISTS (subquery)</td><td class="desc">True if the subquery returns at least one row</td></tr>
+          <tr><td class="fn">NOT EXISTS (subquery)</td><td class="desc">True if the subquery returns no rows</td></tr>
+          <tr><td class="fn">col = ANY (subquery)</td><td class="desc">True if the condition matches at least one subquery row</td></tr>
+          <tr><td class="fn">col = ALL (subquery)</td><td class="desc">True only if the condition matches every subquery row</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- CTES & SUBQUERIES -->
+    <div id="section-ctes" class="quadrant pg-indigo">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>CTEs &amp; Subqueries</h2>
+        <div class="tag">with · recursive</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Common Table Expressions</div>
+        <div class="trick">
+          <div class="trick-title">Basic CTE</div>
+          <div class="trick-code">WITH recent AS (
+  SELECT * FROM table WHERE date >= '2025-01-01'
+)
+SELECT * FROM recent;</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Multiple, chained CTEs</div>
+          <div class="trick-code">WITH a AS (SELECT ...),
+     b AS (SELECT ... FROM a)
+SELECT * FROM b;</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Recursive CTE</div>
+          <div class="trick-code">WITH RECURSIVE org AS (
+  SELECT id, manager_id FROM employees WHERE manager_id IS NULL
+  UNION ALL
+  SELECT e.id, e.manager_id
+  FROM employees e
+  JOIN org ON e.manager_id = org.id
+)
+SELECT * FROM org;</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Subqueries</div>
+        <table>
+          <tr><td class="fn">FROM (SELECT ...) AS sub</td><td class="desc">Use a query's result as a virtual table</td></tr>
+          <tr><td class="fn">WHERE col IN (SELECT ...)</td><td class="desc">Filter rows using values returned by a subquery</td></tr>
+          <tr><td class="fn">SELECT col, (SELECT ...) AS alias</td><td class="desc">Use a scalar subquery to return one value per row</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DATA MODIFICATION -->
+    <div id="section-data-mod" class="quadrant pg-amber">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Data Modification</h2>
+        <div class="tag">insert · update · delete</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Inserting &amp; Creating From Queries</div>
+        <table>
+          <tr><td class="fn">INSERT INTO table (c1, c2) VALUES (v1, v2);</td><td class="desc">Insert a new row with specific column values</td></tr>
+          <tr><td class="fn">INSERT INTO table SELECT * FROM other;</td><td class="desc">Insert rows copied from the result of another query</td></tr>
+          <tr><td class="fn">CREATE TABLE new_table AS SELECT * FROM table;</td><td class="desc">Create a new table from a query result (Postgres equivalent of SELECT INTO)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Updating, Deleting &amp; Nulls</div>
+        <table>
+          <tr><td class="fn">UPDATE table SET col = value WHERE condition;</td><td class="desc">Modify existing rows that match a condition</td></tr>
+          <tr><td class="fn">DELETE FROM table WHERE condition;</td><td class="desc">Remove rows that match a condition</td></tr>
+          <tr><td class="fn">col IS NULL / IS NOT NULL</td><td class="desc">Test whether a column holds a NULL value</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DATE FORMATTING: SELECT -->
+    <div id="section-formatting" class="quadrant pg-blue">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Date Formatting</h2>
+        <div class="tag">SELECT clause</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Format as Text — to_char()</div>
+        <table>
+          <tr><td class="fn">to_char(date, 'YYYY-MM')</td><td class="desc">Format a date as a year-month string, e.g. "2024-03"</td></tr>
+          <tr><td class="fn">to_char(date, 'YYYY-MM-DD')</td><td class="desc">Format a date as a full ISO date string</td></tr>
+          <tr><td class="fn">to_char(date, 'YYYY')</td><td class="desc">Format a date as a 4-digit year</td></tr>
+          <tr><td class="fn">to_char(date, 'month')</td><td class="desc">Format a date as its full month name</td></tr>
+          <tr><td class="fn">to_char(date, 'W')</td><td class="desc">Format a date as its week-of-month number</td></tr>
+          <tr><td class="fn">'Q' || to_char(date,'Q')</td><td class="desc">Format a date as a labeled quarter, e.g. "Q2"</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Extract Date Parts</div>
+        <table>
+          <tr><td class="fn">EXTRACT(month FROM date)</td><td class="desc">Return the month number from a date</td></tr>
+          <tr><td class="fn">EXTRACT(year FROM date)</td><td class="desc">Return the year number from a date</td></tr>
+          <tr><td class="fn">EXTRACT(epoch FROM interval)</td><td class="desc">Convert an interval into total seconds</td></tr>
+          <tr><td class="fn">date_trunc('month', date)</td><td class="desc">Truncate a date down to the start of its month</td></tr>
+          <tr><td class="fn">date_trunc('day', date)</td><td class="desc">Truncate a timestamp down to midnight of its day</td></tr>
+          <tr><td class="fn">date_trunc('year', date)</td><td class="desc">Truncate a date down to the start of its year</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Calculated Periods</div>
+        <table>
+          <tr><td class="fn">min(date) AS first_activity</td><td class="desc">Get the earliest date within a group</td></tr>
+          <tr><td class="fn">CEILING(DATEDIFF('day', ref, date) / 7.0)</td><td class="desc">Calculate a week number relative to a reference date</td></tr>
+          <tr><td class="fn">DATEDIFF(day, date_a, date_b)</td><td class="desc">Calculate the number of days between two dates</td></tr>
+          <tr><td class="fn">NULL AS month</td><td class="desc">Use a NULL placeholder column, useful for aligning UNIONs</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">to_char Format Codes</div>
+        <table class="fmt-table">
+          <tr><td class="fmt-code">YYYY / YY</td><td class="desc">4-digit or 2-digit year</td></tr>
+          <tr><td class="fmt-code">MM / Mon / Month</td><td class="desc">2-digit month, abbreviated name, or full name</td></tr>
+          <tr><td class="fmt-code">DD</td><td class="desc">2-digit day of the month</td></tr>
+          <tr><td class="fmt-code">Day / Dy</td><td class="desc">Full or abbreviated day-of-week name</td></tr>
+          <tr><td class="fmt-code">Q</td><td class="desc">Quarter number (1–4)</td></tr>
+          <tr><td class="fmt-code">WW / W</td><td class="desc">Week number of the year, or of the month</td></tr>
+          <tr><td class="fmt-code">HH24 / HH12</td><td class="desc">24-hour or 12-hour hour</td></tr>
+          <tr><td class="fmt-code">MI / SS</td><td class="desc">Minutes / seconds</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DATE FILTERING: WHERE -->
+    <div id="section-filtering" class="quadrant pg-gold">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Date Filtering</h2>
+        <div class="tag">WHERE / HAVING clause</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Exact Period Match</div>
+        <table>
+          <tr><td class="fn">date_trunc('month', date) = '2022-04-01'</td><td class="desc">Filter rows to a single calendar month</td></tr>
+          <tr><td class="fn">to_char(date, 'YYYY-mm') = '2023-05'</td><td class="desc">Filter rows to a month using formatted text</td></tr>
+          <tr><td class="fn">to_char(date, 'YYYY') = '2023'</td><td class="desc">Filter rows to a single year using formatted text</td></tr>
+          <tr><td class="fn">HAVING min(date_trunc('year', date)) = '2021-01-01'</td><td class="desc">Filter groups whose earliest year matches a given value</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Date Ranges</div>
+        <table>
+          <tr><td class="fn">date >= '2023-5-1' AND date &lt; '2023-6-1'</td><td class="desc">Filter rows within an explicit date range</td></tr>
+          <tr><td class="fn">date >= '2025-01-01' AND date &lt; '2026-01-01'</td><td class="desc">Filter rows to a full calendar year using bounds</td></tr>
+          <tr><td class="fn">date_trunc('day', date) >= d AND &lt; d + interval '1 day'</td><td class="desc">Filter rows to one specific calendar day</td></tr>
+          <tr><td class="fn">date > sd.first_activity</td><td class="desc">Filter rows to after a reference date from another table</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Rolling Windows</div>
+        <table>
+          <tr><td class="fn">date(date) BETWEEN (getdate() - interval '1 year') AND getdate()</td><td class="desc">Filter to a rolling trailing 12 months</td></tr>
+          <tr><td class="fn">date >= dateadd(year, -2, getdate())</td><td class="desc">Filter to a rolling trailing 2 years</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Full Example</div>
+        <div class="trick">
+          <div class="trick-code">WHERE date_trunc('day', date) >= ('2023-01-17'::date + interval '0 hour')
+  AND date_trunc('day', date) &lt;  ('2023-01-17'::date + interval '0 hour' + interval '1 day')</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGGREGATES & RATIOS -->
+    <div id="section-aggregates" class="quadrant pg-purple">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Aggregates &amp; Ratios</h2>
+        <div class="tag">sum · avg · coalesce</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Sums &amp; Totals</div>
+        <table>
+          <tr><td class="fn">sum(amount_a) AS amount_a</td><td class="desc">Total for amount_a across all rows</td></tr>
+          <tr><td class="fn">sum(amount_b) AS amount_b</td><td class="desc">Total for amount_b across all rows</td></tr>
+          <tr><td class="fn">sum(amount_c) AS amount_c</td><td class="desc">Total for amount_c across all rows</td></tr>
+          <tr><td class="fn">sum(amount_d) AS amount_d</td><td class="desc">Total for amount_d across all rows</td></tr>
+          <tr><td class="fn">sum(revenue_in_eur) AS revenue_in_eur</td><td class="desc">Total revenue converted to EUR</td></tr>
+          <tr><td class="fn">abs(sum(amount_b)) AS total_amount</td><td class="desc">Total for amount_b, expressed as an absolute value</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ratios &amp; Averages</div>
+        <table>
+          <tr><td class="fn">amount_a_eur / amount_a AS fx_rate</td><td class="desc">Derive an implied exchange rate from two totals</td></tr>
+          <tr><td class="fn">sum(revenue) / sum(players) AS revenue_per_player</td><td class="desc">Average revenue generated per player</td></tr>
+          <tr><td class="fn">sum(quantity) / sum(players)</td><td class="desc">Average quantity per player</td></tr>
+          <tr><td class="fn">sum(amount_c) / sum(amount_a) AS rtp</td><td class="desc">Ratio of amount_c to amount_a</td></tr>
+          <tr><td class="fn">AVG(revenue_in_eur) AS average_revenue</td><td class="desc">Mean revenue across all rows</td></tr>
+          <tr><td class="fn">STDDEV(revenue)</td><td class="desc">Standard deviation of revenue</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Conditional Values</div>
+        <table>
+          <tr><td class="fn">coalesce(nullif(item_name, ''), item)</td><td class="desc">Fall back to another column when a value is an empty string</td></tr>
+          <tr><td class="fn">count(*) AS record_count</td><td class="desc">Count all rows matching the current filters</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- WINDOW FUNCTIONS OVERVIEW -->
+    <div id="section-window-overview" class="quadrant pg-mint">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Window Functions</h2>
+        <div class="tag">over · partition by</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Window Function Basics</div>
+        <table>
+          <tr><td class="fn">func() OVER (PARTITION BY col ORDER BY col2)</td><td class="desc">Apply a function across a defined "window" of related rows</td></tr>
+          <tr><td class="fn">ROW_NUMBER() OVER (...)</td><td class="desc">Assign a unique sequential number to each row within its partition</td></tr>
+          <tr><td class="fn">NTILE(4) OVER (ORDER BY col)</td><td class="desc">Split rows into a fixed number of roughly equal buckets</td></tr>
+          <tr><td class="fn">FIRST_VALUE(col) OVER (...)</td><td class="desc">Return the first value in the current window frame</td></tr>
+          <tr><td class="fn">LAST_VALUE(col) OVER (...)</td><td class="desc">Return the last value in the current window frame</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Frame Clauses</div>
+        <table>
+          <tr><td class="fn">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</td><td class="desc">Frame from the start of the partition to the current row</td></tr>
+          <tr><td class="fn">ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING</td><td class="desc">Frame covering the current row plus one row on each side</td></tr>
+          <tr><td class="fn">RANGE BETWEEN ...</td><td class="desc">Frame based on value ranges rather than physical row position</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- WINDOW: RUNNING TOTALS -->
+    <div id="section-running" class="quadrant pg-orange">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Running Totals</h2>
+        <div class="tag">window functions</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cumulative Sums</div>
+        <table>
+          <tr><td class="fn">sum(revenue) OVER (...) AS running_revenue</td><td class="desc">Running total of revenue up to the current row</td></tr>
+          <tr><td class="fn">sum(bet) OVER (...) AS sum_bet</td><td class="desc">Running total of stakes up to the current row</td></tr>
+          <tr><td class="fn">sum(quantity) OVER (...) AS running_quantity</td><td class="desc">Running total of quantity up to the current row</td></tr>
+          <tr><td class="fn">sum(amount_a_eur) OVER (...)</td><td class="desc">Running total of amount_a converted to EUR, up to the current row</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Full Example</div>
+        <div class="trick">
+          <div class="trick-code">SELECT
+  date,
+  SUM(revenue) OVER (
+    ORDER BY date
+    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+  ) AS running_revenue,
+  SUM(quantity) OVER (
+    ORDER BY date
+    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+  ) AS running_quantity
+FROM table;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WINDOW: LAG / LEAD / RANK -->
+    <div id="section-lag-lead" class="quadrant pg-coral">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Lag, Lead &amp; Rank</h2>
+        <div class="tag">window functions</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Row Comparisons</div>
+        <table>
+          <tr><td class="fn">LAG(revenue) OVER (ORDER BY date)</td><td class="desc">Return the previous row's revenue value</td></tr>
+          <tr><td class="fn">LEAD(revenue_in_eur, 12) OVER (ORDER BY month)</td><td class="desc">Return revenue from 12 periods ahead</td></tr>
+          <tr><td class="fn">RANK() OVER (PARTITION BY category ORDER BY revenue DESC)</td><td class="desc">Rank rows within each category by revenue</td></tr>
+          <tr><td class="fn">LAG(date) OVER (ORDER BY date) AS prev_activity</td><td class="desc">Return the previous row's date</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Time-Gap &amp; Span Calculations</div>
+        <table>
+          <tr><td class="fn">EXTRACT(epoch FROM (date - LAG(date) OVER (...))) / 60.0</td><td class="desc">Minutes elapsed since the previous row</td></tr>
+          <tr><td class="fn">MIN(date), MAX(date)</td><td class="desc">Earliest and latest dates within a group</td></tr>
+          <tr><td class="fn">EXTRACT(epoch FROM (MAX(date) - MIN(date))) / 3600.0</td><td class="desc">Total hours spanned by a group of rows</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GROWTH / PERIOD OVER PERIOD -->
+    <div id="section-growth" class="quadrant pg-green">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Growth &amp; YoY</h2>
+        <div class="tag">period-over-period</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Absolute &amp; Percentage Growth</div>
+        <table>
+          <tr><td class="fn">revenue - LAG(revenue) OVER (ORDER BY month)</td><td class="desc">Absolute change in revenue vs. the previous period</td></tr>
+          <tr><td class="fn">(rev - LAG(rev)) / LAG(rev) * 100</td><td class="desc">Percentage change in revenue vs. the previous period</td></tr>
+          <tr><td class="fn">LAG(revenue) OVER (ORDER BY month) AS previous_month_sales</td><td class="desc">Previous month's revenue, for side-by-side comparison</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Full Example — Formatted Growth %</div>
+        <div class="trick">
+          <div class="trick-code">SELECT
+  month,
+  sum(revenue) AS revenue,
+  ROUND(
+    100 * (sum(revenue) - lag(sum(revenue), 1) OVER (ORDER BY month))
+    / lag(sum(revenue), 1) OVER (ORDER BY month)
+  , 0) || '%' AS growth
+FROM sales
+GROUP BY month;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORED PROCEDURES & OPERATORS -->
+    <div id="section-procs" class="quadrant pg-slate">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Procs &amp; Operators</h2>
+        <div class="tag">create procedure · operators</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Stored Procedures &amp; Functions</div>
+        <div class="trick">
+          <div class="trick-code">CREATE PROCEDURE do_something(arg int)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- procedure body
+END;
+$$;
+
+CALL do_something(5);</div>
+        </div>
+        <table>
+          <tr><td class="fn">CREATE FUNCTION name(...) RETURNS type AS $$ ... $$ LANGUAGE plpgsql;</td><td class="desc">Define a reusable function that returns a value</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Operators</div>
+        <table>
+          <tr><td class="fn">= &lt;&gt; !=</td><td class="desc">Equality and inequality comparisons</td></tr>
+          <tr><td class="fn">&lt;  &gt;  &lt;=  &gt;=</td><td class="desc">Relational comparisons</td></tr>
+          <tr><td class="fn">AND / OR / NOT</td><td class="desc">Logical operators for combining conditions</td></tr>
+          <tr><td class="fn">+  -  *  /  %</td><td class="desc">Arithmetic operators, including modulus</td></tr>
+          <tr><td class="fn">||</td><td class="desc">String concatenation operator</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- CONDITIONAL & STRINGS -->
+    <div id="section-conditional" class="quadrant pg-cyan">
+      <div class="quad-head">
+        <div class="icon">pg</div>
+        <h2>Conditional &amp; Strings</h2>
+        <div class="tag">case · concat</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Conditional Aggregation</div>
+        <table>
+          <tr><td class="fn">count(case extract(year from date) when 2023 then 1 end)</td><td class="desc">Count rows matching a specific year using conditional aggregation</td></tr>
+          <tr><td class="fn">amount_b > 0</td><td class="desc">Filter to rows with a positive value in amount_b</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">String Building</div>
+        <table>
+          <tr><td class="fn">category || ' - ' || item AS name</td><td class="desc">Concatenate two columns with a separator</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>POSTGRESQL · QUICK REFERENCE</span>
+    <span>date formatting / filtering / aggregates / window functions</span>
+  </div>
+
+</body>
+</html>

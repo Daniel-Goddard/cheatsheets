@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math for Data Science, ML & AI — Cheat Sheet</title>
+<style>
+  :root{
+    --bg:#0b0c0f;
+    --panel-bg:#111318;
+    --panel-border:rgba(255,255,255,0.08);
+    --text:#e8e6df;
+    --text-dim:#9a978d;
+    --gold:#d4af6a;
+
+    --beginner:#5fb3a3;
+    --beginner-soft:rgba(95,179,163,0.10);
+    --intermediate:#d4af6a;
+    --intermediate-soft:rgba(212,175,106,0.10);
+    --advanced:#c0605a;
+    --advanced-soft:rgba(192,96,90,0.10);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(212,175,106,0.06), transparent 45%),
+      radial-gradient(circle at 85% 100%, rgba(95,179,163,0.05), transparent 45%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Georgia','Iowan Old Style',serif;
+    padding:36px 24px 60px;
+  }
+
+  .wrap{max-width:1280px;margin:0 auto;}
+
+  .wordmark{
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .wordmark .eyebrow{
+    font-family:'Space Grotesk','Helvetica Neue',sans-serif;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .wordmark h1{
+    font-family:'Space Grotesk','Helvetica Neue',sans-serif;
+    font-size:38px;
+    font-weight:700;
+    margin:10px 0 6px;
+    letter-spacing:-0.5px;
+  }
+  .wordmark p{
+    color:var(--text-dim);
+    font-size:15px;
+    max-width:640px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+
+  .nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    margin:28px 0 40px;
+  }
+  .nav a{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--panel-border);
+    color:var(--text);
+    background:var(--panel-bg);
+    transition:border-color 0.15s ease;
+  }
+  .nav a.b:hover{border-color:var(--beginner);color:var(--beginner);}
+  .nav a.i:hover{border-color:var(--intermediate);color:var(--intermediate);}
+  .nav a.a:hover{border-color:var(--advanced);color:var(--advanced);}
+
+  .tier{
+    margin-bottom:56px;
+    scroll-margin-top:20px;
+  }
+  .tier-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:20px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--panel-border);
+  }
+  .tier-tag{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:6px;
+  }
+  .tier[data-tier="beginner"] .tier-tag{background:var(--beginner-soft);color:var(--beginner);}
+  .tier[data-tier="intermediate"] .tier-tag{background:var(--intermediate-soft);color:var(--intermediate);}
+  .tier[data-tier="advanced"] .tier-tag{background:var(--advanced-soft);color:var(--advanced);}
+
+  .tier-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:22px;
+    margin:0;
+    font-weight:700;
+  }
+  .tier-head .sub{
+    color:var(--text-dim);
+    font-size:13px;
+    font-family:'Space Grotesk',sans-serif;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:18px;
+  }
+
+  .quadrant{
+    background:var(--panel-bg);
+    border:1px solid var(--panel-border);
+    border-radius:14px;
+    padding:20px 22px;
+  }
+  .tier[data-tier="beginner"] .quadrant{border-top:3px solid var(--beginner);}
+  .tier[data-tier="intermediate"] .quadrant{border-top:3px solid var(--intermediate);}
+  .tier[data-tier="advanced"] .quadrant{border-top:3px solid var(--advanced);}
+
+  .quad-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .tier[data-tier="beginner"] .quad-title{color:var(--beginner);}
+  .tier[data-tier="intermediate"] .quad-title{color:var(--intermediate);}
+  .tier[data-tier="advanced"] .quad-title{color:var(--advanced);}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+  }
+  tr{border-top:1px solid var(--panel-border);}
+  tr:first-child{border-top:none;}
+  td{padding:8px 0;vertical-align:top;line-height:1.4;}
+  td.fn{
+    font-family:'SF Mono','Courier New',monospace;
+    font-size:12.5px;
+    color:var(--text);
+    white-space:nowrap;
+    padding-right:14px;
+    width:1%;
+  }
+  td.desc{color:var(--text-dim);}
+
+  .used-in{
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px dashed var(--panel-border);
+    font-size:12px;
+    color:var(--text-dim);
+    font-style:italic;
+  }
+  .used-in b{color:var(--text);font-style:normal;}
+
+  .code{
+    margin-top:12px;
+    background:#08090b;
+    border:1px solid var(--panel-border);
+    border-radius:8px;
+    padding:12px 14px;
+    overflow-x:auto;
+  }
+  .code-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:8px;
+  }
+  .code pre{
+    margin:0;
+    font-family:'SF Mono','Fira Code','Courier New',monospace;
+    font-size:12px;
+    line-height:1.55;
+    color:#c8d3d5;
+    white-space:pre;
+  }
+  .code .c{color:#6a7278;font-style:italic;}
+  .code .k{color:#c586c0;}
+  .code .s{color:#ce9178;}
+  .code .n{color:#b5cea8;}
+  .code .f{color:#dcdcaa;}
+
+  .footer{
+    text-align:center;
+    margin-top:50px;
+    padding-top:20px;
+    border-top:1px solid var(--panel-border);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  @media print{
+    body{background:white;color:black;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="wordmark">
+    <div class="eyebrow">Quick Reference</div>
+    <h1>Math for Data Science, ML & AI Engineering</h1>
+    <p>The math that actually shows up in practice — organized from foundations to the calculus behind Transformers, grouped by level so you can jump to where you are. Each concept includes a runnable Python snippet.</p>
+  </div>
+
+  <div class="nav">
+    <a class="b" href="#beginner">Beginner</a>
+    <a class="i" href="#intermediate">Intermediate</a>
+    <a class="a" href="#advanced">Advanced</a>
+  </div>
+
+  <!-- BEGINNER -->
+  <div class="tier" data-tier="beginner" id="beginner">
+    <div class="tier-head">
+      <span class="tier-tag">Beginner</span>
+      <h2>Foundations</h2>
+      <span class="sub">— the vocabulary you need before any ML course makes sense</span>
+    </div>
+    <div class="grid">
+
+      <div class="quadrant">
+        <div class="quad-title">Arithmetic & Algebra</div>
+        <table>
+          <tr><td class="fn">y = mx + b</td><td class="desc">Line equation — slope m, intercept b (linear regression is this, generalized)</td></tr>
+          <tr><td class="fn">x², √x</td><td class="desc">Squares/roots — behind variance, std dev, distance</td></tr>
+          <tr><td class="fn">logₐ(x)</td><td class="desc">"What power gives me x" — turns multiplication into addition</td></tr>
+          <tr><td class="fn">eˣ</td><td class="desc">Exponential growth — sigmoid, softmax, compounding</td></tr>
+          <tr><td class="fn">Σ, Π</td><td class="desc">Sum / product notation — how formulas are written compactly</td></tr>
+        </table>
+        <div class="used-in">Shows up in: every formula you'll read next</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre><span class="c"># y = mx + b, and e^x</span>
+import numpy as np
+
+m, b = 2.5, 1.0
+x = np.array([1, 2, 3])
+y = m * x + b          <span class="c"># [3.5, 6.0, 8.5]</span>
+
+np.exp(1)               <span class="c"># e^1 = 2.718...</span>
+np.log(np.e)             <span class="c"># log base e -> 1.0</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Basic Statistics</div>
+        <table>
+          <tr><td class="fn">mean = Σx / n</td><td class="desc">Average value</td></tr>
+          <tr><td class="fn">median</td><td class="desc">Middle value — robust to outliers</td></tr>
+          <tr><td class="fn">variance</td><td class="desc">Average squared distance from the mean — spread</td></tr>
+          <tr><td class="fn">std dev = √var</td><td class="desc">Spread, same units as the data</td></tr>
+          <tr><td class="fn">min/max/range</td><td class="desc">Boundaries of your data</td></tr>
+        </table>
+        <div class="used-in">Shows up in: <b>EDA</b>, feature scaling, understanding any dataset</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import numpy as np
+
+data = np.array([4, 8, 15, 16, 23, 42])
+
+data.mean()       <span class="c"># average</span>
+np.median(data)   <span class="c"># middle value</span>
+data.var()        <span class="c"># variance</span>
+data.std()        <span class="c"># standard deviation</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Basic Probability</div>
+        <table>
+          <tr><td class="fn">P(A)</td><td class="desc">Probability of event A, between 0 and 1</td></tr>
+          <tr><td class="fn">P(A or B)</td><td class="desc">= P(A) + P(B) − P(A and B)</td></tr>
+          <tr><td class="fn">P(A and B)</td><td class="desc">= P(A)·P(B) if independent</td></tr>
+          <tr><td class="fn">P(A|B)</td><td class="desc">Probability of A given B already happened</td></tr>
+          <tr><td class="fn">odds</td><td class="desc">P(A) / (1−P(A)) — used in logistic regression's logit</td></tr>
+        </table>
+        <div class="used-in">Shows up in: classifiers, A/B tests, uncertainty</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre><span class="c"># estimate P(A), P(A and B) from data</span>
+import numpy as np
+
+clicked = np.array([1, 0, 1, 1, 0])
+bought  = np.array([1, 0, 0, 1, 0])
+
+p_clicked = clicked.mean()             <span class="c"># P(A)</span>
+p_both = (clicked & bought).mean()      <span class="c"># P(A and B)</span>
+p_bought_given_clicked = p_both / p_clicked  <span class="c"># P(B|A)</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Vectors & Matrices</div>
+        <table>
+          <tr><td class="fn">x ∈ ℝⁿ</td><td class="desc">A vector — one row of your data, or one feature column</td></tr>
+          <tr><td class="fn">A ∈ ℝᵐˣⁿ</td><td class="desc">A matrix — your whole dataset (rows × columns)</td></tr>
+          <tr><td class="fn">x · y</td><td class="desc">Dot product — Σxᵢyᵢ; a measure of alignment/similarity</td></tr>
+          <tr><td class="fn">‖x‖</td><td class="desc">Length ("norm") of a vector</td></tr>
+          <tr><td class="fn">Aᵀ</td><td class="desc">Transpose — flip rows and columns</td></tr>
+        </table>
+        <div class="used-in">Shows up in: literally every ML model, since data is stored as matrices</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import numpy as np
+
+x = np.array([1, 2, 3])
+y = np.array([4, 5, 6])
+
+np.dot(x, y)          <span class="c"># dot product -> 32</span>
+np.linalg.norm(x)      <span class="c"># length of x -> 3.74</span>
+
+A = np.array([[1, 2], [3, 4]])
+A.T                    <span class="c"># transpose</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Slopes & Basic Calculus</div>
+        <table>
+          <tr><td class="fn">slope = Δy/Δx</td><td class="desc">Rate of change — how fast one thing changes vs another</td></tr>
+          <tr><td class="fn">f'(x)</td><td class="desc">Derivative — the slope at a single point</td></tr>
+          <tr><td class="fn">d/dx(xⁿ) = nxⁿ⁻¹</td><td class="desc">Power rule — most derivatives you'll take reduce to this</td></tr>
+          <tr><td class="fn">minimum</td><td class="desc">Where the slope = 0 and curves upward — what training tries to find</td></tr>
+        </table>
+        <div class="used-in">Shows up in: intuition for "why does the model learn"</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre><span class="c"># numerical derivative -- the slope at a point</span>
+def f(x):
+    return x**2
+
+def slope(f, x, h=1e-6):
+    return (f(x + h) - f(x - h)) / (2 * h)
+
+slope(f, 3)   <span class="c"># approx 6.0, matches f'(x)=2x</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Reading ML Notation</div>
+        <table>
+          <tr><td class="fn">θ (theta)</td><td class="desc">Model parameters/weights, the things training adjusts</td></tr>
+          <tr><td class="fn">ŷ (y-hat)</td><td class="desc">Predicted value vs y, the true/actual value</td></tr>
+          <tr><td class="fn">L(θ)</td><td class="desc">Loss function — how wrong the model currently is</td></tr>
+          <tr><td class="fn">η (eta)</td><td class="desc">Learning rate — step size during training</td></tr>
+          <tr><td class="fn">∇ (nabla)</td><td class="desc">Gradient symbol — "the slope, but for many variables at once"</td></tr>
+        </table>
+        <div class="used-in">Shows up in: every paper and every framework's docs</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre><span class="c"># theta (weights), y_hat, and a simple loss</span>
+theta = 0.5
+x, y = 2.0, 3.0
+
+y_hat = theta * x         <span class="c"># prediction</span>
+loss = (y - y_hat) ** 2    <span class="c"># L(theta), squared error</span>
+eta = 0.01                 <span class="c"># learning rate</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INTERMEDIATE -->
+  <div class="tier" data-tier="intermediate" id="intermediate">
+    <div class="tier-head">
+      <span class="tier-tag">Intermediate</span>
+      <h2>Applied ML Math</h2>
+      <span class="sub">— what you need to actually build and tune models</span>
+    </div>
+    <div class="grid">
+
+      <div class="quadrant">
+        <div class="quad-title">Linear Algebra Operations</div>
+        <table>
+          <tr><td class="fn">AB</td><td class="desc">Matrix multiply — chained transformations (every NN layer)</td></tr>
+          <tr><td class="fn">A⁻¹</td><td class="desc">Inverse — solves Ax = b directly (normal equations)</td></tr>
+          <tr><td class="fn">‖x‖₁, ‖x‖₂</td><td class="desc">L1 (sum of abs) / L2 (Euclidean) norms — used in regularization</td></tr>
+          <tr><td class="fn">Av = λv</td><td class="desc">Eigenvector v, eigenvalue λ — directions a matrix only stretches</td></tr>
+          <tr><td class="fn">rank(A)</td><td class="desc">Number of independent directions — redundancy in your data</td></tr>
+        </table>
+        <div class="used-in">Shows up in: <b>PCA</b>, regularized regression, low-rank methods</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import numpy as np
+
+A = np.array([[4, 2], [1, 3]])
+B = np.array([[1, 0], [0, 1]])
+
+A @ B                  <span class="c"># matrix multiply</span>
+np.linalg.inv(A)        <span class="c"># A inverse</span>
+
+vals, vecs = np.linalg.eig(A)   <span class="c"># eigenvalues/vectors</span>
+np.linalg.matrix_rank(A)         <span class="c"># rank</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Calculus for Optimization</div>
+        <table>
+          <tr><td class="fn">∇f</td><td class="desc">Gradient — vector of partial derivatives, points uphill</td></tr>
+          <tr><td class="fn">chain rule</td><td class="desc">d/dx f(g(x)) = f'(g(x))·g'(x) — the whole basis of backprop</td></tr>
+          <tr><td class="fn">σ(x) = 1/(1+e⁻ˣ)</td><td class="desc">Sigmoid — squashes to (0,1), σ' = σ(1−σ)</td></tr>
+          <tr><td class="fn">ReLU(x)</td><td class="desc">max(0,x) — derivative is 1 or 0, cheap to compute</td></tr>
+          <tr><td class="fn">θ ← θ − η∇L</td><td class="desc">Gradient descent update rule</td></tr>
+        </table>
+        <div class="used-in">Shows up in: training every neural network</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre><span class="c"># one step of gradient descent, by hand</span>
+def loss(theta):
+    return (theta - 3) ** 2
+
+def grad(theta, h=1e-6):
+    return (loss(theta + h) - loss(theta - h)) / (2 * h)
+
+theta, eta = 0.0, 0.1
+for _ in range(50):
+    theta -= eta * grad(theta)   <span class="c"># theta -> ~3.0</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Probability Distributions</div>
+        <table>
+          <tr><td class="fn">Bernoulli/Binomial</td><td class="desc">Binary outcomes — coin flips, A/B tests, classification labels</td></tr>
+          <tr><td class="fn">Gaussian N(μ,σ²)</td><td class="desc">Bell curve — noise assumptions, weight init, latent spaces</td></tr>
+          <tr><td class="fn">Categorical</td><td class="desc">Multi-class outcomes — softmax output distribution</td></tr>
+          <tr><td class="fn">Poisson</td><td class="desc">Count data over a fixed interval — event modeling</td></tr>
+          <tr><td class="fn">E[X], Var(X)</td><td class="desc">Expectation and variance of a random variable</td></tr>
+        </table>
+        <div class="used-in">Shows up in: choosing the right loss function for your data</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>from scipy import stats
+import numpy as np
+
+<span class="c"># sample from a Gaussian and check its density</span>
+samples = np.random.normal(loc=0, scale=1, size=1000)
+stats.norm.pdf(0, loc=0, scale=1)   <span class="c"># density at x=0</span>
+
+<span class="c"># binomial: P(exactly 3 successes in 10 trials, p=.5)</span>
+stats.binom.pmf(3, n=10, p=0.5)</pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Statistics for Modeling</div>
+        <table>
+          <tr><td class="fn">ρ (Pearson r)</td><td class="desc">Correlation, −1 to 1 — linear relationship strength</td></tr>
+          <tr><td class="fn">p-value</td><td class="desc">P(data this extreme | H₀ true) — not P(H₀ is true)</td></tr>
+          <tr><td class="fn">t-test</td><td class="desc">Compare two group means — classic A/B test</td></tr>
+          <tr><td class="fn">confidence interval</td><td class="desc">Plausible range for the true parameter</td></tr>
+          <tr><td class="fn">bias / variance</td><td class="desc">Underfit vs overfit — the core tradeoff in model selection</td></tr>
+        </table>
+        <div class="used-in">Shows up in: experiment design, model evaluation</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>from scipy import stats
+import numpy as np
+
+group_a = np.array([5.1, 5.4, 5.0, 5.3])
+group_b = np.array([6.0, 6.2, 5.8, 6.1])
+
+corr, _ = stats.pearsonr(group_a, group_b)
+t_stat, p_value = stats.ttest_ind(group_a, group_b)</pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Loss Functions</div>
+        <table>
+          <tr><td class="fn">MSE</td><td class="desc">(1/n)Σ(y−ŷ)² — standard regression loss</td></tr>
+          <tr><td class="fn">MAE</td><td class="desc">(1/n)Σ|y−ŷ| — robust to outliers</td></tr>
+          <tr><td class="fn">binary cross-entropy</td><td class="desc">−[y log ŷ + (1−y)log(1−ŷ)] — binary classification</td></tr>
+          <tr><td class="fn">categorical cross-entropy</td><td class="desc">Multi-class version, paired with softmax</td></tr>
+        </table>
+        <div class="used-in">Shows up in: literally the thing your model is trained to minimize</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import numpy as np
+
+y = np.array([1, 0, 1])
+y_hat = np.array([0.9, 0.2, 0.6])
+
+mse = np.mean((y - y_hat) ** 2)
+mae = np.mean(np.abs(y - y_hat))
+
+bce = -np.mean(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))</pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Regularization</div>
+        <table>
+          <tr><td class="fn">Ridge (L2)</td><td class="desc">Adds λ‖w‖₂² to loss — shrinks weights smoothly</td></tr>
+          <tr><td class="fn">Lasso (L1)</td><td class="desc">Adds λ‖w‖₁ — drives some weights to exactly zero</td></tr>
+          <tr><td class="fn">dropout</td><td class="desc">Randomly zero activations during training</td></tr>
+          <tr><td class="fn">early stopping</td><td class="desc">Halt once validation loss stops improving</td></tr>
+        </table>
+        <div class="used-in">Shows up in: fighting overfitting in any model</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>from sklearn.linear_model import Ridge, Lasso
+
+<span class="c"># Ridge = L2 penalty, Lasso = L1 penalty</span>
+ridge = Ridge(alpha=1.0).fit(X_train, y_train)
+lasso = Lasso(alpha=0.1).fit(X_train, y_train)
+
+lasso.coef_   <span class="c"># some coefficients will be exactly 0</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADVANCED -->
+  <div class="tier" data-tier="advanced" id="advanced">
+    <div class="tier-head">
+      <span class="tier-tag">Advanced</span>
+      <h2>Deep Learning & Research-Level Math</h2>
+      <span class="sub">— the machinery behind Transformers, generative models, and modern optimizers</span>
+    </div>
+    <div class="grid">
+
+      <div class="quadrant">
+        <div class="quad-title">Matrix Decompositions</div>
+        <table>
+          <tr><td class="fn">A = UΣVᵀ</td><td class="desc">SVD — works for any matrix; basis for PCA, LoRA, recommenders</td></tr>
+          <tr><td class="fn">A = QΛQ⁻¹</td><td class="desc">Eigendecomposition — only for diagonalizable matrices</td></tr>
+          <tr><td class="fn">A = LLᵀ</td><td class="desc">Cholesky — fast solves for positive-definite systems</td></tr>
+          <tr><td class="fn">A = QR</td><td class="desc">QR decomposition — numerically stable least squares</td></tr>
+          <tr><td class="fn">tr(A), det(A)</td><td class="desc">Trace (sum of eigenvalues), determinant (volume scaling)</td></tr>
+        </table>
+        <div class="used-in">Shows up in: PCA derivation, LoRA fine-tuning, Gaussian processes</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import numpy as np
+
+A = np.random.rand(5, 3)
+
+U, S, Vt = np.linalg.svd(A)         <span class="c"># SVD</span>
+L = np.linalg.cholesky(A.T @ A)      <span class="c"># Cholesky (needs PSD input)</span>
+Q, R = np.linalg.qr(A)                <span class="c"># QR</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Multivariate Calculus</div>
+        <table>
+          <tr><td class="fn">J (Jacobian)</td><td class="desc">Matrix of partials for vector-valued functions — per-layer local derivative</td></tr>
+          <tr><td class="fn">H (Hessian)</td><td class="desc">Matrix of second derivatives — curvature of the loss surface</td></tr>
+          <tr><td class="fn">∇f = λ∇g</td><td class="desc">Lagrange multipliers — constrained optimization (SVM margin)</td></tr>
+          <tr><td class="fn">convexity</td><td class="desc">f(λx+(1−λ)y) ≤ λf(x)+(1−λ)f(y) — guarantees a global minimum</td></tr>
+        </table>
+        <div class="used-in">Shows up in: understanding why/when training gets stuck</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import torch
+
+x = torch.tensor([1.0, 2.0], requires_grad=True)
+f = (x ** 2).sum()
+
+f.backward()
+x.grad          <span class="c"># the gradient (Jacobian for scalar output)</span>
+
+<span class="c"># Hessian via autograd</span>
+h = torch.autograd.functional.hessian(lambda x: (x**2).sum(), x.detach())</pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Information Theory</div>
+        <table>
+          <tr><td class="fn">H(P) = −ΣP(x)logP(x)</td><td class="desc">Entropy — average uncertainty in a distribution</td></tr>
+          <tr><td class="fn">H(P,Q)</td><td class="desc">Cross-entropy — literally your classification loss</td></tr>
+          <tr><td class="fn">KL(P‖Q)</td><td class="desc">= H(P,Q) − H(P); divergence between two distributions</td></tr>
+          <tr><td class="fn">perplexity</td><td class="desc">2^H or e^(cross-entropy) — standard LM quality metric</td></tr>
+        </table>
+        <div class="used-in">Shows up in: VAEs, distillation, RLHF's KL penalty, LM evaluation</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>from scipy.stats import entropy
+import numpy as np
+
+p = np.array([0.5, 0.5])
+q = np.array([0.9, 0.1])
+
+entropy(p)          <span class="c"># H(P)</span>
+entropy(p, q)        <span class="c"># KL(P || Q)</span>
+
+perplexity = np.exp(entropy(p))</pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">MLE & Bayesian Inference</div>
+        <table>
+          <tr><td class="fn">θ* = argmax Σ log P(xᵢ|θ)</td><td class="desc">Maximum likelihood estimation</td></tr>
+          <tr><td class="fn">P(θ|D) ∝ P(D|θ)P(θ)</td><td class="desc">Bayes' rule — posterior ∝ likelihood × prior</td></tr>
+          <tr><td class="fn">MSE ⟺ MLE</td><td class="desc">Squared error is MLE under a Gaussian noise assumption</td></tr>
+          <tr><td class="fn">cross-entropy ⟺ MLE</td><td class="desc">Cross-entropy is MLE under a categorical assumption</td></tr>
+        </table>
+        <div class="used-in">Shows up in: justifying why "standard" losses are the ones we use</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>from scipy.optimize import minimize
+import numpy as np
+
+data = np.array([2.1, 1.9, 2.3, 2.0])
+
+<span class="c"># MLE for a Gaussian mean: minimize negative log-likelihood</span>
+def neg_log_lik(mu):
+    return -np.sum(-0.5 * (data - mu) ** 2)
+
+result = minimize(neg_log_lik, x0=0.0)
+result.x   <span class="c"># ~ sample mean</span></pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Modern Optimizers</div>
+        <table>
+          <tr><td class="fn">momentum</td><td class="desc">v ← βv + ∇L; θ ← θ − ηv — smooths noisy gradient steps</td></tr>
+          <tr><td class="fn">Adam</td><td class="desc">Per-parameter adaptive rates using running 1st/2nd moment estimates</td></tr>
+          <tr><td class="fn">cosine annealing / warmup</td><td class="desc">Learning-rate schedules that vary η over training</td></tr>
+          <tr><td class="fn">batch/layer norm</td><td class="desc">Normalize activations to stabilize deep training</td></tr>
+        </table>
+        <div class="used-in">Shows up in: training scripts for every modern deep net</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import torch
+
+model = torch.nn.Linear(10, 1)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
+
+<span class="c"># inside training loop:</span>
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+scheduler.step()</pre>
+        </div>
+      </div>
+
+      <div class="quadrant">
+        <div class="quad-title">Transformer & Generative Math</div>
+        <table>
+          <tr><td class="fn">softmax(z)ᵢ = eᶻⁱ/Σⱼeᶻʲ</td><td class="desc">Converts logits to a probability distribution</td></tr>
+          <tr><td class="fn">Attention(Q,K,V)</td><td class="desc">= softmax(QKᵀ/√dₖ)V — dot-product similarity + weighted sum</td></tr>
+          <tr><td class="fn">cos(θ) = x·y/(‖x‖‖y‖)</td><td class="desc">Cosine similarity — embedding search, RAG retrieval</td></tr>
+          <tr><td class="fn">diffusion / SDEs</td><td class="desc">Gaussian noise processes reversed step-by-step to generate data</td></tr>
+        </table>
+        <div class="used-in">Shows up in: every LLM, image generator, and embedding search stack</div>
+        <div class="code">
+          <div class="code-label">Python</div>
+          <pre>import torch
+import torch.nn.functional as F
+
+Q, K, V = torch.randn(1,4,8), torch.randn(1,4,8), torch.randn(1,4,8)
+d_k = Q.shape[-1]
+
+scores = Q @ K.transpose(-2, -1) / d_k**0.5
+attn = F.softmax(scores, dim=-1)
+output = attn @ V   <span class="c"># scaled dot-product attention</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>MATH FOR DS · ML · AI ENGINEERING</span>
+    <span>Beginner → Intermediate → Advanced</span>
+  </div>
+
+</div>
+</body>
+</html>
