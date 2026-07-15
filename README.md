@@ -5,7 +5,7 @@ A small collection of single-page, dark-themed quick references — each one a s
 ![style: dark](https://img.shields.io/badge/style-dark-0A0E17)
 ![type: reference](https://img.shields.io/badge/type-cheat--sheet-F2C14E)
 
-**🔗 Live index:** [daniel-goddard.github.io/python_cheatsheet](https://daniel-goddard.github.io/python_cheatsheet/)
+**🔗 Live index:** [daniel-goddard.github.io/cheatsheets](https://daniel-goddard.github.io/cheatsheets/)
 
 ## 📋 What's included
 
@@ -33,7 +33,7 @@ Covers the math that actually shows up in data science and machine learning, tie
 
 ## 🚀 Usage
 
-**View them live:** [daniel-goddard.github.io/python_cheatsheet](https://daniel-goddard.github.io/python_cheatsheet/)
+**View them live:** [daniel-goddard.github.io/cheatsheets](https://daniel-goddard.github.io/cheatsheets/)
 
 Or run any of them locally — they're plain HTML files with no build step or dependencies.
 
