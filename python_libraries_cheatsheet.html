@@ -20,6 +20,8 @@
     --mpl:#5FD3B3;
     --sklearn:#F7A63E;
     --seaborn:#7FA8E0;
+    --statsmodels:#E06B9E;
+    --spacy:#C77DFF;
     --tensorflow:#FDB44B;
     --pytorch:#FF6B5B;
     --xgboost:#4ADE9E;
@@ -178,6 +180,14 @@
   .seaborn .section-title{background:var(--seaborn);}
   .seaborn td.fn{color:var(--seaborn);}
 
+  .statsmodels .quad-head .icon{background:var(--statsmodels);}
+  .statsmodels .section-title{background:var(--statsmodels);}
+  .statsmodels td.fn{color:var(--statsmodels);}
+
+  .spacy .quad-head .icon{background:var(--spacy);}
+  .spacy .section-title{background:var(--spacy);}
+  .spacy td.fn{color:var(--spacy);}
+
   .tensorflow .quad-head .icon{background:var(--tensorflow);}
   .tensorflow .section-title{background:var(--tensorflow);}
   .tensorflow td.fn{color:var(--tensorflow);}
@@ -260,6 +270,9 @@
   .trick-output b{font-weight:600;}
   .core-blue .trick-code{color:var(--core-blue);}
   .core-yellow .trick-code{color:var(--core-yellow);}
+  .seaborn .trick-code{color:var(--seaborn);}
+  .statsmodels .trick-code{color:var(--statsmodels);}
+  .spacy .trick-code{color:var(--spacy);}
 
   /* Full-width comparison matrix */
   .full-width{grid-column:1 / -1;}
@@ -296,7 +309,7 @@
   <div class="wordmark">
     <div>
       <h1>Python <span>Libraries</span></h1>
-      <div class="sub">core · pandas · numpy · matplotlib · scikit-learn · seaborn · tensorflow · pytorch · xgboost — quick reference</div>
+      <div class="sub">core · pandas · numpy · matplotlib · scikit-learn · seaborn · statsmodels · spacy · tensorflow · pytorch · xgboost — quick reference</div>
     </div>
     <div class="chips">
       <a href="#section-core" class="chip"><span class="dot" style="background:var(--core-blue)"></span>python core</a>
@@ -305,6 +318,8 @@
       <a href="#section-matplotlib" class="chip"><span class="dot" style="background:var(--mpl)"></span>matplotlib</a>
       <a href="#section-sklearn" class="chip"><span class="dot" style="background:var(--sklearn)"></span>scikit-learn</a>
       <a href="#section-seaborn" class="chip"><span class="dot" style="background:var(--seaborn)"></span>seaborn</a>
+      <a href="#section-statsmodels" class="chip"><span class="dot" style="background:var(--statsmodels)"></span>statsmodels</a>
+      <a href="#section-spacy" class="chip"><span class="dot" style="background:var(--spacy)"></span>spacy</a>
       <a href="#section-tensorflow" class="chip"><span class="dot" style="background:var(--tensorflow)"></span>tensorflow</a>
       <a href="#section-pytorch" class="chip"><span class="dot" style="background:var(--pytorch)"></span>pytorch</a>
       <a href="#section-xgboost" class="chip"><span class="dot" style="background:var(--xgboost)"></span>xgboost</a>
@@ -1276,33 +1291,177 @@ print(password)</div>
 
       <div class="section">
         <div class="section-title">Basic Plots</div>
-        <table>
-          <tr><td class="fn">sns.scatterplot(data,x,y)</td><td class="desc">Draw a scatter plot with semantic grouping</td></tr>
-          <tr><td class="fn">sns.lineplot(data,x,y)</td><td class="desc">Draw a line plot with a confidence interval</td></tr>
-          <tr><td class="fn">sns.barplot(data,x,y)</td><td class="desc">Draw a bar plot with error bars</td></tr>
-          <tr><td class="fn">sns.histplot(data)</td><td class="desc">Draw a histogram with an optional density curve</td></tr>
-          <tr><td class="fn">sns.boxplot(data)</td><td class="desc">Draw a box plot showing value distributions</td></tr>
-          <tr><td class="fn">sns.violinplot(data)</td><td class="desc">Draw a violin plot combining boxplot and KDE</td></tr>
-        </table>
+
+        <div class="trick">
+          <div class="trick-title">Scatter &amp; line plots</div>
+          <div class="trick-code">import seaborn as sns
+import pandas as pd
+
+df = pd.DataFrame({
+    "x": [1, 2, 3, 4],
+    "y": [10, 12, 9, 15],
+    "group": ["a", "a", "b", "b"]
+})
+
+sns.scatterplot(data=df, x="x", y="y", hue="group")
+sns.lineplot(data=df, x="x", y="y")</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Bar, histogram, box &amp; violin</div>
+          <div class="trick-code">sns.barplot(data=df, x="group", y="y")
+sns.histplot(df["y"], kde=True)
+sns.boxplot(data=df, x="group", y="y")
+sns.violinplot(data=df, x="group", y="y")</div>
+        </div>
       </div>
 
       <div class="section">
         <div class="section-title">Relationships &amp; Distributions</div>
-        <table>
-          <tr><td class="fn">sns.pairplot(data)</td><td class="desc">Plot pairwise relationships across a dataset</td></tr>
-          <tr><td class="fn">sns.heatmap(data)</td><td class="desc">Draw a color-encoded matrix</td></tr>
-          <tr><td class="fn">sns.jointplot(data,x,y)</td><td class="desc">Draw a bivariate plot with marginal distributions</td></tr>
-          <tr><td class="fn">sns.kdeplot(data)</td><td class="desc">Draw a kernel density estimate</td></tr>
-        </table>
+
+        <div class="trick">
+          <div class="trick-title">Pairwise &amp; correlation</div>
+          <div class="trick-code">sns.pairplot(df, hue="group")
+sns.heatmap(df.corr(numeric_only=True), annot=True)</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Joint &amp; density plots</div>
+          <div class="trick-code">sns.jointplot(data=df, x="x", y="y", kind="reg")
+sns.kdeplot(df["y"], fill=True)</div>
+        </div>
       </div>
 
       <div class="section">
         <div class="section-title">Styling</div>
-        <table>
-          <tr><td class="fn">sns.set_style(style)</td><td class="desc">Set the overall aesthetic style of the plots</td></tr>
-          <tr><td class="fn">sns.set_palette(palette)</td><td class="desc">Set the default color palette</td></tr>
-          <tr><td class="fn">sns.despine()</td><td class="desc">Remove the top and right spines from a plot</td></tr>
-        </table>
+        <div class="trick">
+          <div class="trick-title">Theme &amp; palette</div>
+          <div class="trick-code">sns.set_style("whitegrid")
+sns.set_palette("viridis")
+sns.despine()</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATSMODELS -->
+    <div id="section-statsmodels" class="quadrant statsmodels">
+      <div class="quad-head">
+        <div class="icon">sm</div>
+        <h2>Statsmodels</h2>
+        <div class="tag">import statsmodels.api as sm</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Linear &amp; Formula Models</div>
+
+        <div class="trick">
+          <div class="trick-title">OLS regression</div>
+          <div class="trick-code">import statsmodels.api as sm
+
+X = sm.add_constant(df[["x"]])
+model = sm.OLS(df["y"], X).fit()
+print(model.summary())</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Formula API (R-style)</div>
+          <div class="trick-code">import statsmodels.formula.api as smf
+
+model = smf.ols("y ~ x + group", data=df).fit()
+print(model.params)
+print(model.pvalues)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Time Series</div>
+
+        <div class="trick">
+          <div class="trick-title">ARIMA forecasting</div>
+          <div class="trick-code">from statsmodels.tsa.arima.model import ARIMA
+
+model = ARIMA(series, order=(1, 1, 1)).fit()
+forecast = model.forecast(steps=12)</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Seasonal decomposition</div>
+          <div class="trick-code">from statsmodels.tsa.seasonal import seasonal_decompose
+
+result = seasonal_decompose(series, model="additive", period=12)
+result.plot()</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Statistical Tests</div>
+        <div class="trick">
+          <div class="trick-title">Hypothesis &amp; diagnostic tests</div>
+          <div class="trick-code">from statsmodels.stats.diagnostic import het_breuschpagan
+from statsmodels.stats.stattools import durbin_watson
+
+bp_test = het_breuschpagan(model.resid, model.model.exog)
+dw_stat = durbin_watson(model.resid)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPACY -->
+    <div id="section-spacy" class="quadrant spacy">
+      <div class="quad-head">
+        <div class="icon">sp</div>
+        <h2>spaCy</h2>
+        <div class="tag">import spacy</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Loading &amp; Processing Text</div>
+
+        <div class="trick">
+          <div class="trick-title">Load a model &amp; process text</div>
+          <div class="trick-code">import spacy
+
+nlp = spacy.load("en_core_web_sm")
+doc = nlp("Apple is looking at buying a UK startup for $1 billion.")</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Tokens, lemmas &amp; part-of-speech tags</div>
+          <div class="trick-code">for token in doc:
+    print(token.text, token.lemma_, token.pos_)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Named Entities &amp; Similarity</div>
+
+        <div class="trick">
+          <div class="trick-title">Named entity recognition</div>
+          <div class="trick-code">for ent in doc.ents:
+    print(ent.text, ent.label_)</div>
+        </div>
+
+        <div class="trick">
+          <div class="trick-title">Word / document similarity</div>
+          <div class="trick-code">doc1 = nlp("I like pizza")
+doc2 = nlp("I love pasta")
+similarity = doc1.similarity(doc2)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Pipelines &amp; Custom Components</div>
+        <div class="trick">
+          <div class="trick-title">Inspecting &amp; extending the pipeline</div>
+          <div class="trick-code">print(nlp.pipe_names)
+
+@spacy.Language.component("custom_component")
+def custom_component(doc):
+    print("Processing:", doc.text[:20])
+    return doc
+
+nlp.add_pipe("custom_component", last=True)</div>
+        </div>
       </div>
     </div>
 
@@ -1440,7 +1599,7 @@ print(password)</div>
 
   <div class="footer">
     <span>PYTHON LIBRARIES · QUICK REFERENCE</span>
-    <span>python core / pandas / numpy / matplotlib / scikit-learn / seaborn / tensorflow / pytorch / xgboost</span>
+    <span>python core / pandas / numpy / matplotlib / scikit-learn / seaborn / statsmodels / spacy / tensorflow / pytorch / xgboost</span>
   </div>
 
 </body>
