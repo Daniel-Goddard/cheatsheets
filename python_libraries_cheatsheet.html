@@ -1024,6 +1024,354 @@ print(password)</div>
       </div>
     </div>
 
+    <!-- PYTHON CORE: FUNCTIONAL & FILES ONE-LINERS -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">functional · files one-liners</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Functional Programming</div>
+        <table>
+          <tr><td class="fn">sum(range(1,101))</td><td class="desc">Calculate a range sum quickly</td></tr>
+          <tr><td class="fn">a, b = b, a</td><td class="desc">Swap two variables instantly, no temp variable needed</td></tr>
+          <tr><td class="fn">all(x > 0 for x in lst)</td><td class="desc">Check whether every element satisfies a condition</td></tr>
+          <tr><td class="fn">any(x > 0 for x in lst)</td><td class="desc">Check whether at least one element satisfies a condition</td></tr>
+          <tr><td class="fn">reduce(lambda a, b: a + b, lst)</td><td class="desc">Reduce an iterable to a single value with a function</td></tr>
+          <tr><td class="fn">list(filter(None, lst))</td><td class="desc">Filter out falsy items from a list</td></tr>
+          <tr><td class="fn">list(map(str, lst))</td><td class="desc">Transform every element in a list with a function</td></tr>
+          <tr><td class="fn">f = lambda x: x * 2</td><td class="desc">Define a small inline function</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Files</div>
+        <table>
+          <tr><td class="fn">pd.read_csv(f)</td><td class="desc">Read a CSV file faster using pandas</td></tr>
+          <tr><td class="fn">os.path.exists(f)</td><td class="desc">Check whether a file exists quickly</td></tr>
+          <tr><td class="fn">os.listdir(".")</td><td class="desc">List the contents of a directory</td></tr>
+          <tr><td class="fn">json.dump(data, open(f, "w"))</td><td class="desc">Save data to a file as JSON</td></tr>
+          <tr><td class="fn">json.load(open(f))</td><td class="desc">Load JSON data from a file</td></tr>
+          <tr><td class="fn">sum(1 for _ in open(f))</td><td class="desc">Count the number of lines in a file</td></tr>
+          <tr><td class="fn">open(f, "w").write(text)</td><td class="desc">Write text to a file quickly</td></tr>
+          <tr><td class="fn">open(f).read()</td><td class="desc">Read an entire file's contents</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: DICT ONE-LINERS -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">dict one-liners</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dicts</div>
+        <table>
+          <tr><td class="fn">max(d, key=d.get)</td><td class="desc">Find the key with the highest value</td></tr>
+          <tr><td class="fn">{k: v for k, v in d.items() if v > 0}</td><td class="desc">Filter dictionary entries by a condition</td></tr>
+          <tr><td class="fn">list(d.values())</td><td class="desc">Get all values from a dictionary</td></tr>
+          <tr><td class="fn">list(d.keys())</td><td class="desc">Get all keys from a dictionary</td></tr>
+          <tr><td class="fn">d.get(k, 0)</td><td class="desc">Retrieve a key's value safely, with a default</td></tr>
+          <tr><td class="fn">{v: k for k, v in d.items()}</td><td class="desc">Swap a dictionary's keys and values</td></tr>
+          <tr><td class="fn">{**d1, **d2}</td><td class="desc">Merge two dictionaries together</td></tr>
+          <tr><td class="fn">{k: v for k, v in pairs}</td><td class="desc">Build a dictionary from key-value pairs</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: LIST ONE-LINERS -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">list one-liners</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lists</div>
+        <table>
+          <tr><td class="fn">list(zip(a, b))</td><td class="desc">Combine two iterables together element-wise</td></tr>
+          <tr><td class="fn">[(i, v) for i, v in enumerate(lst)]</td><td class="desc">Iterate over a list along with its index</td></tr>
+          <tr><td class="fn">lst[::-1]</td><td class="desc">Reverse a list efficiently</td></tr>
+          <tr><td class="fn">sorted(lst)</td><td class="desc">Return a new sorted list</td></tr>
+          <tr><td class="fn">list(set(lst))</td><td class="desc">Remove duplicates from a list</td></tr>
+          <tr><td class="fn">max(lst), min(lst)</td><td class="desc">Find the largest and smallest values</td></tr>
+          <tr><td class="fn">[x for sub in lst for x in sub]</td><td class="desc">Flatten a nested list into one level</td></tr>
+          <tr><td class="fn">[x**x for x in range(5)]</td><td class="desc">Build a list using a comprehension</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON CORE: STRING ONE-LINERS -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Core</h2>
+        <div class="tag">string one-liners</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Strings</div>
+        <table>
+          <tr><td class="fn">f"{name} is {age}"</td><td class="desc">Format readable text with an f-string</td></tr>
+          <tr><td class="fn">s.title()</td><td class="desc">Capitalize the first letter of each word</td></tr>
+          <tr><td class="fn">s == s[::-1]</td><td class="desc">Check whether a string is a palindrome</td></tr>
+          <tr><td class="fn">s.count("a")</td><td class="desc">Count how many times a character appears</td></tr>
+          <tr><td class="fn">s.replace("a", "b")</td><td class="desc">Replace occurrences of text within a string</td></tr>
+          <tr><td class="fn">s.strip()</td><td class="desc">Remove extra whitespace from both ends</td></tr>
+          <tr><td class="fn">",".join(lst)</td><td class="desc">Concatenate a list of strings with a separator</td></tr>
+          <tr><td class="fn">s.upper()</td><td class="desc">Convert a string to uppercase</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON ECOSYSTEM: AI/ML TOOLING MAP (FULL WIDTH) -->
+    <div class="quadrant core-yellow full-width">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python Ecosystem</h2>
+        <div class="tag">AI / ML tooling map</div>
+      </div>
+      <div class="section">
+        <table class="matrix">
+          <tr><th>Category</th><th>Tools</th><th>What they're for</th></tr>
+          <tr><td class="matrix-label">Data Preprocessing &amp; Management</td><td>Dask · Polars · Pandas · NumPy</td><td>Load, wrangle, and scale tabular data processing</td></tr>
+          <tr><td class="matrix-label">Model &amp; Data Security</td><td>OpenMined · PySyft · Presidio</td><td>Privacy-preserving ML and PII detection/redaction</td></tr>
+          <tr><td class="matrix-label">MLOps &amp; Automation</td><td>Airflow · Prefect · Dagster · Kubeflow</td><td>Orchestrate and automate ML pipelines and workflows</td></tr>
+          <tr><td class="matrix-label">Machine Learning Frameworks</td><td>Scikit-learn · XGBoost · LightGBM · CatBoost</td><td>Classical ML model training on tabular data</td></tr>
+          <tr><td class="matrix-label">Deep Learning Frameworks</td><td>PyTorch · TensorFlow · Keras · JAX</td><td>Build and train neural networks</td></tr>
+          <tr><td class="matrix-label">Model Experimentation &amp; Tracking</td><td>MLflow · Weights &amp; Biases · Comet ML · Neptune.ai</td><td>Log experiments, metrics, and model versions</td></tr>
+          <tr><td class="matrix-label">Data Visualization</td><td>Matplotlib · Seaborn · Plotly · Altair</td><td>Chart and explore data visually</td></tr>
+          <tr><td class="matrix-label">Model Evaluation &amp; Validation</td><td>Evidently AI · Deepchecks · Great Expectations · Scikit-plot · tsfresh</td><td>Validate data quality, monitor drift, and evaluate models</td></tr>
+          <tr><td class="matrix-label">Feature Engineering</td><td>Featuretools · Category Encoders</td><td>Automate feature creation and categorical encoding</td></tr>
+          <tr><td class="matrix-label">Model Deployment &amp; Serving</td><td>Streamlit · Gradio · BentoML · FastAPI</td><td>Turn models into interactive apps or served APIs</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- AI TOOLING LANDSCAPE I -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>AI Tooling Landscape</h2>
+        <div class="tag">data · ops · viz</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Data Preprocessing &amp; Management</div>
+        <table>
+          <tr><td class="fn">Pandas</td><td class="desc">Tabular data manipulation and analysis</td></tr>
+          <tr><td class="fn">NumPy</td><td class="desc">N-dimensional array computing</td></tr>
+          <tr><td class="fn">Dask</td><td class="desc">Parallel, out-of-core computing for large datasets</td></tr>
+          <tr><td class="fn">Polars</td><td class="desc">Fast, Rust-based DataFrame library</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Feature Engineering</div>
+        <table>
+          <tr><td class="fn">Featuretools</td><td class="desc">Automated feature engineering from relational data</td></tr>
+          <tr><td class="fn">Category Encoders</td><td class="desc">Encode categorical variables beyond one-hot encoding</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model &amp; Data Security</div>
+        <table>
+          <tr><td class="fn">PySyft</td><td class="desc">Privacy-preserving machine learning</td></tr>
+          <tr><td class="fn">OpenMined</td><td class="desc">Open-source privacy-preserving AI tooling</td></tr>
+          <tr><td class="fn">Presidio</td><td class="desc">Detect and anonymize personal data (PII)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">MLOps &amp; Automation</div>
+        <table>
+          <tr><td class="fn">Airflow</td><td class="desc">Author and schedule data/ML pipelines as DAGs</td></tr>
+          <tr><td class="fn">Prefect</td><td class="desc">Modern workflow orchestration for data pipelines</td></tr>
+          <tr><td class="fn">Dagster</td><td class="desc">Data orchestration with strong asset lineage</td></tr>
+          <tr><td class="fn">Kubeflow</td><td class="desc">Run ML workflows on Kubernetes</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Data Visualization</div>
+        <table>
+          <tr><td class="fn">Matplotlib</td><td class="desc">Foundational, general-purpose plotting library</td></tr>
+          <tr><td class="fn">Seaborn</td><td class="desc">Statistical visualization built on Matplotlib</td></tr>
+          <tr><td class="fn">Plotly</td><td class="desc">Interactive, web-based charts</td></tr>
+          <tr><td class="fn">Altair</td><td class="desc">Declarative statistical visualization</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- AI TOOLING LANDSCAPE II -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>AI Tooling Landscape</h2>
+        <div class="tag">modeling · tracking · serving</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Machine Learning Frameworks</div>
+        <table>
+          <tr><td class="fn">Scikit-learn</td><td class="desc">General-purpose classical ML library</td></tr>
+          <tr><td class="fn">XGBoost</td><td class="desc">Gradient boosting tuned for speed and performance</td></tr>
+          <tr><td class="fn">LightGBM</td><td class="desc">Fast, distributed gradient boosting</td></tr>
+          <tr><td class="fn">CatBoost</td><td class="desc">Gradient boosting with strong categorical support</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Deep Learning Frameworks</div>
+        <table>
+          <tr><td class="fn">TensorFlow</td><td class="desc">End-to-end deep learning platform</td></tr>
+          <tr><td class="fn">PyTorch</td><td class="desc">Flexible, research-friendly deep learning framework</td></tr>
+          <tr><td class="fn">Keras</td><td class="desc">High-level neural network API</td></tr>
+          <tr><td class="fn">JAX</td><td class="desc">Composable function transforms for high-performance ML</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Experimentation &amp; Tracking</div>
+        <table>
+          <tr><td class="fn">MLflow</td><td class="desc">Track experiments, models, and deployments</td></tr>
+          <tr><td class="fn">Weights &amp; Biases</td><td class="desc">Experiment tracking and visualization</td></tr>
+          <tr><td class="fn">Comet ML</td><td class="desc">ML experiment tracking and model monitoring</td></tr>
+          <tr><td class="fn">Neptune.ai</td><td class="desc">Metadata store for MLOps experiment tracking</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Deployment &amp; Serving</div>
+        <table>
+          <tr><td class="fn">FastAPI</td><td class="desc">High-performance API framework for serving models</td></tr>
+          <tr><td class="fn">BentoML</td><td class="desc">Package and deploy ML models as APIs</td></tr>
+          <tr><td class="fn">Streamlit</td><td class="desc">Build interactive data/ML apps quickly</td></tr>
+          <tr><td class="fn">Gradio</td><td class="desc">Quick web UIs for ML model demos</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Model Evaluation &amp; Validation</div>
+        <table>
+          <tr><td class="fn">Great Expectations</td><td class="desc">Validate, document, and profile data quality</td></tr>
+          <tr><td class="fn">Deepchecks</td><td class="desc">Automated testing for ML models and data</td></tr>
+          <tr><td class="fn">Evidently AI</td><td class="desc">Monitor data drift and model performance</td></tr>
+          <tr><td class="fn">tsfresh</td><td class="desc">Automated time series feature extraction</td></tr>
+          <tr><td class="fn">Scikit-plot</td><td class="desc">Quick visualizations for scikit-learn metrics</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- CHOOSING AN ML ALGORITHM -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Choosing an ML Algorithm</h2>
+        <div class="tag">decision guide</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">By Goal</div>
+        <table>
+          <tr><td class="fn">Predict a category</td><td class="desc">Binary: Logistic Regression, Decision Tree, Naive Bayes. Multi-class: Random Forest, XGBoost, Neural Networks</td></tr>
+          <tr><td class="fn">Predict a number</td><td class="desc">Linear: Linear/Ridge/Lasso/Elastic Net. Nonlinear: Random Forest, XGBoost, LightGBM, Neural Networks</td></tr>
+          <tr><td class="fn">Find groups or patterns</td><td class="desc">Known cluster count: K-Means, K-Medoids, GMM. Unknown: Hierarchical, DBSCAN, HDBSCAN</td></tr>
+          <tr><td class="fn">Reduce dimensions</td><td class="desc">Visualization: PCA, t-SNE, UMAP. Compression: Truncated SVD, Autoencoders</td></tr>
+          <tr><td class="fn">Forecast over time</td><td class="desc">Traditional: ARIMA, SARIMA, Prophet. Deep learning: LSTM, GRU, TCN, Transformers</td></tr>
+          <tr><td class="fn">Detect anomalies</td><td class="desc">Point outliers: Isolation Forest, One-Class SVM, LOF. Complex patterns: Autoencoders, VAE, Deep SVDD</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Other Things to Consider</div>
+        <table>
+          <tr><td class="fn">Data size</td><td class="desc">More data generally helps performance; deep models need the most</td></tr>
+          <tr><td class="fn">Interpretability</td><td class="desc">Linear models and trees are easier to explain than deep models</td></tr>
+          <tr><td class="fn">Training speed</td><td class="desc">Simple models train fastest; boosting and deep models take longer</td></tr>
+          <tr><td class="fn">Overfitting</td><td class="desc">Use cross-validation, regularization, and early stopping</td></tr>
+          <tr><td class="fn">Compute cost</td><td class="desc">Deep models require more CPU/GPU memory and longer training</td></tr>
+          <tr><td class="fn">Evaluation metrics</td><td class="desc">Match metrics to the objective — accuracy, RMSE, F1, AUC, MAPE</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON ONE-LINERS: FUNCTIONAL & FILES -->
+    <div class="quadrant core-yellow">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python One-Liners</h2>
+        <div class="tag">functional · files</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Functional</div>
+        <table>
+          <tr><td class="fn">sum(range(1, 101))</td><td class="desc">Sum a range of numbers quickly</td></tr>
+          <tr><td class="fn">a, b = b, a</td><td class="desc">Swap two variables without a temp variable</td></tr>
+          <tr><td class="fn">all(x > 0 for x in lst)</td><td class="desc">Check that every element satisfies a condition</td></tr>
+          <tr><td class="fn">any(x > 0 for x in lst)</td><td class="desc">Check that at least one element satisfies a condition</td></tr>
+          <tr><td class="fn">reduce(lambda a, b: a + b, lst)</td><td class="desc">Reduce an iterable to a single value (functools)</td></tr>
+          <tr><td class="fn">list(filter(None, lst))</td><td class="desc">Filter out falsy values from a list</td></tr>
+          <tr><td class="fn">list(map(str, lst))</td><td class="desc">Transform every element with a function</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Files</div>
+        <table>
+          <tr><td class="fn">os.path.exists(f)</td><td class="desc">Check whether a file or path exists</td></tr>
+          <tr><td class="fn">sum(1 for _ in open(f))</td><td class="desc">Count the number of lines in a file</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PYTHON ONE-LINERS: DICTS, LISTS & STRINGS -->
+    <div class="quadrant core-blue">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Python One-Liners</h2>
+        <div class="tag">dicts · lists · strings</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dicts</div>
+        <table>
+          <tr><td class="fn">max(d, key=d.get)</td><td class="desc">Find the dictionary key with the highest value</td></tr>
+          <tr><td class="fn">{k: v for k, v in d.items() if v > 0}</td><td class="desc">Filter dictionary entries by a condition</td></tr>
+          <tr><td class="fn">{v: k for k, v in d.items()}</td><td class="desc">Swap a dictionary's keys and values</td></tr>
+          <tr><td class="fn">{**d1, **d2}</td><td class="desc">Merge two dictionaries into one</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Lists</div>
+        <table>
+          <tr><td class="fn">[(i, v) for i, v in enumerate(lst)]</td><td class="desc">Iterate over a list along with its index</td></tr>
+          <tr><td class="fn">lst[::-1]</td><td class="desc">Reverse a list using slicing</td></tr>
+          <tr><td class="fn">list(set(lst))</td><td class="desc">Remove duplicates from a list</td></tr>
+          <tr><td class="fn">[x for sub in lst for x in sub]</td><td class="desc">Flatten a nested list</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Strings</div>
+        <table>
+          <tr><td class="fn">s.title()</td><td class="desc">Capitalize the first letter of every word</td></tr>
+          <tr><td class="fn">s == s[::-1]</td><td class="desc">Check whether a string is a palindrome</td></tr>
+          <tr><td class="fn">s.count("a")</td><td class="desc">Count how many times a character appears</td></tr>
+          <tr><td class="fn">",".join(lst)</td><td class="desc">Join a list of strings with a separator</td></tr>
+        </table>
+      </div>
+    </div>
+
     <!-- PANDAS -->
     <div id="section-pandas" class="quadrant pandas">
       <div class="quad-head">
@@ -1592,6 +1940,40 @@ nlp.add_pipe("custom_component", last=True)</div>
           <tr><td class="fn">xgb.cv(params, dtrain)</td><td class="desc">Run cross-validation with a given parameter set</td></tr>
           <tr><td class="fn">xgb.plot_importance(model)</td><td class="desc">Plot feature importances from a trained model</td></tr>
         </table>
+      </div>
+    </div>
+
+    <!-- WHICH ML ALGORITHM SHOULD I USE? (FULL WIDTH) -->
+    <div class="quadrant core-blue full-width">
+      <div class="quad-head">
+        <div class="icon">py</div>
+        <h2>Which ML Algorithm?</h2>
+        <div class="tag">decision guide</div>
+      </div>
+      <div class="section">
+        <table class="matrix">
+          <tr><th>Goal</th><th>Key Question</th><th>Recommended Algorithms</th></tr>
+          <tr><td class="matrix-label">Predict a Category</td><td>Binary or multi-class? Simple, small, large/tabular, or text/image data?</td><td>Logistic Regression, Decision Tree, Naive Bayes (interpretable) · SVM, k-NN (small data) · Random Forest, XGBoost, LightGBM, CatBoost (large/tabular) · Neural Networks, CNNs, Transformers (text/image)</td></tr>
+          <tr><td class="matrix-label">Predict a Number</td><td>Is the relationship mostly linear or nonlinear?</td><td>Linear Regression, Ridge, Lasso, Elastic Net (linear) · Decision Tree/Random Forest/GBM/XGBoost Regressor, SVR, k-NN Regressor, MLP (nonlinear)</td></tr>
+          <tr><td class="matrix-label">Find Groups or Patterns</td><td>Do you know the number of groups in advance?</td><td>K-Means, K-Medoids, Hierarchical Clustering, GMM (known groups) · DBSCAN, HDBSCAN (unknown groups) · LDA, NMF, Probabilistic LDA (topic/latent structure)</td></tr>
+          <tr><td class="matrix-label">Reduce Dimensions</td><td>Do you need visualization or feature compression?</td><td>PCA, t-SNE, UMAP (visualization) · Truncated SVD, ICA, Autoencoders, VAE (compression)</td></tr>
+          <tr><td class="matrix-label">Forecast Over Time</td><td>Seasonal/simple patterns, or complex sequential patterns?</td><td>ARIMA, SARIMA, Prophet (traditional statistics) · XGBoost/LightGBM on lag features, LSTM, GRU, TCN, Transformer models (ML/DL) · VAR, VECM, DeepVAR (multiple related series)</td></tr>
+          <tr><td class="matrix-label">Detect Anomalies</td><td>Simple point outliers or complex patterns?</td><td>Isolation Forest, One-Class SVM, LOF, Elliptic Envelope (point outliers) · Autoencoders, VAE, LSTM, Deep SVDD (complex patterns) · labeled data → supervised classification instead</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Other Things to Consider</div>
+        <table class="matrix">
+          <tr><td class="matrix-label">Data Size</td><td>More data usually improves performance; deep models need more of it</td></tr>
+          <tr><td class="matrix-label">Interpretability</td><td>Linear models and trees are easier to explain than deep models</td></tr>
+          <tr><td class="matrix-label">Training Speed</td><td>Simple models train faster; boosting and deep models take longer</td></tr>
+          <tr><td class="matrix-label">Overfitting</td><td>Use cross-validation, regularization, early stopping, and simpler baselines</td></tr>
+          <tr><td class="matrix-label">Feature Engineering</td><td>Good features can beat complex models; domain knowledge matters</td></tr>
+          <tr><td class="matrix-label">Compute Cost</td><td>Deep models require more CPU/GPU memory and longer training</td></tr>
+          <tr><td class="matrix-label">Evaluation Metrics</td><td>Choose metrics that match your objective (accuracy, RMSE, F1, AUC, MAPE)</td></tr>
+        </table>
+        <div class="trick-output" style="margin-top:8px;">No single best algorithm — start simple, compare models, and choose based on your data, objective, and constraints.</div>
       </div>
     </div>
 
