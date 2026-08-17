@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Windows Networking Commands Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E17;
+    --panel-border:#F2C14E;
+    --gold:#F2C14E;
+    --text:#ECEAE4;
+    --text-dim:#9AA1B2;
+    --row-line: rgba(242,193,78,0.14);
+
+    --win-blue:#4FA3E3;
+    --win-teal:#5FD3B3;
+    --win-amber:#FFB86B;
+    --win-coral:#FF6B5B;
+    --win-purple:#B39CFF;
+    --win-green:#4ADE9E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(242,193,78,0.05), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(79,163,227,0.06), transparent 40%),
+      var(--bg);
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    padding:28px;
+  }
+  .wordmark{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .wordmark h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:40px;
+    margin:0;
+    letter-spacing:-0.5px;
+  }
+  .wordmark h1 span{color:var(--gold);}
+  .wordmark .sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--text-dim);
+    letter-spacing:0.5px;
+  }
+  .chips{display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.12);
+    display:flex;align-items:center;gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .chip:hover{
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(255,255,255,0.28);
+  }
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;}
+  }
+  .quadrant{
+    background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+    border:1.5px solid var(--panel-border);
+    border-radius:16px;
+    padding:18px;
+    scroll-margin-top:20px;
+  }
+  .quad-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .quad-head .icon{
+    width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;font-size:13px;color:#0A0E17;
+  }
+  .quad-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:20px;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .quad-head .tag{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--text-dim);
+    text-align:right;
+  }
+  .section{margin-bottom:14px;}
+  .section:last-child{margin-bottom:0;}
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    padding:6px 10px;
+    border-radius:6px;
+    margin-bottom:2px;
+    color:#0A0E17;
+  }
+  table{width:100%;border-collapse:collapse;}
+  td{
+    padding:5px 10px;
+    font-size:12px;
+    border-bottom:1px solid var(--row-line);
+    vertical-align:top;
+    line-height:1.4;
+  }
+  tr:last-child td{border-bottom:none;}
+  td.fn{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    color:var(--gold);
+    width:38%;
+  }
+  td.desc{color:var(--text);}
+
+  .win-blue .quad-head .icon{background:var(--win-blue);}
+  .win-blue .section-title{background:var(--win-blue);}
+  .win-blue td.fn{color:var(--win-blue);}
+
+  .win-teal .quad-head .icon{background:var(--win-teal);}
+  .win-teal .section-title{background:var(--win-teal);}
+  .win-teal td.fn{color:var(--win-teal);}
+
+  .win-amber .quad-head .icon{background:var(--win-amber);}
+  .win-amber .section-title{background:var(--win-amber);}
+  .win-amber td.fn{color:var(--win-amber);}
+
+  .win-coral .quad-head .icon{background:var(--win-coral);}
+  .win-coral .section-title{background:var(--win-coral);}
+  .win-coral td.fn{color:var(--win-coral);}
+
+  .win-purple .quad-head .icon{background:var(--win-purple);}
+  .win-purple .section-title{background:var(--win-purple);}
+  .win-purple td.fn{color:var(--win-purple);}
+
+  .win-green .quad-head .icon{background:var(--win-green);}
+  .win-green .section-title{background:var(--win-green);}
+  .win-green td.fn{color:var(--win-green);}
+
+  .footer{
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+  <div class="wordmark">
+    <div>
+      <h1>Windows <span>Networking</span></h1>
+      <div class="sub">command prompt · network diagnostics — quick reference</div>
+    </div>
+    <div class="chips">
+      <a href="#section-config" class="chip"><span class="dot" style="background:var(--win-blue)"></span>ip config</a>
+      <a href="#section-reachability" class="chip"><span class="dot" style="background:var(--win-teal)"></span>reachability</a>
+      <a href="#section-connections" class="chip"><span class="dot" style="background:var(--win-amber)"></span>connections</a>
+      <a href="#section-dns" class="chip"><span class="dot" style="background:var(--win-coral)"></span>dns · shares</a>
+      <a href="#section-arp" class="chip"><span class="dot" style="background:var(--win-purple)"></span>arp · routing</a>
+      <a href="#section-remote" class="chip"><span class="dot" style="background:var(--win-green)"></span>identity · remote</a>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- IP CONFIGURATION -->
+    <div id="section-config" class="quadrant win-blue">
+      <div class="quad-head">
+        <div class="icon">ip</div>
+        <h2>IP Configuration</h2>
+        <div class="tag">ipconfig</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">View &amp; Manage IP Settings</div>
+        <table>
+          <tr><td class="fn">ipconfig</td><td class="desc">Show basic network configuration for all adapters</td></tr>
+          <tr><td class="fn">ipconfig /all</td><td class="desc">Show detailed network info, including MAC address and DNS servers</td></tr>
+          <tr><td class="fn">ipconfig /release</td><td class="desc">Release the current DHCP-assigned IP address</td></tr>
+          <tr><td class="fn">ipconfig /renew</td><td class="desc">Request a new IP address from the DHCP server</td></tr>
+          <tr><td class="fn">ipconfig /flushdns</td><td class="desc">Clear the local DNS resolver cache</td></tr>
+          <tr><td class="fn">ipconfig /displaydns</td><td class="desc">Display the contents of the DNS resolver cache</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- REACHABILITY & PATH ANALYSIS -->
+    <div id="section-reachability" class="quadrant win-teal">
+      <div class="quad-head">
+        <div class="icon">rt</div>
+        <h2>Reachability</h2>
+        <div class="tag">ping · tracert · pathping</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Testing Connectivity</div>
+        <table>
+          <tr><td class="fn">ping &lt;destination&gt;</td><td class="desc">Test whether a host is reachable and measure round-trip time</td></tr>
+          <tr><td class="fn">tracert &lt;destination&gt;</td><td class="desc">Show the network path (hops) taken to reach a destination</td></tr>
+          <tr><td class="fn">pathping &lt;destination&gt;</td><td class="desc">Combine ping and tracert for detailed per-hop path analysis</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- CONNECTIONS & PORTS -->
+    <div id="section-connections" class="quadrant win-amber">
+      <div class="quad-head">
+        <div class="icon">nt</div>
+        <h2>Connections &amp; Ports</h2>
+        <div class="tag">netstat</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Inspecting Active Connections</div>
+        <table>
+          <tr><td class="fn">netstat</td><td class="desc">Show active network connections and listening ports</td></tr>
+          <tr><td class="fn">netstat -a</td><td class="desc">Show all connections and listening ports</td></tr>
+          <tr><td class="fn">netstat -n</td><td class="desc">Show addresses and ports in numerical form, without resolving names</td></tr>
+          <tr><td class="fn">netstat -o</td><td class="desc">Show the process ID (PID) owning each connection</td></tr>
+          <tr><td class="fn">netstat -ano</td><td class="desc">Show all connections with numerical addresses and process IDs</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DNS & SHARES -->
+    <div id="section-dns" class="quadrant win-coral">
+      <div class="quad-head">
+        <div class="icon">dn</div>
+        <h2>DNS &amp; Network Shares</h2>
+        <div class="tag">nslookup · net use · net view</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">DNS Lookups</div>
+        <table>
+          <tr><td class="fn">nslookup</td><td class="desc">Query DNS information for a domain</td></tr>
+          <tr><td class="fn">nslookup -type=&lt;type&gt; &lt;domain&gt;</td><td class="desc">Query a specific DNS record type, e.g. MX or TXT</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Network Shares</div>
+        <table>
+          <tr><td class="fn">net use</td><td class="desc">Manage connections to shared network resources</td></tr>
+          <tr><td class="fn">net view</td><td class="desc">Show computers and shares available on the network</td></tr>
+          <tr><td class="fn">net view \\&lt;computer&gt;</td><td class="desc">Show the shared resources on a specific computer</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ARP & ROUTING -->
+    <div id="section-arp" class="quadrant win-purple">
+      <div class="quad-head">
+        <div class="icon">ar</div>
+        <h2>ARP &amp; Routing</h2>
+        <div class="tag">arp · route · nbtstat</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">ARP Cache</div>
+        <table>
+          <tr><td class="fn">arp -a</td><td class="desc">Show the ARP cache, mapping IP addresses to MAC addresses</td></tr>
+          <tr><td class="fn">arp -d &lt;IP&gt;</td><td class="desc">Delete an entry from the ARP cache</td></tr>
+          <tr><td class="fn">arp -s &lt;IP&gt; &lt;MAC&gt;</td><td class="desc">Add a static ARP entry</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Routing &amp; NetBIOS</div>
+        <table>
+          <tr><td class="fn">route print</td><td class="desc">Show the local IP routing table</td></tr>
+          <tr><td class="fn">nbtstat -n</td><td class="desc">Show local NetBIOS names</td></tr>
+          <tr><td class="fn">nbtstat -a &lt;remote&gt;</td><td class="desc">Show NetBIOS names registered on a remote computer</td></tr>
+          <tr><td class="fn">nbtstat -c</td><td class="desc">Show the local NetBIOS name cache</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- IDENTITY & REMOTE ACCESS -->
+    <div id="section-remote" class="quadrant win-green">
+      <div class="quad-head">
+        <div class="icon">rm</div>
+        <h2>Identity &amp; Remote Access</h2>
+        <div class="tag">hostname · ssh · rdp</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Machine Identity</div>
+        <table>
+          <tr><td class="fn">hostname</td><td class="desc">Show the local computer's name</td></tr>
+          <tr><td class="fn">getmac</td><td class="desc">Show the MAC addresses of network adapters</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Remote Connections</div>
+        <table>
+          <tr><td class="fn">telnet &lt;host&gt; &lt;port&gt;</td><td class="desc">Open a basic, unencrypted remote connection to a host/port</td></tr>
+          <tr><td class="fn">ssh &lt;user&gt;@&lt;host&gt; -p &lt;port&gt;</td><td class="desc">Open a secure, encrypted remote shell connection</td></tr>
+          <tr><td class="fn">mstsc</td><td class="desc">Open Remote Desktop Connection</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>WINDOWS NETWORKING · QUICK REFERENCE</span>
+    <span>ipconfig / ping / netstat / arp / route / nbtstat</span>
+  </div>
+
+</body>
+</html>
