@@ -31,6 +31,23 @@ Covers the math that actually shows up in data science and machine learning, tie
 - **Beginner / Intermediate / Advanced** sections spanning linear algebra, calculus, probability, statistics, optimization, and information theory
 - Each concept ties back to where it's actually used (PCA, backprop, attention, regularization, etc.) with a runnable Python snippet underneath
 
+### 📊 [Power BI Cheat Sheet](power_bi_cheatsheet.html)
+Covers Power BI end to end, from the desktop app through to the cloud service.
+
+- **Foundations & Architecture** — what Power BI is, licensing tiers, the ecosystem, data sources, and connection modes (Import/DirectQuery/Live)
+- **Power Query & M Language** — the ETL process, common transformations, applied steps, query folding, parameters, custom functions, and Merge vs Append
+- **Data Modeling** — star vs snowflake schema, cardinality, cross-filter direction, fact vs dimension tables
+- **DAX** — fundamentals (measures, calculated columns/tables, core functions), row/filter context & context transition, time intelligence, and advanced patterns (running totals, percent of total, ranking, multi-condition CALCULATE) plus an interview-traps box
+- **Visualization & Dashboard Design** — a visual-selection guide, UX principles, color psychology, themes/formatting, conditional formatting, navigation & bookmarks
+- **Filters & Interaction, Service & Security** — filter/slicer types, drill actions, workspaces, scheduled refresh, Q&A/Smart Narratives/Goals, RLS vs OLS, performance optimization, and a 20-question interview Q&A
+
+### 🪟 [Windows Networking Commands](windows_networking_cheatsheet.html)
+Command-line reference for diagnosing and inspecting Windows networking.
+
+- **IP Configuration** (`ipconfig`), **Reachability** (`ping`/`tracert`/`pathping`), **Connections & Ports** (`netstat`)
+- **DNS & Network Shares** (`nslookup`/`net use`/`net view`), **ARP & Routing** (`arp`/`route print`/`nbtstat`)
+- **Identity & Remote Access** (`hostname`/`getmac`/`telnet`/`ssh`/`mstsc`)
+
 ## 🚀 Usage
 
 **View them live:** [daniel-goddard.github.io/cheatsheets](https://daniel-goddard.github.io/cheatsheets/)

@@ -15,6 +15,8 @@
     --python:#4B8BBE;
     --postgres:#4F97D1;
     --math:#C0605A;
+    --powerbi:#F2C14E;
+    --winnet:#5FD3B3;
   }
   *{box-sizing:border-box;}
   body{
@@ -81,12 +83,16 @@
   #postgres:hover{border-color:var(--postgres);}
   #math .dot{background:var(--math);}
   #math:hover{border-color:var(--math);}
+  #powerbi .dot{background:var(--powerbi);}
+  #powerbi:hover{border-color:var(--powerbi);}
+  #winnet .dot{background:var(--winnet);}
+  #winnet:hover{border-color:var(--winnet);}
 </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Cheat <span>Sheets</span></h1>
-    <div class="sub">quick references for python · sql · math — pick one below</div>
+    <div class="sub">quick references for python · sql · math · power bi · networking — pick one below</div>
 
     <div class="cards">
       <a id="python" class="card" href="python_libraries_cheatsheet.html">
@@ -102,6 +108,16 @@
       <a id="math" class="card" href="math_ds_ml_ai_cheatsheet.html">
         <div class="card-title"><span class="dot"></span>Math for Data Science, ML &amp; AI</div>
         <div class="card-desc">Linear algebra, calculus, probability, statistics, optimization &amp; information theory — Beginner to Advanced.</div>
+      </a>
+
+      <a id="powerbi" class="card" href="power_bi_cheatsheet.html">
+        <div class="card-title"><span class="dot"></span>Power BI Cheat Sheet</div>
+        <div class="card-desc">Foundations, Power Query/M, data modeling, DAX (fundamentals to advanced patterns), visualization, the Service &amp; security.</div>
+      </a>
+
+      <a id="winnet" class="card" href="windows_networking_cheatsheet.html">
+        <div class="card-title"><span class="dot"></span>Windows Networking Commands</div>
+        <div class="card-desc">ipconfig, ping/tracert/pathping, netstat, nslookup, arp/route, and remote access commands.</div>
       </a>
     </div>
   </div>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Power BI Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E17;
+    --panel-border:#F2C14E;
+    --gold:#F2C14E;
+    --text:#ECEAE4;
+    --text-dim:#9AA1B2;
+    --row-line: rgba(242,193,78,0.14);
+
+    --pbi-blue:#4F97D1;
+    --pbi-gold:#F2C14E;
+    --pbi-teal:#5FD3B3;
+    --pbi-purple:#B39CFF;
+    --pbi-orange:#F7A63E;
+    --pbi-coral:#FF6B5B;
+    --pbi-green:#4ADE9E;
+    --pbi-cyan:#5CC2E8;
+    --pbi-lime:#C6E86B;
+    --pbi-pink:#FF8FB3;
+    --pbi-steel:#7FA8E0;
+    --pbi-indigo:#8C9EFF;
+    --pbi-amber:#FFB86B;
+    --pbi-mint:#7EE8C0;
+    --pbi-slate:#A9B4C4;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(242,193,78,0.05), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(79,151,209,0.06), transparent 40%),
+      var(--bg);
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    padding:28px;
+  }
+  .wordmark{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-bottom:22px;
+  }
+  .wordmark h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:44px;
+    margin:0;
+    letter-spacing:-0.5px;
+  }
+  .wordmark h1 span{color:var(--gold);}
+  .wordmark .sub{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--text-dim);
+    letter-spacing:0.5px;
+  }
+  .chips{display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    padding:5px 10px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.12);
+    display:flex;align-items:center;gap:6px;
+    color:var(--text);
+    text-decoration:none;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .chip:hover{
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(255,255,255,0.28);
+  }
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;}
+  }
+  .quadrant{
+    background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
+    border:1.5px solid var(--panel-border);
+    border-radius:16px;
+    padding:18px;
+    scroll-margin-top:20px;
+  }
+  .full-width{grid-column:1 / -1;}
+  .quad-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .quad-head .icon{
+    width:30px;height:30px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;font-size:13px;color:#0A0E17;
+  }
+  .quad-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:20px;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .quad-head .tag{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    color:var(--text-dim);
+    text-align:right;
+  }
+  .section{margin-bottom:14px;}
+  .section:last-child{margin-bottom:0;}
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    padding:6px 10px;
+    border-radius:6px;
+    margin-bottom:2px;
+    color:#0A0E17;
+  }
+  table{width:100%;border-collapse:collapse;}
+  td{
+    padding:5px 10px;
+    font-size:12px;
+    border-bottom:1px solid var(--row-line);
+    vertical-align:top;
+    line-height:1.4;
+  }
+  tr:last-child td{border-bottom:none;}
+  td.fn{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    color:var(--gold);
+    width:34%;
+  }
+  td.desc{color:var(--text);}
+
+  .pbi-blue .quad-head .icon{background:var(--pbi-blue);}
+  .pbi-blue .section-title{background:var(--pbi-blue);}
+  .pbi-blue td.fn{color:var(--pbi-blue);}
+
+  .pbi-gold .quad-head .icon{background:var(--pbi-gold);}
+  .pbi-gold .section-title{background:var(--pbi-gold);}
+  .pbi-gold td.fn{color:var(--pbi-gold);}
+
+  .pbi-teal .quad-head .icon{background:var(--pbi-teal);}
+  .pbi-teal .section-title{background:var(--pbi-teal);}
+  .pbi-teal td.fn{color:var(--pbi-teal);}
+
+  .pbi-purple .quad-head .icon{background:var(--pbi-purple);}
+  .pbi-purple .section-title{background:var(--pbi-purple);}
+  .pbi-purple td.fn{color:var(--pbi-purple);}
+
+  .pbi-orange .quad-head .icon{background:var(--pbi-orange);}
+  .pbi-orange .section-title{background:var(--pbi-orange);}
+  .pbi-orange td.fn{color:var(--pbi-orange);}
+
+  .pbi-coral .quad-head .icon{background:var(--pbi-coral);}
+  .pbi-coral .section-title{background:var(--pbi-coral);}
+  .pbi-coral td.fn{color:var(--pbi-coral);}
+
+  .pbi-green .quad-head .icon{background:var(--pbi-green);}
+  .pbi-green .section-title{background:var(--pbi-green);}
+  .pbi-green td.fn{color:var(--pbi-green);}
+
+  .pbi-cyan .quad-head .icon{background:var(--pbi-cyan);}
+  .pbi-cyan .section-title{background:var(--pbi-cyan);}
+  .pbi-cyan td.fn{color:var(--pbi-cyan);}
+
+  .pbi-lime .quad-head .icon{background:var(--pbi-lime);}
+  .pbi-lime .section-title{background:var(--pbi-lime);}
+  .pbi-lime td.fn{color:var(--pbi-lime);}
+
+  .pbi-pink .quad-head .icon{background:var(--pbi-pink);}
+  .pbi-pink .section-title{background:var(--pbi-pink);}
+  .pbi-pink td.fn{color:var(--pbi-pink);}
+
+  .pbi-steel .quad-head .icon{background:var(--pbi-steel);}
+  .pbi-steel .section-title{background:var(--pbi-steel);}
+  .pbi-steel td.fn{color:var(--pbi-steel);}
+
+  .pbi-indigo .quad-head .icon{background:var(--pbi-indigo);}
+  .pbi-indigo .section-title{background:var(--pbi-indigo);}
+  .pbi-indigo td.fn{color:var(--pbi-indigo);}
+
+  .pbi-amber .quad-head .icon{background:var(--pbi-amber);}
+  .pbi-amber .section-title{background:var(--pbi-amber);}
+  .pbi-amber td.fn{color:var(--pbi-amber);}
+
+  .pbi-mint .quad-head .icon{background:var(--pbi-mint);}
+  .pbi-mint .section-title{background:var(--pbi-mint);}
+  .pbi-mint td.fn{color:var(--pbi-mint);}
+
+  .pbi-slate .quad-head .icon{background:var(--pbi-slate);}
+  .pbi-slate .section-title{background:var(--pbi-slate);}
+  .pbi-slate td.fn{color:var(--pbi-slate);}
+
+  /* code / trick blocks */
+  .trick{margin-bottom:12px;}
+  .trick:last-child{margin-bottom:0;}
+  .trick-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    margin-bottom:6px;
+    color:var(--text);
+  }
+  .trick-code{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    word-break:break-word;
+    margin:0;
+  }
+  .pbi-blue .trick-code{color:var(--pbi-blue);}
+  .pbi-gold .trick-code{color:var(--pbi-gold);}
+  .pbi-teal .trick-code{color:var(--pbi-teal);}
+  .pbi-purple .trick-code{color:var(--pbi-purple);}
+  .pbi-orange .trick-code{color:var(--pbi-orange);}
+  .pbi-coral .trick-code{color:var(--pbi-coral);}
+  .pbi-green .trick-code{color:var(--pbi-green);}
+  .pbi-cyan .trick-code{color:var(--pbi-cyan);}
+  .pbi-lime .trick-code{color:var(--pbi-lime);}
+  .pbi-pink .trick-code{color:var(--pbi-pink);}
+  .pbi-steel .trick-code{color:var(--pbi-steel);}
+  .pbi-indigo .trick-code{color:var(--pbi-indigo);}
+  .pbi-amber .trick-code{color:var(--pbi-amber);}
+  .pbi-mint .trick-code{color:var(--pbi-mint);}
+  .pbi-slate .trick-code{color:var(--pbi-slate);}
+
+  .footer{
+    margin-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+  <div class="wordmark">
+    <div>
+      <h1>Power <span>BI</span></h1>
+      <div class="sub">foundations · modeling · dax · service &amp; security — quick reference</div>
+    </div>
+    <div class="chips">
+      <a href="#section-foundations" class="chip"><span class="dot" style="background:var(--pbi-gold)"></span>foundations</a>
+      <a href="#section-architecture" class="chip"><span class="dot" style="background:var(--pbi-blue)"></span>architecture</a>
+      <a href="#section-powerquery" class="chip"><span class="dot" style="background:var(--pbi-teal)"></span>power query / m</a>
+      <a href="#section-modeling" class="chip"><span class="dot" style="background:var(--pbi-purple)"></span>data modeling</a>
+      <a href="#section-dax-fundamentals" class="chip"><span class="dot" style="background:var(--pbi-coral)"></span>dax fundamentals</a>
+      <a href="#section-dax-context" class="chip"><span class="dot" style="background:var(--pbi-orange)"></span>dax context</a>
+      <a href="#section-dax-patterns" class="chip"><span class="dot" style="background:var(--pbi-green)"></span>dax patterns</a>
+      <a href="#section-visualization" class="chip"><span class="dot" style="background:var(--pbi-cyan)"></span>visualization</a>
+      <a href="#section-dashboard" class="chip"><span class="dot" style="background:var(--pbi-pink)"></span>dashboard design</a>
+      <a href="#section-filters" class="chip"><span class="dot" style="background:var(--pbi-steel)"></span>filters</a>
+      <a href="#section-service" class="chip"><span class="dot" style="background:var(--pbi-indigo)"></span>service</a>
+      <a href="#section-security" class="chip"><span class="dot" style="background:var(--pbi-lime)"></span>security</a>
+      <a href="#section-performance" class="chip"><span class="dot" style="background:var(--pbi-mint)"></span>performance</a>
+      <a href="#section-bestpractices" class="chip"><span class="dot" style="background:var(--pbi-slate)"></span>best practices</a>
+      <a href="#section-interview" class="chip"><span class="dot" style="background:var(--pbi-amber)"></span>interview q&amp;a</a>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- FOUNDATIONS -->
+    <div id="section-foundations" class="quadrant pbi-gold">
+      <div class="quad-head">
+        <div class="icon">bi</div>
+        <h2>Foundations</h2>
+        <div class="tag">what is power bi</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">What is Power BI?</div>
+        <table>
+          <tr><td class="fn">Business Intelligence</td><td class="desc">Process of collecting, analyzing &amp; turning data into insights for better decisions</td></tr>
+          <tr><td class="fn">Power BI</td><td class="desc">Microsoft suite of BI tools to connect to data, visualize it &amp; share insights across an organization</td></tr>
+          <tr><td class="fn">Data → Decisions</td><td class="desc">Visualize → Analyze → Make Better Decisions</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Key Features</div>
+        <table>
+          <tr><td class="fn">Connect</td><td class="desc">Connect to hundreds of data sources</td></tr>
+          <tr><td class="fn">Model</td><td class="desc">Build a strong data model with relationships</td></tr>
+          <tr><td class="fn">Visualize</td><td class="desc">Create interactive &amp; beautiful reports</td></tr>
+          <tr><td class="fn">Share</td><td class="desc">Share insights with your team securely</td></tr>
+          <tr><td class="fn">Refresh</td><td class="desc">Keep data up-to-date with scheduled refresh</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ecosystem Components</div>
+        <table>
+          <tr><td class="fn">Power BI Desktop</td><td class="desc">Free Windows app to connect, transform, model data &amp; build reports</td></tr>
+          <tr><td class="fn">Power BI Service</td><td class="desc">Cloud service (SaaS) to publish, share, collaborate &amp; create dashboards/apps</td></tr>
+          <tr><td class="fn">Power BI Mobile</td><td class="desc">Mobile apps to view dashboards &amp; reports on the go</td></tr>
+          <tr><td class="fn">Power BI Report Server</td><td class="desc">On-premises solution to publish &amp; manage reports internally</td></tr>
+          <tr><td class="fn">On-Prem Data Gateway</td><td class="desc">Secure bridge between Power BI Service and on-premises data sources</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Licensing Tiers</div>
+        <table>
+          <tr><td class="fn">Free</td><td class="desc">Power BI Desktop; My Workspace only, limited sharing — learning &amp; personal use</td></tr>
+          <tr><td class="fn">Pro</td><td class="desc">Full sharing/collaboration, Apps &amp; Workspaces, 10GB storage — individuals &amp; small teams</td></tr>
+          <tr><td class="fn">Premium Per User</td><td class="desc">All Pro features, larger storage (100GB) &amp; AI features — power users</td></tr>
+          <tr><td class="fn">Premium Capacity / Fabric</td><td class="desc">Dedicated capacity, large-scale workloads, Microsoft Fabric — enterprise</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE & DATA SOURCES -->
+    <div id="section-architecture" class="quadrant pbi-blue">
+      <div class="quad-head">
+        <div class="icon">ar</div>
+        <h2>Architecture &amp; Data Sources</h2>
+        <div class="tag">end-to-end flow</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">End-to-End Flow</div>
+        <table>
+          <tr><td class="fn">Data Sources</td><td class="desc">Connect to databases, files, cloud services &amp; APIs</td></tr>
+          <tr><td class="fn">Power Query (ETL)</td><td class="desc">Extract, clean, transform &amp; load data using M Language</td></tr>
+          <tr><td class="fn">Data Model</td><td class="desc">Create tables, define relationships &amp; structure using Star Schema</td></tr>
+          <tr><td class="fn">DAX</td><td class="desc">Create measures, calculated columns &amp; tables for calculations</td></tr>
+          <tr><td class="fn">Visualizations</td><td class="desc">Build interactive charts, cards &amp; KPIs</td></tr>
+          <tr><td class="fn">Reports → Dashboards</td><td class="desc">Combine visuals into pages; pin key visuals for at-a-glance monitoring</td></tr>
+          <tr><td class="fn">Power BI Service</td><td class="desc">Publish, share, collaborate &amp; schedule refreshes</td></tr>
+          <tr><td class="fn">Business Users</td><td class="desc">Access dashboards &amp; reports to make data-driven decisions</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Popular Data Sources</div>
+        <table>
+          <tr><td class="fn">Excel / CSV</td><td class="desc">.xlsx/.xls files from local, OneDrive or SharePoint; comma-separated values files</td></tr>
+          <tr><td class="fn">SQL Server / PostgreSQL / MySQL</td><td class="desc">Relational data from on-premises or cloud databases</td></tr>
+          <tr><td class="fn">Oracle</td><td class="desc">Data from Oracle databases</td></tr>
+          <tr><td class="fn">SharePoint</td><td class="desc">Lists, libraries &amp; SharePoint Online data</td></tr>
+          <tr><td class="fn">Azure</td><td class="desc">Azure SQL, Synapse, Blob, Data Lake, Cosmos DB, etc.</td></tr>
+          <tr><td class="fn">REST APIs</td><td class="desc">Connect to web APIs &amp; pull live data</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Connection Modes</div>
+        <table>
+          <tr><td class="fn">Import</td><td class="desc">Data imported &amp; stored in-memory (VertiPaq) — fastest, best for small/medium datasets, needs refresh</td></tr>
+          <tr><td class="fn">DirectQuery</td><td class="desc">Data stays in source, queried in real time — best for huge/fast-changing data, limited transforms</td></tr>
+          <tr><td class="fn">Live Connection</td><td class="desc">Connects directly to an Analysis Services or Power BI semantic model — reuses governed enterprise models</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- POWER QUERY & M LANGUAGE -->
+    <div id="section-powerquery" class="quadrant pbi-teal">
+      <div class="quad-head">
+        <div class="icon">pq</div>
+        <h2>Power Query &amp; M Language</h2>
+        <div class="tag">ETL layer</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">ETL Process</div>
+        <table>
+          <tr><td class="fn">Extract</td><td class="desc">Connect to multiple data sources (Get Data)</td></tr>
+          <tr><td class="fn">Transform</td><td class="desc">Clean, reshape &amp; enrich data in the Power Query Editor</td></tr>
+          <tr><td class="fn">Load</td><td class="desc">Click Close &amp; Apply to load the transformed table into the Data Model</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Common M Transformations</div>
+        <table>
+          <tr><td class="fn">Table.SelectRows</td><td class="desc">Filter rows matching a condition (UI: "Filter Rows")</td></tr>
+          <tr><td class="fn">Table.AddColumn</td><td class="desc">Add a new calculated column (UI: "Custom Column")</td></tr>
+          <tr><td class="fn">Table.Group</td><td class="desc">Group rows &amp; aggregate — Sum, Count, Avg, etc. (UI: "Group By")</td></tr>
+          <tr><td class="fn">Table.RenameColumns</td><td class="desc">Rename one or more columns</td></tr>
+          <tr><td class="fn">Table.RemoveColumns</td><td class="desc">Drop columns you don't need</td></tr>
+          <tr><td class="fn">Table.TransformColumnTypes</td><td class="desc">Change a column's data type</td></tr>
+          <tr><td class="fn">Table.Sort</td><td class="desc">Sort rows ascending or descending</td></tr>
+          <tr><td class="fn">Table.NestedJoin</td><td class="desc">Merge queries on a common key (UI: "Merge Queries")</td></tr>
+          <tr><td class="fn">Table.Combine</td><td class="desc">Append multiple tables with the same structure</td></tr>
+          <tr><td class="fn">Table.Pivot</td><td class="desc">Turn unique row values into new columns</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Applied Steps — M Code</div>
+        <div class="trick">
+          <div class="trick-title">Every UI action is just sugar for a let…in expression</div>
+          <div class="trick-code">let
+    Source = Sql.Database("myserver", "SalesDB"),
+    dbo_Orders = Source{[Schema="dbo",Item="Orders"]}[Data],
+    #"Filtered Rows" = Table.SelectRows(dbo_Orders, each [OrderDate] >= #date(2026,1,1)),
+    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows", {{"Amt", "OrderAmount"}})
+in
+    #"Renamed Columns"</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Parameters &amp; Custom Functions</div>
+        <div class="trick">
+          <div class="trick-title">Reusable parameter</div>
+          <div class="trick-code">StartDate = #date(2026, 1, 1) meta [IsParameterQuery=true, Type="Date"]</div>
+        </div>
+        <div class="trick">
+          <div class="trick-title">Custom function, invoked as GetSalesForRegion("West")</div>
+          <div class="trick-code">let
+    GetSalesForRegion = (region as text) =>
+        Table.SelectRows(Sales, each [Region] = region)
+in
+    GetSalesForRegion</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Query Folding</div>
+        <table>
+          <tr><td class="fn">What it Does</td><td class="desc">Pushes transformations back to the source system (e.g. generates equivalent SQL) instead of pulling all raw data in first</td></tr>
+          <tr><td class="fn">Check Folding</td><td class="desc">Right-click a step → "View Native Query" to confirm folding is still intact</td></tr>
+          <tr><td class="fn">Best Practice</td><td class="desc">Filter &amp; aggregate early; custom columns and text transformations can break folding — keep them late in the sequence</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Merge vs Append Queries</div>
+        <table>
+          <tr><td class="fn">Merge Queries</td><td class="desc">Join two queries side-by-side on a common column — adds columns (like a VLOOKUP/SQL JOIN)</td></tr>
+          <tr><td class="fn">Append Queries</td><td class="desc">Stack two or more queries with the same structure — adds rows (like a SQL UNION ALL)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DATA MODELING -->
+    <div id="section-modeling" class="quadrant pbi-purple">
+      <div class="quad-head">
+        <div class="icon">dm</div>
+        <h2>Data Modeling</h2>
+        <div class="tag">star schema · relationships</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Core Concepts</div>
+        <table>
+          <tr><td class="fn">Tables</td><td class="desc">A collection of related data organized in rows &amp; columns</td></tr>
+          <tr><td class="fn">Relationships</td><td class="desc">Connections between tables using common fields (keys)</td></tr>
+          <tr><td class="fn">Cardinality</td><td class="desc">Defines the relationship type between two tables</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cardinality Types</div>
+        <table>
+          <tr><td class="fn">One-to-Many (1:*)</td><td class="desc">One dimension row relates to many fact rows — the standard, most common pattern</td></tr>
+          <tr><td class="fn">One-to-One (1:1)</td><td class="desc">Exactly one row on each side — rare, usually indicates tables that could be merged</td></tr>
+          <tr><td class="fn">Many-to-Many (*:*)</td><td class="desc">Multiple rows on both sides can relate — use carefully, can double-count if not modeled deliberately</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Star vs Snowflake Schema</div>
+        <table>
+          <tr><td class="fn">Star Schema (recommended)</td><td class="desc">A central fact table connected directly to flat dimension tables — simpler, best performance, favored by the VertiPaq engine</td></tr>
+          <tr><td class="fn">Snowflake Schema</td><td class="desc">Dimensions further normalized into sub-dimensions — saves storage, but adds join hops &amp; is slower to query</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Fact vs Dimension Tables</div>
+        <table>
+          <tr><td class="fn">Fact Table</td><td class="desc">The "events" — one row per transaction/measurement, mostly numeric + foreign keys (e.g. Fact_Sales)</td></tr>
+          <tr><td class="fn">Dimension Table</td><td class="desc">The "who/what/when/where" — descriptive attributes used for filtering &amp; grouping (e.g. Dim_Customer, Dim_Date)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Cross-Filter Direction</div>
+        <table>
+          <tr><td class="fn">Single (→)</td><td class="desc">Filter flows from the "one" (dimension) side to the "many" (fact) side — default &amp; generally safest</td></tr>
+          <tr><td class="fn">Both (↔)</td><td class="desc">Filters propagate in both directions — only for many-to-many bridge scenarios; can cause ambiguous paths if overused</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DAX FUNDAMENTALS -->
+    <div id="section-dax-fundamentals" class="quadrant pbi-coral">
+      <div class="quad-head">
+        <div class="icon">dx</div>
+        <h2>DAX Fundamentals</h2>
+        <div class="tag">measures · columns</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">DAX Objects</div>
+        <table>
+          <tr><td class="fn">Measures</td><td class="desc">Dynamic calculations that change with filters &amp; context — used in reports &amp; visuals</td></tr>
+          <tr><td class="fn">Calculated Columns</td><td class="desc">Computed column added to a table; calculated row by row &amp; stored in the model</td></tr>
+          <tr><td class="fn">Calculated Tables</td><td class="desc">Creates a new table using a DAX expression; stored in the model like a physical table</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Basic DAX Functions</div>
+        <table>
+          <tr><td class="fn">SUM(col)</td><td class="desc">Adds all numeric values in a column</td></tr>
+          <tr><td class="fn">COUNT(col) / COUNTROWS(table)</td><td class="desc">COUNT counts non-blank values in a column; COUNTROWS counts rows in a table</td></tr>
+          <tr><td class="fn">DISTINCTCOUNT(col)</td><td class="desc">Counts the number of unique values in a column</td></tr>
+          <tr><td class="fn">MAX(col) / MIN(col)</td><td class="desc">Returns the largest / smallest value in a column</td></tr>
+          <tr><td class="fn">IF(cond, t, f)</td><td class="desc">Returns a value if a condition is TRUE, otherwise another</td></tr>
+          <tr><td class="fn">CALCULATE(expr, filters)</td><td class="desc">Changes filter context to evaluate an expression — the most important DAX function</td></tr>
+          <tr><td class="fn">FILTER(table, cond)</td><td class="desc">Returns a filtered table based on a condition</td></tr>
+          <tr><td class="fn">RELATED(col)</td><td class="desc">Gets a value from a related table in a many-to-one relationship</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Example Measures</div>
+        <div class="trick">
+          <div class="trick-code">Total Sales = SUM(Sales[Amount])
+
+Sales 2025 = CALCULATE([Total Sales], 'Date'[Year] = 2025)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">DAX Operators</div>
+        <table>
+          <tr><td class="fn">+  −  *  /</td><td class="desc">Addition, subtraction, multiplication, division</td></tr>
+          <tr><td class="fn">&amp;</td><td class="desc">Concatenation — joins two text values, e.g. [First] &amp; " " &amp; [Last]</td></tr>
+          <tr><td class="fn">=  &lt;&gt;  &gt;  &lt;  &gt;=  &lt;=</td><td class="desc">Comparison operators — equal, not equal, greater/less than (or equal)</td></tr>
+          <tr><td class="fn">&amp;&amp;  ||</td><td class="desc">Logical AND / OR (equivalent to the AND()/OR() functions)</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Best Practices</div>
+        <table>
+          <tr><td class="fn">Measures &gt; Columns</td><td class="desc">Prefer Measures over Calculated Columns for performance — Calculated Columns increase model memory</td></tr>
+          <tr><td class="fn">Naming</td><td class="desc">Use meaningful names for Measures &amp; other DAX objects</td></tr>
+          <tr><td class="fn">RELATED Scope</td><td class="desc">RELATED() only works in many-to-one relationships</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ADVANCED DAX: CONTEXT -->
+    <div id="section-dax-context" class="quadrant pbi-orange">
+      <div class="quad-head">
+        <div class="icon">cx</div>
+        <h2>Advanced DAX: Context</h2>
+        <div class="tag">row · filter · transition</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Context Types</div>
+        <table>
+          <tr><td class="fn">Row Context</td><td class="desc">Evaluates a formula one row at a time — created by iterator functions like SUMX, FILTER, ADDCOLUMNS</td></tr>
+          <tr><td class="fn">Filter Context</td><td class="desc">The set of filters currently applied — slicers, visuals, report filters, and surrounding CALCULATE</td></tr>
+          <tr><td class="fn">Context Transition</td><td class="desc">Occurs when CALCULATE converts Row Context into Filter Context — happens automatically inside CALCULATE()</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Important DAX Functions</div>
+        <table>
+          <tr><td class="fn">SUMX(table, expr)</td><td class="desc">Iterator — adds an expression evaluated for each row, e.g. SUMX(Sales, Sales[Qty] * Sales[Price])</td></tr>
+          <tr><td class="fn">AVERAGEX(table, expr)</td><td class="desc">Iterator — averages an expression evaluated for each row of a table</td></tr>
+          <tr><td class="fn">RANKX(table, expr)</td><td class="desc">Returns the rank of a value within a table — tied values share a rank, and the next rank skips (1, 1, 3)</td></tr>
+          <tr><td class="fn">ALL(table/col)</td><td class="desc">Removes all filters from a table or column</td></tr>
+          <tr><td class="fn">REMOVEFILTERS(table/col)</td><td class="desc">Modern, more readable equivalent of ALL() for clearing filters inside CALCULATE</td></tr>
+          <tr><td class="fn">ALLEXCEPT(table, cols)</td><td class="desc">Removes all filters except on the specified columns</td></tr>
+          <tr><td class="fn">VALUES(col)</td><td class="desc">Returns distinct values from a column</td></tr>
+          <tr><td class="fn">SWITCH(expr, …)</td><td class="desc">Evaluates an expression against multiple conditions</td></tr>
+          <tr><td class="fn">DIVIDE(num, den, alt)</td><td class="desc">Safe division — handles divide by zero</td></tr>
+          <tr><td class="fn">VAR … RETURN</td><td class="desc">Stores a variable to improve readability &amp; performance</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Time Intelligence</div>
+        <table>
+          <tr><td class="fn">SAMEPERIODLASTYEAR(dates)</td><td class="desc">Shifts the current date filter back exactly one year</td></tr>
+          <tr><td class="fn">TOTALYTD(expr, dates)</td><td class="desc">Cumulative total from start of year to the current filter date</td></tr>
+          <tr><td class="fn">DATEADD(dates, n, interval)</td><td class="desc">Shifts the date filter by any interval — day/month/quarter/year</td></tr>
+          <tr><td class="fn">PARALLELPERIOD(dates, n, i)</td><td class="desc">Shifts to the same relative period, matching the whole period rather than day-for-day</td></tr>
+          <tr><td class="fn">DATESYTD / DATESMTD(dates)</td><td class="desc">Returns the year-to-date / month-to-date date range for use inside CALCULATE</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Example — YoY Growth</div>
+        <div class="trick">
+          <div class="trick-code">YoY Growth % =
+VAR SalesCY = [Total Sales]
+VAR SalesLY = CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Date'[Date]))
+RETURN
+DIVIDE(SalesCY - SalesLY, SalesLY)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADVANCED DAX PATTERNS -->
+    <div id="section-dax-patterns" class="quadrant pbi-green">
+      <div class="quad-head">
+        <div class="icon">pt</div>
+        <h2>Advanced DAX Patterns</h2>
+        <div class="tag">calculate · running total · rank</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">CALCULATE — The Core Mental Model</div>
+        <table>
+          <tr><td class="fn">Plain Measure</td><td class="desc">SUM(Sales[Amount]) simply sums whatever rows the current filter context leaves visible</td></tr>
+          <tr><td class="fn">CALCULATE's Job</td><td class="desc">The only DAX function that can modify filter context — takes the current context and layers new filters on top, replacing any existing filter on the same column</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Context Transition Example</div>
+        <div class="trick">
+          <div class="trick-title">Inside a calculated column on the Sales table</div>
+          <div class="trick-code">Customer Total = CALCULATE(SUM(Sales[Amount]), ALLEXCEPT(Sales, Sales[CustomerID]))</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Running Total</div>
+        <div class="trick">
+          <div class="trick-title">ALL() removes the date filter, FILTER re-applies a custom one</div>
+          <div class="trick-code">Running Total Sales =
+CALCULATE(
+    [Total Sales],
+    FILTER(ALL('Date'), 'Date'[Date] &lt;= MAX('Date'[Date]))
+)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Percent of Total</div>
+        <div class="trick">
+          <div class="trick-code">Pct of Total Sales =
+DIVIDE(
+    [Total Sales],
+    CALCULATE([Total Sales], ALL(Products))
+)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ranking with RANKX</div>
+        <div class="trick">
+          <div class="trick-title">Ranks ignoring the current filter so ranks stay stable</div>
+          <div class="trick-code">Product Rank =
+RANKX(ALL(Products), [Total Sales], , DESC)</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">CALCULATE with Multiple Conditions</div>
+        <div class="trick">
+          <div class="trick-title">Comma-separated filter arguments act as AND</div>
+          <div class="trick-code">South Mouse Sales =
+CALCULATE(
+    [Total Sales],
+    Sales[Region] = "South",
+    Sales[Product] = "Mouse"
+)</div>
+        </div>
+        <div class="trick">
+          <div class="trick-title">Same result built with FILTER + COUNTROWS</div>
+          <div class="trick-code">Big Orders =
+COUNTROWS(FILTER(Sales, Sales[Amount] > 500))</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Interview Traps</div>
+        <table>
+          <tr><td class="fn">SUM vs SUMX</td><td class="desc">SUM just adds a column. SUMX does the math row by row first, then sums the results.</td></tr>
+          <tr><td class="fn">CALCULATE Filters</td><td class="desc">A filter argument inside CALCULATE replaces the visual's existing filter on that same column — it doesn't add to it.</td></tr>
+          <tr><td class="fn">DIVIDE's 3rd Argument</td><td class="desc">DIVIDE(numerator, denominator, altResult) safely returns altResult (e.g. 0) instead of erroring on divide-by-zero.</td></tr>
+          <tr><td class="fn">Time Intelligence Needs a Date Table</td><td class="desc">SAMEPERIODLASTYEAR, TOTALYTD, DATEADD etc. only work correctly against a contiguous calendar table marked as the official Date Table.</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DATA VISUALIZATION -->
+    <div id="section-visualization" class="quadrant pbi-cyan">
+      <div class="quad-head">
+        <div class="icon">vz</div>
+        <h2>Data Visualization</h2>
+        <div class="tag">choosing the right visual</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Visual Selection Guide</div>
+        <table>
+          <tr><td class="fn">Table</td><td class="desc">Detailed data view, in rows &amp; columns — good for data lookups</td></tr>
+          <tr><td class="fn">Column / Bar Chart</td><td class="desc">Compare values across categories (Bar works well for long labels)</td></tr>
+          <tr><td class="fn">Line / Area Chart</td><td class="desc">Show trend or volume/magnitude over time</td></tr>
+          <tr><td class="fn">Pie / Donut Chart</td><td class="desc">Show part-to-whole for a few categories only</td></tr>
+          <tr><td class="fn">Scatter Plot</td><td class="desc">Show relationship/correlation between two measures</td></tr>
+          <tr><td class="fn">Waterfall Chart</td><td class="desc">Show the cumulative effect of positive &amp; negative values</td></tr>
+          <tr><td class="fn">Funnel Chart</td><td class="desc">Show stages in a process &amp; conversion drop-off</td></tr>
+          <tr><td class="fn">Treemap</td><td class="desc">Show part-to-whole in hierarchical rectangles</td></tr>
+          <tr><td class="fn">Gauge / KPI</td><td class="desc">Show progress toward a target</td></tr>
+          <tr><td class="fn">Maps</td><td class="desc">Show data by geographic location</td></tr>
+          <tr><td class="fn">Matrix</td><td class="desc">Display multi-dimensional data in rows &amp; columns with totals</td></tr>
+          <tr><td class="fn">Card / Multi-Row Card</td><td class="desc">Display one (or several) single KPIs/important values in a compact size</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Which Visual to Use?</div>
+        <table>
+          <tr><td class="fn">Compare Categories</td><td class="desc">Bar / Column Chart</td></tr>
+          <tr><td class="fn">Show Trend Over Time</td><td class="desc">Line / Area Chart</td></tr>
+          <tr><td class="fn">Show Part of Whole</td><td class="desc">Pie / Donut Chart (few categories only)</td></tr>
+          <tr><td class="fn">Show Relationship</td><td class="desc">Scatter Chart</td></tr>
+          <tr><td class="fn">Show Geographic Data</td><td class="desc">Map</td></tr>
+          <tr><td class="fn">Show Hierarchical Data</td><td class="desc">Treemap / Matrix</td></tr>
+          <tr><td class="fn">Show Progress to Goal</td><td class="desc">KPI / Gauge</td></tr>
+          <tr><td class="fn">Show Flow or Stages</td><td class="desc">Funnel Chart</td></tr>
+          <tr><td class="fn">Show Increase/Decrease</td><td class="desc">Waterfall Chart</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Best Practices</div>
+        <table>
+          <tr><td class="fn">Simplicity</td><td class="desc">Use the simplest visual that conveys the message</td></tr>
+          <tr><td class="fn">Consistency</td><td class="desc">Use consistent colors &amp; themes throughout the report</td></tr>
+          <tr><td class="fn">Labels</td><td class="desc">Add clear titles, labels &amp; tooltips</td></tr>
+          <tr><td class="fn">Avoid</td><td class="desc">Pie/Donut for more than 5–6 categories; unnecessary 3D visuals</td></tr>
+          <tr><td class="fn">Audience</td><td class="desc">Always focus on the audience and the business goal</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- DASHBOARD DESIGN -->
+    <div id="section-dashboard" class="quadrant pbi-pink">
+      <div class="quad-head">
+        <div class="icon">db</div>
+        <h2>Dashboard Design</h2>
+        <div class="tag">ux · color · layout</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">UX Principles</div>
+        <table>
+          <tr><td class="fn">Know Your Audience</td><td class="desc">Design around their goals &amp; the KPIs that matter to them</td></tr>
+          <tr><td class="fn">Show the Right KPIs</td><td class="desc">Not all data — only what drives decisions</td></tr>
+          <tr><td class="fn">Visual Hierarchy</td><td class="desc">Important info first; follow F-pattern reading (Top → Left → Right → Down)</td></tr>
+          <tr><td class="fn">White Space</td><td class="desc">Improves readability — don't crowd visuals, keep breathing room</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Color Psychology</div>
+        <table>
+          <tr><td class="fn">Blue</td><td class="desc">Trust, professional — best for corporate dashboards</td></tr>
+          <tr><td class="fn">Green</td><td class="desc">Growth, positive, success</td></tr>
+          <tr><td class="fn">Orange</td><td class="desc">Energy, attention</td></tr>
+          <tr><td class="fn">Red</td><td class="desc">Alerts, issues, critical values</td></tr>
+          <tr><td class="fn">Grey</td><td class="desc">Neutral, balance, background</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Layout</div>
+        <table>
+          <tr><td class="fn">Grid Layout</td><td class="desc">Use a grid for alignment; keep breathing room between visuals</td></tr>
+          <tr><td class="fn">KPIs → Charts → Details</td><td class="desc">Place KPI cards at the top, charts in the middle, details at the bottom</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Interactivity Features</div>
+        <table>
+          <tr><td class="fn">Bookmarks</td><td class="desc">Save a report state (filters, selections, visual states) for quick navigation</td></tr>
+          <tr><td class="fn">Buttons</td><td class="desc">Page Navigation, Bookmark, URL or Drillthrough actions</td></tr>
+          <tr><td class="fn">Tooltips</td><td class="desc">Additional info on hover — report page tooltips for rich, interactive detail</td></tr>
+          <tr><td class="fn">Drillthrough</td><td class="desc">Navigate from a summary visual to a detailed target page</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Navigation Types</div>
+        <table>
+          <tr><td class="fn">Page Navigation</td><td class="desc">Move between pages in the report</td></tr>
+          <tr><td class="fn">Bookmark Navigation</td><td class="desc">Save &amp; jump to a particular filtered/view state</td></tr>
+          <tr><td class="fn">Drill Navigation</td><td class="desc">View data at a different level of detail (Drill/Drillthrough)</td></tr>
+          <tr><td class="fn">Custom Navigation</td><td class="desc">Icons, images or shapes wired up as nav buttons</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Themes &amp; Report Formatting</div>
+        <table>
+          <tr><td class="fn">Themes</td><td class="desc">Control the report's overall colors, fonts &amp; effects — apply a built-in theme or build a custom one</td></tr>
+          <tr><td class="fn">Title / Background</td><td class="desc">Add or change a visual's title; change its background fill</td></tr>
+          <tr><td class="fn">Data Colors / Labels</td><td class="desc">Set per-series colors; show values directly on the visual</td></tr>
+          <tr><td class="fn">Axis / Legend / Gridlines</td><td class="desc">Format axis text, legend position, and gridline visibility</td></tr>
+          <tr><td class="fn">Tooltips</td><td class="desc">Customize what information shows on hover</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Conditional Formatting</div>
+        <table>
+          <tr><td class="fn">Data Bars</td><td class="desc">Adds in-cell bars sized relative to the value</td></tr>
+          <tr><td class="fn">Color Scale</td><td class="desc">Applies a color gradient background based on value</td></tr>
+          <tr><td class="fn">Icon Sets</td><td class="desc">Adds an icon (arrow, traffic light, etc.) based on a value threshold</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- FILTERS & INTERACTION -->
+    <div id="section-filters" class="quadrant pbi-steel">
+      <div class="quad-head">
+        <div class="icon">fl</div>
+        <h2>Filters &amp; Interaction</h2>
+        <div class="tag">slicers · drillthrough</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Filter Types</div>
+        <table>
+          <tr><td class="fn">Visual Filter</td><td class="desc">Applies to a specific visual only</td></tr>
+          <tr><td class="fn">Page Filter</td><td class="desc">Applies to all visuals on the current page</td></tr>
+          <tr><td class="fn">Report Filter</td><td class="desc">Applies to all pages in the entire report</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Slicer Types</div>
+        <table>
+          <tr><td class="fn">Dropdown Slicer</td><td class="desc">Shows values in a collapsible dropdown list</td></tr>
+          <tr><td class="fn">List Slicer</td><td class="desc">Shows values in a list with checkboxes</td></tr>
+          <tr><td class="fn">Date Slicer</td><td class="desc">Filters dates — Year, Quarter, Month, Day</td></tr>
+          <tr><td class="fn">Between Slicer</td><td class="desc">A range slider — select a range of numbers or dates</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Filters vs Slicers</div>
+        <table>
+          <tr><td class="fn">Filters</td><td class="desc">Restrict data in visuals; usually hidden in the Filter pane; not directly visible to end users</td></tr>
+          <tr><td class="fn">Slicers</td><td class="desc">A visual, on-canvas filter; always visible; users click/select values directly to filter interactively</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Drill Actions &amp; Navigation</div>
+        <table>
+          <tr><td class="fn">Drill Down</td><td class="desc">Move from higher-level data to lower-level detail (Year → Quarter → Month → Day)</td></tr>
+          <tr><td class="fn">Drill Up</td><td class="desc">Move from lower-level data back to a higher-level summary</td></tr>
+          <tr><td class="fn">Drillthrough</td><td class="desc">Navigate from a summary page to a detailed target page</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Interactions Between Visuals</div>
+        <table>
+          <tr><td class="fn">Cross Filtering</td><td class="desc">Selecting data in one visual filters other related visuals</td></tr>
+          <tr><td class="fn">Cross Highlighting</td><td class="desc">Highlights related data in other visuals without filtering — useful for comparison</td></tr>
+          <tr><td class="fn">Sync Slicers</td><td class="desc">Synchronize slicer selections across multiple report pages</td></tr>
+          <tr><td class="fn">Filter Precedence</td><td class="desc">Visual &gt; Page &gt; Report — the most specific filter wins</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- POWER BI SERVICE -->
+    <div id="section-service" class="quadrant pbi-indigo">
+      <div class="quad-head">
+        <div class="icon">sv</div>
+        <h2>Power BI Service</h2>
+        <div class="tag">workspaces · apps · refresh</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Key Components</div>
+        <table>
+          <tr><td class="fn">Publish</td><td class="desc">Upload reports from Power BI Desktop to the Service</td></tr>
+          <tr><td class="fn">Workspace</td><td class="desc">A container to store &amp; manage datasets, reports &amp; dashboards</td></tr>
+          <tr><td class="fn">Dataset</td><td class="desc">The semantic model containing data &amp; relationships</td></tr>
+          <tr><td class="fn">Dataflow</td><td class="desc">Cloud-based Power Query for clean, reusable data across reports</td></tr>
+          <tr><td class="fn">Dashboard</td><td class="desc">Single-page view of pinned key visuals for monitoring KPIs</td></tr>
+          <tr><td class="fn">Apps</td><td class="desc">Package &amp; distribute content to viewers without workspace edit access</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Sharing &amp; Collaboration</div>
+        <table>
+          <tr><td class="fn">Sharing</td><td class="desc">Share reports/dashboards with specific users or security groups</td></tr>
+          <tr><td class="fn">Workspace Roles</td><td class="desc">Admin, Member, Contributor, Viewer — role-based access</td></tr>
+          <tr><td class="fn">Comments &amp; @mentions</td><td class="desc">Discuss insights directly on visuals</td></tr>
+          <tr><td class="fn">Co-Authoring</td><td class="desc">Multiple users can work together in the same workspace</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Scheduled Refresh</div>
+        <table>
+          <tr><td class="fn">Scheduled Refresh</td><td class="desc">Automatically re-runs the Power Query pipeline on a schedule to keep Import datasets current</td></tr>
+          <tr><td class="fn">On-Premises Gateway</td><td class="desc">Required bridge for refreshing against on-premises data sources</td></tr>
+          <tr><td class="fn">Incremental Refresh</td><td class="desc">Refreshes only new/changed data partitions — much faster for large models</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dashboard vs Report</div>
+        <table>
+          <tr><td class="fn">Dashboard</td><td class="desc">Single page of pinned tiles from one or more reports — high-level monitoring, limited interactivity (filters only)</td></tr>
+          <tr><td class="fn">Report</td><td class="desc">Multi-page, fully interactive analysis — detailed drilling, filtering &amp; exploring</td></tr>
+          <tr><td class="fn">Dashboard Tiles</td><td class="desc">Pinned visual, report page, or standalone content — can also be an image, video, text box, or web content tile</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Smart Features</div>
+        <table>
+          <tr><td class="fn">Q&amp;A</td><td class="desc">Ask questions about your data in natural language and get an instant visual answer</td></tr>
+          <tr><td class="fn">Smart Narratives</td><td class="desc">Auto-generates a text summary of the key insights in a visual/report</td></tr>
+          <tr><td class="fn">Personalize Visuals</td><td class="desc">Lets report viewers temporarily customize a visual (chart type, fields) without editing the report</td></tr>
+          <tr><td class="fn">Goals (Scorecards)</td><td class="desc">Track KPIs against targets over time, roll up goals from multiple reports/metrics into one scorecard</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Real-Time &amp; Mobile</div>
+        <table>
+          <tr><td class="fn">Real-Time Dashboards</td><td class="desc">Tiles backed by streaming or push datasets update automatically as new data arrives, without a manual refresh</td></tr>
+          <tr><td class="fn">Mobile Dashboards</td><td class="desc">Power BI Mobile auto-generates a phone-friendly layout; a dedicated phone layout can also be designed manually</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <div id="section-security" class="quadrant pbi-lime">
+      <div class="quad-head">
+        <div class="icon">sc</div>
+        <h2>Security</h2>
+        <div class="tag">rls · ols · gateway</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Row-Level Security (RLS)</div>
+        <table>
+          <tr><td class="fn">What it Does</td><td class="desc">Restricts which rows of data each user sees within a single shared report</td></tr>
+          <tr><td class="fn">Defined Via</td><td class="desc">A DAX filter expression on a role, under Modeling → Manage Roles</td></tr>
+          <tr><td class="fn">Dynamic RLS</td><td class="desc">[SalesRepEmail] = USERPRINCIPALNAME() — filters automatically to the logged-in user</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">RLS vs OLS</div>
+        <table>
+          <tr><td class="fn">RLS (Row-Level)</td><td class="desc">Restricts rows of data; defined with DAX in the data model; dynamic per user</td></tr>
+          <tr><td class="fn">OLS (Object-Level)</td><td class="desc">Hides entire tables, columns or measures from certain users; static, no DAX</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Other Security Layers</div>
+        <table>
+          <tr><td class="fn">Workspace Roles</td><td class="desc">Admin (full control), Member (create &amp; share), Contributor (create &amp; edit), Viewer (view only)</td></tr>
+          <tr><td class="fn">Data Privacy Levels</td><td class="desc">None &lt; Organizational &lt; Private &lt; Confidential — controls data movement between sources via the Privacy Firewall</td></tr>
+          <tr><td class="fn">Sensitivity Labels</td><td class="desc">Public / Internal / Confidential / Highly Confidential — can encrypt &amp; restrict sharing (Microsoft Purview)</td></tr>
+          <tr><td class="fn">Gateway Security</td><td class="desc">On-Premises Data Gateway supports Windows Auth, Kerberos &amp; Service Principal; encrypts data in transit</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PERFORMANCE OPTIMIZATION -->
+    <div id="section-performance" class="quadrant pbi-mint">
+      <div class="quad-head">
+        <div class="icon">pf</div>
+        <h2>Performance Optimization</h2>
+        <div class="tag">query folding · star schema</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Optimization Techniques</div>
+        <table>
+          <tr><td class="fn">Query Folding</td><td class="desc">Enables Power Query to send transformations to the source — reduces data transfer</td></tr>
+          <tr><td class="fn">Star Schema</td><td class="desc">Use Star Schema with fact &amp; dimension tables — improves DAX performance &amp; simplifies relationships</td></tr>
+          <tr><td class="fn">Optimize Relationships</td><td class="desc">Avoid many-to-many relationships; use single filter direction whenever possible</td></tr>
+          <tr><td class="fn">Reduce Visuals</td><td class="desc">Avoid too many visuals on a single page; use only visuals that add business value</td></tr>
+          <tr><td class="fn">Incremental Refresh</td><td class="desc">Refresh only new/changed data instead of the full dataset — greatly improves refresh time</td></tr>
+          <tr><td class="fn">Performance Analyzer</td><td class="desc">Built-in tool to identify visuals &amp; DAX queries causing slow performance</td></tr>
+          <tr><td class="fn">Optimize DAX</td><td class="desc">Use variables (VAR) to store intermediate results; avoid complex calculations in row context</td></tr>
+          <tr><td class="fn">Remove Unused Columns</td><td class="desc">Removes unnecessary columns from Power Query — reduces model size &amp; memory usage</td></tr>
+          <tr><td class="fn">Aggregation Tables</td><td class="desc">Create Aggregation Tables for large datasets — redirects queries to smaller summary tables</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Optimized DAX Example</div>
+        <div class="trick">
+          <div class="trick-code">Total Sales (Optimized) =
+VAR TotalQty = SUM(Sales[Quantity])
+VAR TotalAmt = SUM(Sales[Amount])
+RETURN
+IF(TotalQty > 0, TotalAmt, 0)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEST PRACTICES & COMMON MISTAKES -->
+    <div id="section-bestpractices" class="quadrant pbi-slate">
+      <div class="quad-head">
+        <div class="icon">bp</div>
+        <h2>Best Practices &amp; Mistakes</h2>
+        <div class="tag">naming · modeling · theming</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Best Practices</div>
+        <table>
+          <tr><td class="fn">Naming Conventions</td><td class="desc">Use clear, consistent names; prefix tables with tbl_/dim_/fact_, measures with msr_</td></tr>
+          <tr><td class="fn">Folder Organization</td><td class="desc">Organize reports, datasets &amp; dashboards in logical workspace folders</td></tr>
+          <tr><td class="fn">Reusable Measures</td><td class="desc">Avoid hardcoding values; use variables &amp; shared measures</td></tr>
+          <tr><td class="fn">Model Optimization</td><td class="desc">Use proper data types, remove unused columns, keep the model small and efficient</td></tr>
+          <tr><td class="fn">Consistent Themes</td><td class="desc">Use consistent colors, fonts &amp; layouts following company branding</td></tr>
+          <tr><td class="fn">Documentation</td><td class="desc">Document data sources, transformations &amp; business logic</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Common Mistakes</div>
+        <table>
+          <tr><td class="fn">Flat Tables</td><td class="desc">Using flat tables without relationships leads to redundant data &amp; wrong results — always use Star Schema</td></tr>
+          <tr><td class="fn">Too Many Visuals</td><td class="desc">Overloaded reports confuse users &amp; slow down performance</td></tr>
+          <tr><td class="fn">Duplicate Calculations</td><td class="desc">Creating the same logic in multiple measures/columns increases model size — use reusable measures</td></tr>
+          <tr><td class="fn">Poor Relationships</td><td class="desc">Incorrect or many-to-many relationships lead to wrong results &amp; poor performance</td></tr>
+          <tr><td class="fn">Ignoring Performance</td><td class="desc">Ignoring DAX optimization, model size &amp; refresh times — always test &amp; monitor</td></tr>
+          <tr><td class="fn">Excessive Custom Visuals</td><td class="desc">Too many custom visuals increase load time &amp; maintenance effort</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- INTERVIEW Q&A -->
+    <div id="section-interview" class="quadrant pbi-amber full-width">
+      <div class="quad-head">
+        <div class="icon">iq</div>
+        <h2>Power BI Interview Questions</h2>
+        <div class="tag">top 20 — short &amp; crisp answers</div>
+      </div>
+
+      <div class="section">
+        <table>
+          <tr><td class="fn">Import vs DirectQuery?</td><td class="desc">Import stores data in memory for fast analysis. DirectQuery fetches data in real time from the source.</td></tr>
+          <tr><td class="fn">DAX vs M Language?</td><td class="desc">DAX is used for data analysis &amp; calculations. M Language is used in Power Query for data transformation.</td></tr>
+          <tr><td class="fn">Measure vs Calculated Column?</td><td class="desc">A Measure is calculated on the fly and uses less memory. A Calculated Column is stored in the model and increases memory usage.</td></tr>
+          <tr><td class="fn">What is Row-Level Security (RLS)?</td><td class="desc">RLS restricts data visibility at the row level based on user roles.</td></tr>
+          <tr><td class="fn">What is Star Schema?</td><td class="desc">A data modeling technique with one fact table connected to multiple dimension tables.</td></tr>
+          <tr><td class="fn">What is Query Folding?</td><td class="desc">It pushes transformations to the data source to improve performance.</td></tr>
+          <tr><td class="fn">What is a Gateway in Power BI?</td><td class="desc">A Gateway acts as a bridge between on-premises data sources and the Power BI Service.</td></tr>
+          <tr><td class="fn">Dataset vs Report?</td><td class="desc">Dataset is the data model. Report is the visual representation built on top of the dataset.</td></tr>
+          <tr><td class="fn">Dashboard vs Report?</td><td class="desc">Report is interactive and ad-hoc. Dashboard is a single-page summary of pinned key visuals (tiles).</td></tr>
+          <tr><td class="fn">What is Incremental Refresh?</td><td class="desc">It refreshes only new or changed data partitions, improving refresh time for large datasets.</td></tr>
+          <tr><td class="fn">What does CALCULATE() do?</td><td class="desc">It changes the filter context used to evaluate an expression.</td></tr>
+          <tr><td class="fn">What is Filter Context?</td><td class="desc">The set of filters applied to tables/columns that affect DAX calculations.</td></tr>
+          <tr><td class="fn">What is Context Transition?</td><td class="desc">Converts Row Context to Filter Context — happens automatically inside CALCULATE().</td></tr>
+          <tr><td class="fn">What is a Dataflow?</td><td class="desc">A dataflow prepares and stores data in the cloud for reuse across datasets and reports.</td></tr>
+          <tr><td class="fn">What are Workspaces?</td><td class="desc">Workspaces are containers to organize and collaborate on Power BI content.</td></tr>
+          <tr><td class="fn">Cross Filter vs Cross Highlight?</td><td class="desc">Cross Filter filters data in other visuals. Cross Highlight only highlights related data without filtering.</td></tr>
+          <tr><td class="fn">How can you optimize a slow report?</td><td class="desc">Optimize the model, reduce visuals, use DAX best practices, enable Aggregations, and use Performance Analyzer.</td></tr>
+          <tr><td class="fn">What are Bookmarks?</td><td class="desc">Bookmarks save the state of a report page (filters, slicers, visual states) for user navigation.</td></tr>
+          <tr><td class="fn">What is Drillthrough?</td><td class="desc">Drillthrough navigates from a summary visual to a detailed target page.</td></tr>
+          <tr><td class="fn">Best practice for data modeling?</td><td class="desc">Use Star Schema, proper data types, avoid bi-directional relationships, and keep the model clean.</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>POWER BI · QUICK REFERENCE</span>
+    <span>foundations / power query / dax / visualization / service / security</span>
+  </div>
+
+</body>
+</html>
